@@ -5,18 +5,12 @@ import { nav, profile } from '../data/profile'
 import { useActiveSection } from '../hooks/useActiveSection'
 
 const ids = nav.map(n => n.id)
+const pill = 'border border-line bg-surface/75 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.5)] backdrop-blur-xl'
 
+/** A floating navigation: the name on the left, the sections in a centred pill, actions on the right. */
 export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onToggleTheme: () => void }) {
   const active = useActiveSection(ids)
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -27,17 +21,17 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
   }, [open])
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-300 ${scrolled || open ? 'border-b border-line bg-bg/80 backdrop-blur-xl' : 'border-b border-transparent'}`}>
-      <a href="#about" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-10 focus:rounded-md focus:bg-ink focus:px-3 focus:py-2 focus:text-sm focus:text-bg">
+    <header className="fixed inset-x-0 top-0 z-50 pt-4">
+      <a href="#about" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:text-on-accent">
         Skip to content
       </a>
-      <nav aria-label="Main" className="container-page flex h-16 items-center justify-between gap-6">
-        <a href="#home" className="group flex items-center gap-2.5 text-[15px] font-medium text-ink" aria-label={`${profile.shortName}, back to top`}>
-          <span aria-hidden="true" className="grid size-7 place-items-center rounded-md bg-ink font-mono text-[11px] font-semibold text-bg transition-colors group-hover:bg-accent group-hover:text-on-accent">JP</span>
+      <nav aria-label="Main" className="container-page flex items-center justify-between gap-4">
+        <a href="#home" className={`flex h-11 items-center gap-2.5 rounded-full pl-1.5 pr-4 text-sm font-medium text-ink ${pill}`}>
+          <img src={`${import.meta.env.BASE_URL}${profile.photo}`} alt="" width={32} height={32} className="size-8 rounded-full object-cover object-top" />
           {profile.shortName}
         </a>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className={`hidden h-11 items-center rounded-full px-1.5 md:flex ${pill}`}>
           {nav.filter(n => n.id !== 'home').map(item => {
             const isActive = active === item.id
             return (
@@ -45,38 +39,29 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
                 <a
                   href={`#${item.id}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`relative py-2 text-sm transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
+                  className={`relative block rounded-full px-4 py-1.5 text-sm transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
                 >
-                  {item.label}
                   {isActive && (
-                    <motion.span
-                      layoutId="nav-dot"
-                      aria-hidden="true"
-                      className="absolute -bottom-1 left-1/2 size-1 -translate-x-1/2 rounded-full bg-accent"
-                      transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-                    />
+                    <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-raised" transition={{ type: 'spring', stiffness: 450, damping: 38 }} />
                   )}
+                  <span className="relative">{item.label}</span>
                 </a>
               </li>
             )
           })}
         </ul>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={onToggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-            className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-raised hover:text-ink"
+            className={`grid size-11 place-items-center rounded-full text-muted transition-colors hover:text-ink ${pill}`}
           >
             {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
-          <a
-            href={`${import.meta.env.BASE_URL}${profile.resume}`}
-            download
-            className="hidden h-9 items-center rounded-full border border-line-strong px-4 text-sm text-ink transition-[border-color,transform] hover:border-ink active:scale-[.97] sm:inline-flex"
-          >
-            Résumé
+          <a href="#contact" className="hidden h-11 items-center rounded-full bg-accent px-5 text-sm font-medium text-on-accent transition-[filter,transform] hover:brightness-110 active:scale-[.97] lg:inline-flex">
+            Let's talk
           </a>
           <button
             type="button"
@@ -84,7 +69,7 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="grid size-9 place-items-center rounded-full text-ink transition-colors hover:bg-raised md:hidden"
+            className={`grid size-11 place-items-center rounded-full text-ink md:hidden ${pill}`}
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -95,36 +80,28 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            className="h-[calc(100dvh-4rem)] border-t border-line bg-bg md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className={`container-page mt-3 rounded-3xl p-3 md:hidden ${pill}`}
           >
-            <ul className="container-page pt-6">
-              {nav.map((item, i) => (
-                <motion.li
-                  key={item.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.03 * i, duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                >
+            <ul>
+              {nav.map(item => (
+                <li key={item.id}>
                   <a
                     href={`#${item.id}`}
                     onClick={() => setOpen(false)}
-                    className={`flex items-center justify-between border-b border-line py-4 text-2xl font-medium tracking-tight ${active === item.id ? 'text-ink' : 'text-muted'}`}
+                    className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-lg ${active === item.id ? 'bg-raised text-ink' : 'text-body'}`}
                   >
                     {item.label}
-                    {active === item.id && <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-            <div className="container-page mt-8">
-              <a href={`${import.meta.env.BASE_URL}${profile.resume}`} download className="inline-flex h-11 items-center rounded-full bg-ink px-6 text-sm font-medium text-bg">
-                Download résumé
-              </a>
-            </div>
+            <a href={`${import.meta.env.BASE_URL}${profile.resume}`} download className="mt-2 flex h-12 items-center justify-center rounded-2xl bg-accent text-[15px] font-medium text-on-accent">
+              Download résumé
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

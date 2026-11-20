@@ -1,29 +1,20 @@
 import type { ReactNode } from 'react'
 
-type Props = { id: string; label: string; title?: ReactNode; intro?: ReactNode; children: ReactNode; className?: string }
+type Props = { id: string; eyebrow?: string; title: ReactNode; aside?: ReactNode; children: ReactNode; className?: string }
 
-/**
- * An editorial section: on wide screens a quiet label column on the left (it stays in view while
- * the section scrolls) and the content on the right. The rule above each section separates it.
- */
-export function Section({ id, label, title, intro, children, className = '' }: Props) {
+/** A section with a large serif title; an optional line sits to the right of the title on wide screens. */
+export function Section({ id, eyebrow, title, aside, children, className = '' }: Props) {
   return (
-    <section id={id} aria-labelledby={`${id}-label`} className={`border-t border-line py-20 md:py-28 ${className}`}>
-      <div className="container-page grid gap-x-12 gap-y-8 lg:grid-cols-[200px_1fr]">
-        <div>
-          <h2 id={`${id}-label`} className="text-sm font-medium text-muted lg:sticky lg:top-24">
-            {label}
-          </h2>
-        </div>
-        <div className="min-w-0">
-          {(title || intro) && (
-            <header className="mb-12 max-w-2xl">
-              {title && <p className="text-2xl font-medium leading-snug tracking-[-0.015em] text-ink sm:text-[28px]">{title}</p>}
-              {intro && <p className="mt-3 text-base leading-relaxed text-muted">{intro}</p>}
-            </header>
-          )}
-          {children}
-        </div>
+    <section id={id} aria-labelledby={`${id}-title`} className={`py-24 md:py-32 ${className}`}>
+      <div className="container-page">
+        <header className="mb-14 grid items-end gap-6 md:mb-20 md:grid-cols-[1.4fr_1fr] md:gap-16">
+          <div>
+            {eyebrow && <p className="mb-4 text-sm text-muted">{eyebrow}</p>}
+            <h2 id={`${id}-title`} className="display text-[44px] sm:text-6xl lg:text-7xl">{title}</h2>
+          </div>
+          {aside && <p className="max-w-md text-base leading-relaxed text-muted md:justify-self-end">{aside}</p>}
+        </header>
+        {children}
       </div>
     </section>
   )

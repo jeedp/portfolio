@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 
-/** A technology tag: plain text in a hairline frame, no fill. */
+/** A technology tag. */
 export function Badge({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center rounded-full border border-line px-2.5 py-0.5 text-[12.5px] leading-5 text-body">
+    <span className="inline-flex items-center rounded-full bg-raised px-3 py-1 text-[13px] leading-5 text-body">
       {children}
     </span>
   )
