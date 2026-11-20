@@ -3,3 +3,8 @@
 .vscode/
 .taste-skill/
 shots/
+node_modules/
+dist/
+*.local
+.env
+*.tsbuildinfo
