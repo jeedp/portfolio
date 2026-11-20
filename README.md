@@ -1,8 +1,12 @@
-# Jed Padro — Portfolio
+# Jed B. Padro — Portfolio
 
-Personal portfolio site: selected projects, skills, experience and contact.
+Personal portfolio of Jed B. Padro, a 4th-year Computer Engineering student at Southern Leyte State University.
 
-Built with plain HTML, CSS and JavaScript — no build step. Responsive, with light/dark mode.
+Live at **https://jeedp.github.io/portfolio/**
+
+- About, experience, featured projects (SLSU Campus Wayfinding System, Smart Parking Gate System, IAMS internship fixes, TrainSMART), skills and contact
+- One self-contained `index.html`: plain HTML, CSS and a little JavaScript, no build step and no framework
+- Responsive, with a dark theme by default and a light theme that follows the system or the toggle
 
 ## Run locally
 
