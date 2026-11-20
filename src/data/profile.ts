@@ -16,7 +16,7 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/jed-padro-ba9563299/',
   // Put your photo at public/profile.jpg and set this to 'profile.jpg'.
   // While it is empty, the site shows a JP monogram in its place.
-  photo: '',
+  photo: 'profile.jpg',
   // The PDF in public/resume.pdf. Rebuild it with `npm run resume`, or replace the file with your own.
   resume: 'resume.pdf',
   availability: 'Open to software engineering internships',
