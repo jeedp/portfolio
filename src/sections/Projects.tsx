@@ -1,73 +1,69 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { CircleCheckBig, ExternalLink, Lock, Star } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { profile, projects, type Project } from '../data/profile'
 import { Section } from '../components/Section'
 import { Badge } from '../components/Badge'
 import { ProjectVisual } from '../components/ProjectVisual'
-import { GitHubIcon } from '../components/BrandIcons'
 import { useGitHubRepos } from '../hooks/useGitHubRepos'
 
-const filters = ['All', 'Desktop', 'IoT', 'Web'] as const
+const filters = ['All', 'Web', 'IoT', 'Desktop'] as const
 type Filter = (typeof filters)[number]
 
-function ProjectCard({ project, wide }: { project: Project; wide: boolean }) {
+/** One project as a short case study: the picture, then what it is, what I did and the number that proves it. */
+function CaseStudy({ project }: { project: Project }) {
   return (
     <motion.article
-      layout
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 12 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors hover:border-accent/40 ${
-        wide ? 'lg:col-span-2 lg:grid lg:grid-cols-[1.1fr_1fr]' : ''
-      }`}
+      layout="position"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="border-t border-line pt-8 first:border-t-0 first:pt-0"
+      aria-labelledby={`p-${project.id}`}
     >
-      <div className={`overflow-hidden border-line ${wide ? 'border-b lg:border-b-0 lg:border-r' : 'border-b'}`}>
-        <div className="h-full transition-transform duration-500 ease-out-expo group-hover:scale-[1.02]">
-          <ProjectVisual project={project} fill={wide} />
-        </div>
-      </div>
+      <ProjectVisual project={project} />
 
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
-        <div className="mb-3 flex flex-wrap items-center gap-2 text-sm">
-          <span className="text-muted">{project.kind}</span>
-          {project.status && (
-            <span className="rounded-full border border-accent/30 bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent">{project.status}</span>
-          )}
-        </div>
-        <h3 className="text-2xl font-semibold tracking-tight">{project.title}</h3>
-        <p className="mt-3 leading-relaxed">{project.summary}</p>
-        {project.role && <p className="mt-3 text-[15px] text-muted">{project.role}</p>}
-
-        <ul className="mt-5 space-y-2">
-          {project.features.map(f => (
-            <li key={f} className="flex gap-2.5 text-[15px] leading-relaxed">
-              <CircleCheckBig className="mt-1 size-4 shrink-0 text-accent" aria-hidden="true" />
-              <span>{f}</span>
-            </li>
-          ))}
-        </ul>
-
-        {project.result && (
-          <p className="mt-5 rounded-xl border border-line bg-raised/60 px-4 py-3 text-[15px] leading-relaxed text-ink">{project.result}</p>
-        )}
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.tech.map(t => <Badge key={t}>{t}</Badge>)}
-        </div>
-
-        <div className="mt-auto pt-6">
-          {project.repo ? (
-            <a href={project.repo} className="inline-flex items-center gap-2 font-medium text-ink transition-colors hover:text-accent">
-              <GitHubIcon className="size-[18px]" /> View repository
-              <ExternalLink className="size-3.5 opacity-60" aria-hidden="true" />
+      <div className="mt-8 grid gap-8 md:grid-cols-[1.35fr_1fr] md:gap-12">
+        <div>
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+            <span className="tabular">{project.year}</span>
+            <span aria-hidden="true" className="h-3 w-px bg-line-strong" />
+            <span>{project.kind}</span>
+            {project.status && (
+              <>
+                <span aria-hidden="true" className="h-3 w-px bg-line-strong" />
+                <span className="text-accent">{project.status}</span>
+              </>
+            )}
+          </p>
+          <h3 id={`p-${project.id}`} className="mt-3 text-2xl font-medium tracking-[-0.02em] sm:text-[28px]">
+            {project.title}
+          </h3>
+          <p className="mt-4 text-base leading-relaxed text-body">{project.summary}</p>
+          {project.role && <p className="mt-3 text-sm leading-relaxed text-muted">{project.role}</p>}
+          <div className="mt-6 flex flex-wrap gap-1.5">
+            {project.tech.map(t => <Badge key={t}>{t}</Badge>)}
+          </div>
+          {project.repo && (
+            <a href={project.repo} className="link-draw mt-7 inline-flex items-center gap-1 text-sm font-medium text-ink hover:text-accent">
+              View the code on GitHub <ArrowUpRight className="size-4" aria-hidden="true" />
             </a>
-          ) : (
-            <span className="inline-flex items-center gap-2 text-muted">
-              <Lock className="size-4" aria-hidden="true" /> {project.repoNote ?? 'Repository link coming soon'}
-            </span>
           )}
+        </div>
+
+        <div>
+          {project.metric && (
+            <div className="border-b border-line pb-6">
+              <p className="tabular text-4xl font-medium tracking-[-0.03em] text-ink">{project.metric.value}</p>
+              <p className="mt-2 text-sm leading-snug text-muted">{project.metric.label}</p>
+            </div>
+          )}
+          <ul className="divide-y divide-line">
+            {project.features.map(f => (
+              <li key={f} className="py-3 text-[15px] leading-snug text-body">{f}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </motion.article>
@@ -78,24 +74,20 @@ function GitHubActivity() {
   const repos = useGitHubRepos(profile.githubUser)
   if (!repos || repos.length === 0) return null
   return (
-    <div className="mt-16">
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-        <h3 className="text-xl font-semibold">Recently updated on GitHub</h3>
-        <a href={`${profile.github}?tab=repositories`} className="inline-flex items-center gap-1.5 text-[15px] text-muted transition-colors hover:text-accent">
-          All repositories <ExternalLink className="size-3.5" aria-hidden="true" />
+    <div className="mt-24">
+      <div className="mb-4 flex items-baseline justify-between gap-4">
+        <h3 className="text-sm font-medium text-ink">Recently on GitHub</h3>
+        <a href={`${profile.github}?tab=repositories`} className="link-draw inline-flex items-center gap-1 text-sm text-muted hover:text-ink">
+          All repositories <ArrowUpRight className="size-3.5" aria-hidden="true" />
         </a>
       </div>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="border-t border-line">
         {repos.map(r => (
           <li key={r.name}>
-            <a href={r.html_url} className="flex h-full flex-col rounded-xl border border-line bg-surface p-4 transition-colors hover:border-accent/40">
-              <span className="font-mono text-[15px] font-medium text-ink">{r.name}</span>
-              {r.description && <span className="mt-1.5 line-clamp-2 text-sm text-muted">{r.description}</span>}
-              <span className="mt-auto flex items-center gap-4 pt-3 text-xs text-muted">
-                {r.language && <span>{r.language}</span>}
-                {r.stargazers_count > 0 && <span className="inline-flex items-center gap-1"><Star className="size-3" aria-hidden="true" />{r.stargazers_count}</span>}
-                <span>Updated {new Date(r.pushed_at).toLocaleDateString('en', { month: 'short', year: 'numeric' })}</span>
-              </span>
+            <a href={r.html_url} className="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 border-b border-line py-4 sm:grid-cols-[220px_1fr_auto]">
+              <span className="font-mono text-sm text-ink transition-colors group-hover:text-accent">{r.name}</span>
+              <span className="order-3 col-span-2 truncate text-sm text-muted sm:order-none sm:col-span-1">{r.description ?? r.language ?? ''}</span>
+              <span className="tabular text-xs text-muted">{new Date(r.pushed_at).toLocaleDateString('en', { month: 'short', year: 'numeric' })}</span>
             </a>
           </li>
         ))}
@@ -111,12 +103,11 @@ export function Projects() {
   return (
     <Section
       id="projects"
-      title="Featured projects"
-      intro="Real systems I've designed and built, from a desktop app with its own database to an IoT gate and a campus navigation kiosk."
+      label="Selected work"
+      title="Three systems I designed and built: a campus kiosk, an IoT gate and a desktop app with its own database."
     >
-      <div role="group" aria-label="Filter projects by type" className="mb-8 flex flex-wrap gap-2">
+      <div role="group" aria-label="Filter projects by type" className="mb-12 inline-flex rounded-full border border-line p-1">
         {filters.map(f => {
-          const count = f === 'All' ? projects.length : projects.filter(p => p.category === f).length
           const on = filter === f
           return (
             <button
@@ -124,21 +115,20 @@ export function Projects() {
               type="button"
               aria-pressed={on}
               onClick={() => setFilter(f)}
-              className={`inline-flex h-10 items-center gap-2 rounded-lg border px-4 text-[15px] transition-colors active:scale-[.97] ${
-                on ? 'border-accent bg-accent-soft text-accent' : 'border-line text-body hover:border-accent/50 hover:text-ink'
-              }`}
+              className={`relative h-8 rounded-full px-4 text-sm transition-colors ${on ? 'text-bg' : 'text-muted hover:text-ink'}`}
             >
-              {f} <span className="font-mono text-xs opacity-70">{count}</span>
+              {on && <motion.span layoutId="filter-pill" className="absolute inset-0 rounded-full bg-ink" transition={{ type: 'spring', stiffness: 500, damping: 40 }} />}
+              <span className="relative">{f}</span>
             </button>
           )
         })}
       </div>
 
-      <motion.div layout className="grid gap-6 lg:grid-cols-2">
-        <AnimatePresence mode="popLayout">
-          {shown.map((p, i) => <ProjectCard key={p.id} project={p} wide={i === 0 && shown.length !== 2} />)}
+      <div className="space-y-20">
+        <AnimatePresence mode="popLayout" initial={false}>
+          {shown.map(p => <CaseStudy key={p.id} project={p} />)}
         </AnimatePresence>
-      </motion.div>
+      </div>
 
       <GitHubActivity />
     </Section>
