@@ -31,7 +31,7 @@ function CopyEmail() {
       type="button"
       onClick={copy}
       aria-label={copied ? 'Email address copied' : 'Copy email address'}
-      className="grid size-10 shrink-0 place-items-center rounded-full border border-line-strong text-muted transition-[color,border-color,transform] hover:border-ink hover:text-ink active:scale-95"
+      className="grid size-14 shrink-0 place-items-center rounded-full border border-line-strong text-muted transition-[color,border-color,transform] hover:border-ink hover:text-ink active:scale-95"
     >
       {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4" />}
       <span role="status" className="sr-only">{copied ? 'Copied' : ''}</span>
@@ -101,29 +101,30 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="border-t border-line py-24 md:py-32">
-      <div className="container-page grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
-        <div>
+    <section id="contact" aria-labelledby="contact-title" className="py-24 md:py-32">
+      <div className="container-page">
+        <div className="text-center">
           <p className="text-sm text-muted">Contact</p>
-          <h2 id="contact-title" className="mt-6 max-w-[16ch] text-4xl font-medium leading-[1.05] tracking-[-0.035em] sm:text-5xl">
-            Have an internship or a project in mind?
+          <h2 id="contact-title" className="display mx-auto mt-5 max-w-[14ch] text-[56px] sm:text-8xl lg:text-[120px]">
+            Let's build something together.
           </h2>
-          <p className="mt-6 max-w-[44ch] text-base leading-relaxed text-body">
+          <p className="mx-auto mt-6 max-w-[48ch] text-base leading-relaxed text-body sm:text-lg">
             I'm looking for a software engineering internship and I'm open to collaborations. Email is the fastest way to reach me.
           </p>
-          <div className="mt-10 flex items-center gap-3">
-            <a href={`mailto:${profile.email}`} className="link-draw break-all text-xl font-medium text-ink hover:text-accent sm:text-2xl">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <a href={`mailto:${profile.email}`} className="inline-flex h-14 items-center rounded-full bg-accent px-8 text-lg font-medium text-on-accent transition-[filter,transform] hover:brightness-110 active:scale-[.97]">
               {profile.email}
             </a>
             <CopyEmail />
           </div>
-          <div className="mt-8 flex gap-6 text-sm">
+          <div className="mt-8 flex justify-center gap-6 text-sm">
             <a href={profile.github} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">GitHub <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
             <a href={profile.linkedin} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">LinkedIn <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
           </div>
         </div>
 
-        <form noValidate onSubmit={onSubmit} aria-label="Send a message" className="space-y-7 lg:pt-12">
+        <form noValidate onSubmit={onSubmit} aria-label="Send a message" className="mx-auto mt-20 max-w-3xl space-y-7 rounded-[32px] border border-line bg-surface p-7 sm:p-10">
+          <p className="display text-3xl text-ink">Or leave a message</p>
           <div className="grid gap-7 sm:grid-cols-2">
             {field('name', 'Name', { auto: 'name' })}
             {field('email', 'Email', { type: 'email', auto: 'email' })}
@@ -134,7 +135,7 @@ export function Contact() {
             <button
               type="submit"
               disabled={status.kind === 'sending'}
-              className="inline-flex h-10 items-center rounded-full bg-ink px-5 text-sm font-medium text-bg transition-[background-color,color,transform] hover:bg-accent hover:text-on-accent active:scale-[.97] disabled:opacity-60"
+              className="inline-flex h-12 items-center rounded-full bg-ink px-6 text-[15px] font-medium text-bg transition-[background-color,color,transform] hover:bg-accent hover:text-on-accent active:scale-[.97] disabled:opacity-60"
             >
               {formspreeId ? 'Send message' : 'Send with my email app'}
             </button>

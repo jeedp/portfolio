@@ -26,11 +26,18 @@ export default function App() {
         <Resume />
         <Contact />
       </main>
-      <footer className="border-t border-line">
-        <div className="container-page flex flex-col gap-3 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {profile.name}</p>
-          <p>Designed and built by Jed in React and Tailwind CSS · Updated {profile.updated}</p>
+      <footer className="overflow-hidden border-t border-line">
+        <div className="container-page flex flex-col gap-4 pt-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {profile.name}. Updated {profile.updated}.</p>
+          <div className="flex gap-6">
+            <a href={profile.github} className="link-draw hover:text-ink">GitHub</a>
+            <a href={profile.linkedin} className="link-draw hover:text-ink">LinkedIn</a>
+            <a href="#home" className="link-draw hover:text-ink">Back to top</a>
+          </div>
         </div>
+        <p aria-hidden="true" className="display container-page mt-8 select-none whitespace-nowrap text-[22vw] leading-[0.8] text-ink/[0.06] lg:text-[17rem]">
+          Jed Padro
+        </p>
       </footer>
       <BackToTop />
     </MotionConfig>
