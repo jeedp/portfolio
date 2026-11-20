@@ -3,503 +3,528 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Jed B. Padro: Computer Engineering student and software developer</title>
-<meta name="description" content="Portfolio of Jed B. Padro, a 4th-year Computer Engineering student at Southern Leyte State University who builds systems where software meets hardware.">
+<title>Jed B. Padro: software engineer in training, from firmware to the web</title>
+<meta name="description" content="Jed B. Padro is a Computer Engineering student who has shipped a Raspberry Pi campus kiosk, an ESP32 parking gate and fixes to a production Laravel system. Open to software engineering internships.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Jed B. Padro: software where it meets hardware">
-<meta property="og:description" content="A campus wayfinding kiosk on a Raspberry Pi, an ESP32 parking gate, Laravel fixes in a live audit system, and more.">
+<meta property="og:title" content="Jed B. Padro: I build software that runs on real hardware">
+<meta property="og:description" content="A Raspberry Pi campus kiosk, an ESP32 parking gate and five fixes in a production Laravel app. Open to software engineering internships.">
 <meta property="og:image" content="https://jeedp.github.io/portfolio/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://jeedp.github.io/portfolio/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#0b100f">
+<meta name="theme-color" content="#f4f6f8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script>
-  // apply a saved theme before the first paint
-  try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b100f;
-    --surface: #111917;
-    --surface-2: #16201d;
-    --line: #23302c;
-    --ink: #e3ebe7;
-    --ink-2: #b9c7c1;
-    --muted: #8a9c95;
-    --accent: #3ddc97;
-    --accent-ink: #06130e;
-    --accent-soft: rgba(61, 220, 151, .12);
-    --add: rgba(61, 220, 151, .14);
-    --del: rgba(255, 107, 107, .14);
-    --del-ink: #ff8f8f;
-    --grid-dot: rgba(227, 235, 231, .06);
-    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-    --r: 10px;
-    color-scheme: dark;
-  }
-  @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) {
-      --bg: #f3f6f4; --surface: #ffffff; --surface-2: #eef3f0; --line: #d8e1dc;
-      --ink: #0f1715; --ink-2: #33423d; --muted: #5a6b65;
-      --accent: #0b7d55; --accent-ink: #ffffff; --accent-soft: rgba(11, 125, 85, .1);
-      --add: rgba(11, 125, 85, .12); --del: rgba(200, 40, 40, .1); --del-ink: #b42323;
-      --grid-dot: rgba(15, 23, 21, .07);
-      color-scheme: light;
-    }
-  }
-  :root[data-theme="light"] {
-    --bg: #f3f6f4; --surface: #ffffff; --surface-2: #eef3f0; --line: #d8e1dc;
-    --ink: #0f1715; --ink-2: #33423d; --muted: #5a6b65;
-    --accent: #0b7d55; --accent-ink: #ffffff; --accent-soft: rgba(11, 125, 85, .1);
-    --add: rgba(11, 125, 85, .12); --del: rgba(200, 40, 40, .1); --del-ink: #b42323;
-    --grid-dot: rgba(15, 23, 21, .07);
+    --ground: #f4f6f8;
+    --paper: #ffffff;
+    --ink: #111722;
+    --ink-2: #3a4456;
+    --muted: #5d6779;
+    --line: #dde2e9;
+    --line-strong: #c7ced8;
+    --trace: #0f6b5c;
+    --trace-soft: #e3f1ee;
+    --trace-ink: #ffffff;
+    --del: #fdecec; --del-ink: #b42323;
+    --add: #e3f4ee;
+    --display: "Bricolage Grotesque", Georgia, serif;
+    --sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Geist Mono", ui-monospace, Consolas, monospace;
+    --ease: cubic-bezier(.23, 1, .32, 1);
+    --wrap: 1120px;
     color-scheme: light;
+    accent-color: var(--trace);
+    caret-color: var(--trace);
   }
-
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: var(--bg); color: var(--ink-2);
-    font: 400 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
-    background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: var(--accent); color: var(--accent-ink); }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-  .mono { font-family: var(--mono); }
-  .skip { position: absolute; left: -999px; top: 16px; background: var(--accent); color: var(--accent-ink); padding: 8px 14px; border-radius: 6px; z-index: 10; }
-  .skip:focus { left: 16px; }
+  html { scroll-behavior: smooth; scrollbar-color: var(--line-strong) var(--ground); }
+  body { margin: 0; background: var(--ground); color: var(--ink-2); font: 400 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: inherit; }
+  ::selection { background: var(--trace); color: var(--trace-ink); }
+  :focus-visible { outline: 2px solid var(--trace); outline-offset: 3px; border-radius: 6px; }
+  img, svg { display: block; max-width: 100%; }
+  h1, h2, h3 { color: var(--ink); font-family: var(--display); font-weight: 650; text-wrap: balance; margin: 0; }
+  p { margin: 0 0 16px; text-wrap: pretty; }
+  strong { color: var(--ink); font-weight: 600; }
+  .wrap { width: min(var(--wrap), 100% - 48px); margin-inline: auto; }
+  .skip { position: absolute; left: -999px; top: 12px; z-index: 20; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 8px; text-decoration: none; }
+  .skip:focus { left: 12px; }
 
-  .page { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  @media (min-width: 1024px) {
-    .page { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; padding: 0 48px; }
-  }
+  /* links and buttons answer the pointer and the press; nothing else moves on its own */
+  .link { text-decoration: none; color: var(--ink); font-weight: 500; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; padding-bottom: 2px; transition: background-size .25s var(--ease), color .2s; }
+  .link:hover { background-size: 100% 1.5px; color: var(--trace); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 22px; border-radius: 12px; font: 600 16px/1 var(--sans); text-decoration: none; border: 1px solid transparent; cursor: pointer; transition: transform .16s var(--ease), background-color .2s, border-color .2s; }
+  .btn:active { transform: scale(.97); }
+  .btn--main { background: var(--ink); color: #fff; box-shadow: 0 6px 16px -8px rgba(17,23,34,.6); }
+  .btn--main:hover { background: var(--trace); }
+  .btn--quiet { background: var(--paper); color: var(--ink); border-color: var(--line-strong); }
+  .btn--quiet:hover { border-color: var(--ink); }
+  .btn svg { width: 18px; height: 18px; }
 
-  /* ---------- left column ---------- */
-  .side { padding: 64px 0 24px; }
-  @media (min-width: 1024px) {
-    .side { position: sticky; top: 0; height: 100vh; padding: 96px 0; display: flex; flex-direction: column; }
-  }
-  .status { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); color: var(--ink-2); border: 1px solid var(--line); background: var(--surface); padding: 7px 12px; border-radius: 999px; }
-  .status i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 2.4s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent-soft); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
-  h1 { margin: 22px 0 6px; color: var(--ink); font: 600 clamp(40px, 5vw, 52px)/1.05 var(--sans); letter-spacing: -.03em; }
-  .role { margin: 0; color: var(--ink); font: 500 19px/1.4 var(--sans); }
-  .role span { color: var(--accent); }
-  .pitch { margin: 18px 0 0; max-width: 380px; color: var(--muted); }
+  /* top bar */
+  .bar { position: sticky; top: 0; z-index: 10; background: var(--ground); border-bottom: 1px solid transparent; transition: border-color .2s; }
+  .bar.is-scrolled { border-bottom-color: var(--line); }
+  .bar .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 650 18px/1 var(--display); letter-spacing: -.01em; }
+  .logo svg { width: 26px; height: 26px; }
+  .nav { display: flex; align-items: center; gap: 28px; }
+  .nav a:not(.btn) { font-size: 15px; }
+  .nav .btn { height: 40px; padding: 0 16px; font-size: 15px; border-radius: 10px; }
+  @media (max-width: 760px) { .nav a:not(.btn) { display: none; } }
 
-  .toc { display: none; margin-top: 56px; }
-  @media (min-width: 1024px) { .toc { display: block; } }
-  .toc ol { list-style: none; margin: 0; padding: 0; }
-  .toc a { display: flex; align-items: center; gap: 14px; padding: 9px 0; font: 500 13px/1 var(--mono); color: var(--muted); transition: color .2s; }
-  .toc a::before { content: ""; height: 1px; width: 28px; background: currentColor; transition: width .25s, background .2s; }
-  .toc a:hover, .toc a.is-on { color: var(--ink); }
-  .toc a.is-on::before { width: 60px; background: var(--accent); }
-  .toc b { font-weight: 500; color: var(--accent); }
+  /* hero */
+  .hero { padding: 72px 0 104px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+  .avail { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; padding: 6px 14px 6px 10px; border-radius: 999px; background: var(--trace-soft); color: var(--trace); font: 500 14px/1.2 var(--sans); }
+  .avail svg { width: 16px; height: 16px; }
+  .hero .name { margin: 0 0 14px; font: 500 20px/1.3 var(--sans); color: var(--muted); }
+  .hero .name strong { color: var(--ink); }
+  .hero h1 { font-size: clamp(44px, 6vw, 74px); line-height: .98; letter-spacing: -.035em; }
+  .lede { margin: 26px 0 34px; max-width: 34em; font-size: 19px; color: var(--ink-2); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; gap: 40px; } .hero { padding: 40px 0 72px; } }
 
-  .links { display: flex; align-items: center; gap: 10px; margin-top: 32px; flex-wrap: wrap; }
-  @media (min-width: 1024px) { .links { margin-top: auto; } }
-  .icon-link { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--ink-2); background: var(--surface); transition: color .2s, border-color .2s, transform .2s; }
-  .icon-link:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
-  .icon-link svg { width: 18px; height: 18px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: 600 14px/1 var(--sans); transition: transform .2s, box-shadow .2s; }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -8px var(--accent); }
-  .btn svg { width: 14px; height: 14px; transition: transform .2s; }
-  .btn:hover svg { transform: translateX(3px); }
-  .theme { cursor: pointer; }
+  /* the page's one orchestrated moment: the schematic draws itself once on load */
+  .schematic { width: 100%; height: auto; overflow: visible; }
+  .schematic .wire { fill: none; stroke: var(--trace); stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 1.1s var(--ease) forwards; animation-delay: var(--d, .2s); }
+  .schematic .pad { fill: var(--paper); stroke: var(--trace); stroke-width: 2; opacity: 0; animation: show .3s var(--ease) forwards; animation-delay: var(--d, 1s); }
+  .schematic .part { fill: var(--paper); stroke: var(--ink); stroke-width: 1.75; }
+  .schematic .fill-ink { fill: var(--ink); }
+  .schematic .soft { fill: var(--trace-soft); }
+  .schematic .hair { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+  .schematic text { font: 500 13px var(--sans); fill: var(--ink); }
+  .schematic .lbl { font: 400 13px var(--sans); fill: var(--muted); }
+  .schematic .pulse { fill: var(--trace); opacity: 0; offset-path: var(--path); animation: travel 1.4s var(--ease) 1.6s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes show { to { opacity: 1; } }
+  @keyframes travel { 0% { offset-distance: 0%; opacity: 1; } 90% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
 
-  /* ---------- right column ---------- */
-  main { padding: 24px 0 64px; }
-  @media (min-width: 1024px) { main { padding: 96px 0; } }
-  section { scroll-margin-top: 24px; padding-bottom: 96px; }
-  @media (min-width: 1024px) { section { scroll-margin-top: 96px; padding-bottom: 128px; } }
-  .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 28px; font: 500 13px/1 var(--mono); color: var(--accent); letter-spacing: .02em; }
-  .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  .eyebrow span { color: var(--muted); }
-  @media (max-width: 1023px) {
-    .eyebrow { position: sticky; top: 0; z-index: 2; margin: 0 -24px 24px; padding: 16px 24px; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); }
-  }
-  h2 { margin: 0; }
-  p { margin: 0 0 16px; }
-  strong { color: var(--ink); font-weight: 500; }
-  .text-link { color: var(--ink); border-bottom: 1px solid var(--accent); transition: color .2s; }
-  .text-link:hover { color: var(--accent); }
+  /* sections */
+  section { padding: 104px 0; border-top: 1px solid var(--line); }
+  .head { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 56px; align-items: end; margin-bottom: 40px; }
+  .head h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.05; letter-spacing: -.03em; }
+  .head p { margin: 0; max-width: 32em; color: var(--muted); }
+  @media (max-width: 900px) { .head { grid-template-columns: 1fr; } section { padding: 80px 0; } }
 
-  /* about */
-  .about p { max-width: 62ch; }
-  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 28px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-  .facts div { background: var(--surface); padding: 16px 18px; }
-  .facts b { display: block; color: var(--ink); font: 600 24px/1.1 var(--sans); letter-spacing: -.02em; }
-  .facts span { display: block; margin-top: 6px; font: 400 14px/1.4 var(--sans); color: var(--muted); }
-  @media (max-width: 560px) { .facts { grid-template-columns: 1fr; } }
+  /* projects: each its own row, the words first, the picture beside them */
+  .project { display: grid; grid-template-columns: 1fr 1.08fr; gap: 56px; align-items: start; padding: 48px 0; }
+  .project + .project { border-top: 1px solid var(--line); }
+  .project h3 { font-size: clamp(26px, 2.6vw, 32px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 8px; }
+  .kind { margin: 0 0 16px; font-size: 15px; color: var(--muted); }
+  .kind b { color: var(--trace); font-weight: 600; }
+  .hook { font-size: 19px; line-height: 1.55; color: var(--ink); margin-bottom: 18px; }
+  .did { margin: 0 0 22px; padding-left: 20px; }
+  .did li { margin-bottom: 8px; }
+  .did li::marker { color: var(--trace); }
+  .result { display: flex; gap: 14px; align-items: flex-start; margin: 0 0 22px; padding: 16px 18px; background: var(--trace-soft); border: 1px solid #c4e2db; border-radius: 14px; color: var(--ink); }
+  .result svg { flex: none; width: 22px; height: 22px; margin-top: 2px; color: var(--trace); }
+  .result p { margin: 0; }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 22px; padding: 0; list-style: none; }
+  .stack li { font-size: 14px; color: var(--ink-2); background: var(--paper); border: 1px solid var(--line); padding: 4px 11px; border-radius: 999px; }
+  .proj-links { font-size: 16px; }
+  .proj-links span { color: var(--muted); }
+  @media (max-width: 900px) { .project { grid-template-columns: 1fr; gap: 28px; } .project .visual { order: -1; } }
 
-  /* experience */
-  .xp { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .xp > li { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding: 20px; margin: 0 -20px; border-radius: var(--r); border: 1px solid transparent; transition: background .2s, border-color .2s; }
-  .xp > li:hover { background: var(--surface); border-color: var(--line); }
-  .xp time { font: 500 13px/1.9 var(--mono); color: var(--muted); }
-  .xp h3 { margin: 0 0 6px; color: var(--ink); font: 500 17px/1.4 var(--sans); }
-  .xp h3 span { color: var(--muted); font-weight: 400; }
-  .xp p { margin: 0; font-size: 15px; }
-  @media (max-width: 560px) { .xp > li { grid-template-columns: 1fr; gap: 4px; } }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding: 0; list-style: none; }
-  .chips li { font: 500 12px/1 var(--mono); color: var(--accent); background: var(--accent-soft); padding: 6px 10px; border-radius: 999px; }
-  .courses { margin-top: 28px; }
-  .courses h3 { margin: 0 0 12px; font: 500 13px/1 var(--mono); color: var(--muted); }
-  .courses ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .courses li { font-size: 14px; color: var(--ink-2); border: 1px solid var(--line); padding: 6px 12px; border-radius: 6px; }
+  .visual { margin: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 1px 2px rgba(17,23,34,.04), 0 18px 40px -28px rgba(17,23,34,.35); }
+  .flow { width: 100%; height: auto; }
+  .flow .box { fill: var(--ground); stroke: var(--line-strong); stroke-width: 1.5; }
+  .flow .core { fill: var(--trace-soft); stroke: var(--trace); stroke-width: 1.75; }
+  .flow .w { fill: none; stroke: var(--trace); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .flow .dash { stroke-dasharray: 5 5; }
+  .flow .dot { fill: var(--trace); }
+  .flow text { font: 600 14px var(--sans); fill: var(--ink); text-anchor: middle; }
+  .flow .sub { font: 400 12.5px var(--sans); fill: var(--muted); }
 
-  /* projects */
-  .projects { display: grid; gap: 28px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; transition: border-color .25s, transform .25s, box-shadow .25s; }
-  .card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); transform: translateY(-3px); box-shadow: 0 20px 40px -24px rgba(0,0,0,.6); }
-  .card__body { padding: 24px 24px 22px; }
-  .card__meta { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 10px; font: 500 12px/1.4 var(--mono); color: var(--muted); }
-  .card__meta b { color: var(--accent); font-weight: 500; }
-  .card h3 { margin: 0 0 8px; color: var(--ink); font: 600 21px/1.3 var(--sans); letter-spacing: -.01em; }
-  .card p { font-size: 15px; }
-  .metric { display: flex; gap: 12px; align-items: baseline; margin: 16px 0 0; padding: 12px 14px; border-left: 2px solid var(--accent); background: var(--surface-2); border-radius: 0 8px 8px 0; font-size: 14px; }
-  .metric b { color: var(--ink); font: 600 18px/1.2 var(--sans); white-space: nowrap; }
-  @media (max-width: 560px) { .metric { flex-direction: column; gap: 4px; } }
-  .card__links { display: flex; gap: 18px; margin-top: 18px; font: 500 13px/1 var(--mono); }
-  .card__links a { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); }
-  .card__links a:hover { color: var(--accent); }
-  .card__links svg { width: 14px; height: 14px; }
-  .card__links .muted { color: var(--muted); }
-
-  /* the drawn schematics on each card */
-  .viz { position: relative; padding: 26px 24px; background: var(--surface-2); border-bottom: 1px solid var(--line); background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px); background-size: 16px 16px; overflow: hidden; }
-  .flow { display: grid; align-items: center; gap: 0; font: 500 12px/1.3 var(--mono); }
-  .flow--3 { grid-template-columns: 1fr 34px 1.2fr 34px 1fr; }
-  .node { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 10px; color: var(--ink); text-align: center; }
-  .node small { display: block; color: var(--muted); font-size: 11px; margin-top: 3px; }
-  .node--core { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-  .stack { display: grid; gap: 8px; }
-  .wire { position: relative; height: 2px; background: var(--line); overflow: hidden; }
-  .wire::after { content: ""; position: absolute; top: 0; left: -40%; width: 40%; height: 100%; background: linear-gradient(90deg, transparent, var(--accent), transparent); animation: run 2.6s linear infinite; }
-  .wire--b::after { animation-delay: 1.3s; }
-  @keyframes run { to { left: 100%; } }
-  @media (max-width: 560px) {
-    .flow--3 { grid-template-columns: 1fr; gap: 0; }
-    .wire { width: 2px; height: 22px; margin: 0 auto; }
-    .wire::after { left: 0; top: -40%; width: 100%; height: 40%; background: linear-gradient(180deg, transparent, var(--accent), transparent); animation-name: run-v; }
-    @keyframes run-v { to { top: 100%; } }
-  }
-
-  .diff { font: 400 12.5px/1.75 var(--mono); color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  .diff__head { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+  .diff { font: 400 13px/1.8 var(--mono); color: var(--ink-2); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .diff__head { display: flex; justify-content: space-between; padding: 9px 14px; background: var(--ground); border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
   .diff__head b { color: var(--ink); font-weight: 500; }
-  .diff__row { display: grid; grid-template-columns: 32px 16px 1fr; padding: 0 12px 0 0; white-space: pre; overflow: hidden; text-overflow: ellipsis; }
-  .diff__row i { font-style: normal; text-align: right; padding-right: 8px; color: var(--muted); opacity: .6; }
-  .diff__row--del { background: var(--del); } .diff__row--del span:first-of-type { color: var(--del-ink); }
-  .diff__row--add { background: var(--add); } .diff__row--add span:first-of-type { color: var(--accent); }
-  .diff .k { color: var(--accent); } .diff .s { color: #e6b673; }
-  :root[data-theme="light"] .diff .s { color: #9a5b00; }
-  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .diff .s { color: #9a5b00; } }
+  .diff__row { display: grid; grid-template-columns: 34px 18px 1fr; white-space: pre; overflow: hidden; }
+  .diff__row i { font-style: normal; text-align: right; padding-right: 10px; color: var(--muted); }
+  .diff__row--del { background: var(--del); } .diff__row--del b { color: var(--del-ink); font-weight: 500; }
+  .diff__row--add { background: var(--add); } .diff__row--add b { color: var(--trace); font-weight: 500; }
+  .diff .s { color: #8a4b0f; } .diff .k { color: var(--trace); }
+  .err { margin: 14px 0 0; padding: 10px 14px; border-radius: 10px; background: var(--del); color: var(--del-ink); font: 500 12.5px/1.5 var(--mono); }
 
-  .table { width: 100%; border-collapse: collapse; font: 400 12.5px/1 var(--mono); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-  .table th, .table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  .table th { color: var(--muted); font-weight: 500; }
-  .table td { color: var(--ink); }
-  .table tr:last-child td { border-bottom: 0; }
-  .bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--accent); vertical-align: middle; }
+  .log { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .log th { text-align: left; font-weight: 500; color: var(--muted); font-size: 13.5px; padding: 0 10px 10px 0; border-bottom: 1px solid var(--line); }
+  .log td { padding: 12px 10px 12px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
+  .log tr:last-child td { border-bottom: 0; }
+  .log .up { color: var(--trace); font-weight: 600; }
 
-  /* other projects */
-  .archive { margin-top: 48px; }
-  .archive h3 { margin: 0 0 12px; font: 500 13px/1 var(--mono); color: var(--muted); }
-  .archive table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .archive td { padding: 14px 8px 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
-  .archive td:first-child { color: var(--ink); font-weight: 500; white-space: nowrap; }
-  .archive td:last-child { text-align: right; font: 500 12px/1.6 var(--mono); color: var(--muted); white-space: nowrap; }
-  .archive tr:hover td:first-child { color: var(--accent); }
-  @media (max-width: 560px) { .archive td:nth-child(2) { display: none; } }
+  .more { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0 32px; }
+  .more h3 { grid-column: 1 / -1; font: 600 16px/1 var(--sans); color: var(--ink); margin-bottom: 12px; }
+  .more div { padding: 16px 0; border-top: 1px solid var(--line); }
+  .more b { display: block; color: var(--ink); font-weight: 600; }
+  .more span { font-size: 15px; color: var(--muted); }
 
-  /* skills */
-  .skills { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-  .skills div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 16px 18px; background: var(--surface); align-items: start; }
-  .skills dt { font: 500 13px/1.9 var(--mono); color: var(--muted); }
-  .skills dd { margin: 0; }
-  .skills .chips { margin: 0; }
-  @media (max-width: 560px) { .skills div { grid-template-columns: 1fr; gap: 8px; } }
-  .next { margin-top: 20px; font-size: 15px; }
+  /* experience: a real sequence, so the years carry the order */
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 112px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+  .timeline li { position: relative; display: grid; grid-template-columns: 112px 1fr; gap: 0 40px; padding: 0 0 40px; }
+  .timeline li::after { content: ""; position: absolute; left: 107px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--paper); border: 2px solid var(--trace); }
+  .timeline time { font: 600 15px/1.6 var(--sans); color: var(--ink); }
+  .timeline h3 { font: 600 19px/1.35 var(--sans); margin-bottom: 2px; }
+  .timeline .org { color: var(--muted); font-size: 16px; margin-bottom: 8px; }
+  .timeline p { margin: 0; max-width: 40em; }
+  @media (max-width: 640px) {
+    .timeline::before { left: 5px; }
+    .timeline li { grid-template-columns: 1fr; padding-left: 32px; }
+    .timeline li::after { left: 0; }
+  }
+  .courses { margin-top: 8px; padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; display: grid; grid-template-columns: 180px 1fr; gap: 12px; }
+  .courses h3 { font: 600 16px/1.6 var(--sans); }
+  .courses ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .courses li { font-size: 15px; }
+  @media (max-width: 640px) { .courses { grid-template-columns: 1fr; } }
 
-  /* contact + footer */
-  .contact h2 { color: var(--ink); font: 600 clamp(30px, 4vw, 40px)/1.15 var(--sans); letter-spacing: -.02em; margin-bottom: 14px; }
-  .contact p { max-width: 54ch; }
-  .contact .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-  .btn--ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-  .btn--ghost:hover { border-color: var(--accent); color: var(--accent); box-shadow: none; }
-  footer { padding: 32px 0 48px; font: 400 13px/1.6 var(--mono); color: var(--muted); border-top: 1px solid var(--line); }
+  /* toolkit */
+  .toolkit { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; }
+  .toolkit h3 { font: 600 15px/1.4 var(--sans); color: var(--trace); margin-bottom: 10px; }
+  .toolkit ul { margin: 0; padding: 0; list-style: none; }
+  .toolkit li { padding: 7px 0; color: var(--ink); border-bottom: 1px solid var(--line); font-size: 16px; }
+  @media (max-width: 980px) { .toolkit { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .toolkit { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+  .learning { margin: 40px 0 0; max-width: 46em; }
+
+  /* about and contact */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .about h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.05; letter-spacing: -.03em; }
+  @media (max-width: 900px) { .about { grid-template-columns: 1fr; gap: 24px; } }
+  .contact { background: var(--ink); color: #c9d1dd; border-radius: 28px; padding: clamp(32px, 6vw, 72px); margin: 0 0 32px; }
+  .contact h2 { color: #fff; font-size: clamp(34px, 5vw, 56px); line-height: 1.02; letter-spacing: -.035em; max-width: 14em; }
+  .contact > p { max-width: 36em; margin: 20px 0 32px; font-size: 18px; }
+  .contact .btn--main { background: #fff; color: var(--ink); box-shadow: none; }
+  .contact .btn--main:hover { background: var(--trace-soft); }
+  .contact .btn--quiet { background: transparent; color: #fff; border-color: rgba(255,255,255,.3); }
+  .contact .btn--quiet:hover { border-color: #fff; }
+  .contact .direct { margin: 28px 0 0; font-size: 15px; color: #a3aebd; }
+  .contact .direct .link { color: #fff; }
+  footer { padding: 8px 0 48px; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .schematic .wire { animation: none; stroke-dashoffset: 0; }
+    .schematic .pad { animation: none; opacity: 1; }
+    .schematic .pulse { display: none; }
+    .btn, .link { transition: none; }
   }
 </style>
 </head>
 <body>
-<a class="skip" href="#content">Skip to content</a>
+<a class="skip" href="#work">Skip to projects</a>
 
-<div class="page">
-  <header class="side">
-    <div>
-      <span class="status"><i aria-hidden="true"></i>Open to software engineering internships</span>
-      <h1>Jed B. Padro</h1>
-      <p class="role">Computer Engineering student <span>·</span> software developer</p>
-      <p class="pitch">I build practical systems where software meets hardware: firmware on an ESP32, a server on a Raspberry Pi, and the interface people use.</p>
-    </div>
-
-    <nav class="toc" aria-label="Sections">
-      <ol>
-        <li><a href="#about"><b>01</b> About</a></li>
-        <li><a href="#experience"><b>02</b> Experience</a></li>
-        <li><a href="#projects"><b>03</b> Projects</a></li>
-        <li><a href="#skills"><b>04</b> Skills</a></li>
-        <li><a href="#contact"><b>05</b> Contact</a></li>
-      </ol>
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Jed Padro, back to top">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" rx="7" fill="#111722"/><path d="M7 9h7a3 3 0 0 1 3 3a3 3 0 0 1-3 3h-3" fill="none" stroke="#5fd0b8" stroke-width="2" stroke-linecap="round"/><circle cx="8" cy="17" r="2" fill="#5fd0b8"/><circle cx="19" cy="9" r="1.6" fill="#fff"/></svg>
+      Jed Padro
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="link" href="#work">Projects</a>
+      <a class="link" href="#experience">Experience</a>
+      <a class="link" href="#toolkit">Skills</a>
+      <a class="link" href="#about">About</a>
+      <a class="btn btn--main" href="mailto:jedpadro@gmail.com">Email me</a>
     </nav>
+  </div>
+</header>
 
-    <div class="links">
-      <a class="btn" href="mailto:jedpadro@gmail.com">Email me
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-      <a class="icon-link" href="https://github.com/jeedp" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg></a>
-      <a class="icon-link" href="https://www.linkedin.com/in/jed-padro-ba9563299/" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg></a>
-      <button class="icon-link theme" type="button" aria-label="Switch light or dark theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="avail">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.5" fill="currentColor"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-opacity=".35"/></svg>
+          Open to software engineering internships
+        </p>
+        <p class="name"><strong>Jed B. Padro</strong>, Computer Engineering student</p>
+        <h1>I build software that runs on real hardware.</h1>
+        <p class="lede">I've shipped a campus map kiosk on a Raspberry Pi, an ESP32 parking gate with a live dashboard, and five bug fixes to a production Laravel system. I like the hard part: making it fast, making it reliable, and making it easy to use.</p>
+        <div class="actions">
+          <a class="btn btn--main" href="#work">See my projects</a>
+          <a class="btn btn--quiet" href="https://github.com/jeedp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+            GitHub</a>
+        </div>
+      </div>
+
+      <svg class="schematic" viewBox="0 0 520 430" role="img" aria-label="A drawing of how Jed's work connects: a browser dashboard, a Raspberry Pi server and an ESP32 microcontroller, joined by circuit traces.">
+        <!-- browser window -->
+        <rect class="part" x="250" y="20" width="250" height="150" rx="12"/>
+        <path class="hair" d="M250 50h250"/>
+        <circle class="fill-ink" cx="268" cy="35" r="3.5"/><circle class="fill-ink" cx="281" cy="35" r="3.5" opacity=".45"/><circle class="fill-ink" cx="294" cy="35" r="3.5" opacity=".2"/>
+        <rect class="soft" x="268" y="68" width="100" height="44" rx="6"/>
+        <text x="282" y="95">12 slots free</text>
+        <rect class="hair" x="380" y="68" width="102" height="44" rx="6"/>
+        <text x="394" y="95">Gate: open</text>
+        <path class="hair" d="M268 134h214M268 150h150"/>
+        <text class="lbl" x="250" y="192">dashboard</text>
+
+        <!-- raspberry pi board -->
+        <rect class="part" x="20" y="148" width="190" height="124" rx="10"/>
+        <rect class="hair" x="38" y="166" width="60" height="60" rx="4"/>
+        <rect class="fill-ink" x="114" y="168" width="78" height="14" rx="3" opacity=".85"/>
+        <rect class="hair" x="114" y="192" width="78" height="32" rx="3"/>
+        <text x="38" y="254">Raspberry Pi</text>
+        <text class="lbl" x="20" y="294">kiosk server</text>
+
+        <!-- esp32 chip -->
+        <rect class="part" x="300" y="266" width="150" height="100" rx="8"/>
+        <path class="hair" d="M312 266v-12M332 266v-12M352 266v-12M372 266v-12M392 266v-12M412 266v-12M432 266v-12M312 366v12M332 366v12M352 366v12M372 366v12M392 366v12M412 366v12M432 366v12"/>
+        <text x="353" y="314">ESP32</text>
+        <text class="lbl" x="349" y="334">2 cores</text>
+        <text class="lbl" x="300" y="404">gate controller</text>
+
+        <!-- traces, drawn once on load -->
+        <path class="wire" style="--len:330;--d:.25s" d="M210 190h20v-82h20"/>
+        <path class="wire" style="--len:260;--d:.55s" d="M375 170v42h-40v54"/>
+        <path class="wire" style="--len:240;--d:.85s" d="M210 236h44v78h46"/>
+        <circle class="pad" style="--d:1.2s" cx="210" cy="190" r="5"/><circle class="pad" style="--d:1.2s" cx="250" cy="108" r="5"/>
+        <circle class="pad" style="--d:1.35s" cx="375" cy="170" r="5"/><circle class="pad" style="--d:1.35s" cx="335" cy="266" r="5"/>
+        <circle class="pad" style="--d:1.5s" cx="210" cy="236" r="5"/><circle class="pad" style="--d:1.5s" cx="300" cy="314" r="5"/>
+        <circle class="pulse" r="4.5" style="--path: path('M210 236h44v78h46')"/>
+      </svg>
     </div>
-  </header>
+  </div>
 
-  <main id="content">
-    <section id="about" aria-labelledby="about-h">
-      <h2 class="eyebrow" id="about-h">01 <span>About</span></h2>
-      <div class="about">
-        <p>I'm a <strong>4th-year Computer Engineering student</strong> at Southern Leyte State University in the Philippines, working toward a career in software engineering. My projects usually sit where code meets a physical device, and I care about the part people touch: a kiosk screen, a dashboard, a form that doesn't break.</p>
-        <p>Right now I'm finishing my thesis, the <a class="text-link" href="#projects">SLSU Campus Wayfinding System</a>. During my internship I fixed and documented five bugs in a production Laravel system used for internal audits.</p>
-        <p>I'm learning more about testing and maintainable architecture, how data moves between systems, and designing hardware and software as one system. AI and machine learning are next on my list.</p>
+  <section id="work" aria-labelledby="work-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="work-h">Projects I'm proud of</h2>
+        <p>Each one solved a real problem, and each one taught me something about performance, reliability or working in someone else's code.</p>
       </div>
-      <div class="facts">
-        <div><b>158</b><span>GitHub contributions in the last 12 months</span></div>
-        <div><b>≤ 3 MB</b><span>per kiosk floor drawing, down from 14 MB</span></div>
-        <div><b>5</b><span>bugs fixed in a live Laravel app</span></div>
-      </div>
-    </section>
 
-    <section id="experience" aria-labelledby="experience-h">
-      <h2 class="eyebrow" id="experience-h">02 <span>Experience</span></h2>
-      <ol class="xp">
+      <article class="project">
+        <div>
+          <h3>SLSU Campus Wayfinding System</h3>
+          <p class="kind"><b>Thesis</b>, team of two, in progress</p>
+          <p class="hook">An offline touchscreen kiosk that guides students and visitors to any building, office or facility on campus, and keeps working when the network drops.</p>
+          <ul class="did">
+            <li>Made the map fast enough for a Raspberry Pi 4 by shrinking every floor drawing.</li>
+            <li>Built the QR hand-off that continues a route on a visitor's own phone with live GPS.</li>
+            <li>Wrote the setup script and guide that turn a blank SD card into a working kiosk.</li>
+          </ul>
+          <div class="result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6 4 4 7-7"/><path d="M15 8h6v6"/></svg>
+            <p>Floor drawings cut from <strong>14 MB to 1.5–3 MB</strong> each, so the map runs smoothly on the Pi.</p>
+          </div>
+          <ul class="stack"><li>JavaScript</li><li>Node.js</li><li>Express</li><li>SQLite</li><li>Raspberry Pi</li></ul>
+          <p class="proj-links"><a class="link" href="https://github.com/cymrcsm/slsu-map-navigation">View the code on GitHub</a></p>
+        </div>
+        <figure class="visual">
+          <svg class="flow" viewBox="0 0 480 300" role="img" aria-label="The touchscreen talks to a Node.js server on the Raspberry Pi, which serves the vector map and SQLite data; a QR code hands the route to the visitor's phone.">
+            <rect class="box" x="16" y="40" width="130" height="64" rx="12"/><text x="81" y="68">Touchscreen</text><text class="sub" x="81" y="88">Chromium kiosk</text>
+            <rect class="core" x="175" y="118" width="140" height="70" rx="12"/><text x="245" y="148">Node + Express</text><text class="sub" x="245" y="168">Raspberry Pi 4</text>
+            <rect class="box" x="334" y="40" width="130" height="64" rx="12"/><text x="399" y="68">Vector map</text><text class="sub" x="399" y="88">floor plans</text>
+            <rect class="box" x="16" y="210" width="130" height="64" rx="12"/><text x="81" y="238">SQLite</text><text class="sub" x="81" y="258">settings</text>
+            <rect class="box" x="334" y="210" width="130" height="64" rx="12"/><text x="399" y="238">Visitor's phone</text><text class="sub" x="399" y="258">QR, live GPS</text>
+            <path class="w" d="M146 72h14v80h15"/><path class="w" d="M315 152h4v-80h15"/><path class="w" d="M175 172h-14v70h-15"/><path class="w dash" d="M315 172h4v70h15"/>
+            <circle class="dot" cx="175" cy="152" r="4"/><circle class="dot" cx="315" cy="152" r="4"/><circle class="dot" cx="175" cy="172" r="4"/><circle class="dot" cx="315" cy="172" r="4"/>
+          </svg>
+        </figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>Smart Parking Gate System</h3>
+          <p class="kind"><b>IoT</b>, solo project</p>
+          <p class="hook">A parking gate that opens for RFID card holders, counts free slots with ultrasonic sensors and shows both on a live web dashboard.</p>
+          <ul class="did">
+            <li>Built everything myself, from pin mapping and firmware to the dashboard.</li>
+            <li>Added Bluetooth control so an operator can open the gate from a browser, even with no internet.</li>
+            <li>Wrote unit tests for the gate and RFID logic.</li>
+          </ul>
+          <div class="result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+            <p>Gate control and network updates run as <strong>separate FreeRTOS tasks on separate cores</strong>, so a slow connection never holds the gate.</p>
+          </div>
+          <ul class="stack"><li>C++</li><li>ESP32</li><li>FreeRTOS</li><li>PlatformIO</li><li>Firebase</li><li>Bluetooth LE</li></ul>
+          <p class="proj-links"><a class="link" href="https://github.com/jeedp/Smart-Parking-Gate-System">View the code on GitHub</a></p>
+        </div>
+        <figure class="visual">
+          <svg class="flow" viewBox="0 0 480 300" role="img" aria-label="RFID reader and ultrasonic sensors feed the ESP32, which drives the gate servos and LCD and reports to Firebase; the web dashboard reads Firebase and can open the gate over Bluetooth.">
+            <rect class="box" x="16" y="34" width="130" height="58" rx="12"/><text x="81" y="60">RFID reader</text><text class="sub" x="81" y="78">card check</text>
+            <rect class="box" x="16" y="120" width="130" height="58" rx="12"/><text x="81" y="146">Ultrasonic</text><text class="sub" x="81" y="164">slot sensors</text>
+            <rect class="core" x="175" y="76" width="140" height="92" rx="12"/><text x="245" y="110">ESP32</text><text class="sub" x="245" y="130">core 0: gate</text><text class="sub" x="245" y="148">core 1: network</text>
+            <rect class="box" x="334" y="34" width="130" height="58" rx="12"/><text x="399" y="60">Gate servos</text><text class="sub" x="399" y="78">16×2 LCD</text>
+            <rect class="box" x="334" y="120" width="130" height="58" rx="12"/><text x="399" y="146">Firebase</text><text class="sub" x="399" y="164">live data</text>
+            <rect class="box" x="175" y="222" width="140" height="58" rx="12"/><text x="245" y="248">Web dashboard</text><text class="sub" x="245" y="266">Bluetooth control</text>
+            <path class="w" d="M146 63h14v38h15"/><path class="w" d="M146 149h14v-12h15"/><path class="w" d="M315 101h4v-38h15"/><path class="w" d="M315 137h4v12h15"/>
+            <path class="w" d="M399 178v73h-84"/><path class="w dash" d="M245 222v-54"/>
+            <circle class="dot" cx="175" cy="101" r="4"/><circle class="dot" cx="175" cy="137" r="4"/><circle class="dot" cx="315" cy="101" r="4"/><circle class="dot" cx="315" cy="137" r="4"/>
+          </svg>
+        </figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>IAMS internship: five bugs, five fixes</h3>
+          <p class="kind"><b>Internship</b>, production Laravel system</p>
+          <p class="hook">I joined a large internal audit system mid-flight, about 260 API routes and a 32,000-line jQuery file, and took ownership of its questionnaire module.</p>
+          <ul class="did">
+            <li>Traced each bug from the browser console to its root cause across Blade views, jQuery and the JSON API.</li>
+            <li>Fixed a popup that crashed on open, toolbar buttons that did nothing, and an Approve button that showed too early.</li>
+            <li>Documented every fix with its symptom, cause, change and how I verified it.</li>
+          </ul>
+          <div class="result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            <p><strong>5 of 5 bugs fixed and verified</strong>, with a written trail the next developer can follow.</p>
+          </div>
+          <ul class="stack"><li>Laravel</li><li>PHP</li><li>jQuery</li><li>MySQL</li><li>Debugging</li></ul>
+          <p class="proj-links"><span>Private company codebase</span></p>
+        </div>
+        <figure class="visual">
+          <div class="diff" role="img" aria-label="Code change in adminJs.js: a call to a function that no longer existed, resetIcqYesNoForm, is replaced with clearIcqYesNoRemarks.">
+            <div class="diff__head"><span>public/js/<b>adminJs.js</b></span><span>+1 −1</span></div>
+            <div class="diff__row"><i>1</i><b> </b><span><span class="k">function</span> addIcqYesNo(id) {</span></div>
+            <div class="diff__row"><i>2</i><b> </b><span>  $(<span class="s">"#icqModal"</span>).data(<span class="s">"mode"</span>, <span class="s">"add"</span>);</span></div>
+            <div class="diff__row diff__row--del"><i>3</i><b>−</b><span>  resetIcqYesNoForm();</span></div>
+            <div class="diff__row diff__row--add"><i>3</i><b>+</b><span>  clearIcqYesNoRemarks();</span></div>
+            <div class="diff__row"><i>4</i><b> </b><span>  $(<span class="s">"#icqSave"</span>).attr(<span class="s">"data-id"</span>, id);</span></div>
+            <div class="diff__row"><i>5</i><b> </b><span>}</span></div>
+          </div>
+          <p class="err">Before: Uncaught ReferenceError: resetIcqYesNoForm is not defined</p>
+        </figure>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>TrainSMART</h3>
+          <p class="kind"><b>Desktop app</b>, solo project</p>
+          <p class="hook">A fitness tracker for workout templates, exercises, logged sessions and body measurements, so progress is easy to see over time.</p>
+          <ul class="did">
+            <li>Designed the relational data model in T-SQL on SQL Server.</li>
+            <li>Built user accounts with input validation in C# Windows Forms.</li>
+          </ul>
+          <ul class="stack"><li>C#</li><li>Windows Forms</li><li>.NET Framework</li><li>SQL Server</li></ul>
+          <p class="proj-links"><a class="link" href="https://github.com/jeedp/TrainSMARTApp">View the code on GitHub</a></p>
+        </div>
+        <figure class="visual">
+          <table class="log" aria-label="Example workout log with exercises, sets, weight and change from last session">
+            <thead><tr><th>Exercise</th><th>Sets</th><th>Weight</th><th>vs last</th></tr></thead>
+            <tbody>
+              <tr><td>Bench press</td><td>4 × 8</td><td>60 kg</td><td class="up">+2.5 kg</td></tr>
+              <tr><td>Squat</td><td>5 × 5</td><td>80 kg</td><td class="up">+5 kg</td></tr>
+              <tr><td>Deadlift</td><td>3 × 5</td><td>100 kg</td><td class="up">+5 kg</td></tr>
+              <tr><td>Overhead press</td><td>3 × 8</td><td>35 kg</td><td>same</td></tr>
+            </tbody>
+          </table>
+        </figure>
+      </article>
+
+      <div class="more">
+        <h3>Also built</h3>
+        <div><b>Task Manager</b><span>Laravel 13 app with REST routes, Eloquent and Tailwind</span></div>
+        <div><b><a class="link" href="https://github.com/jeedp/Calculator">Calculator</a></b><span>A Windows-style calculator in C# Windows Forms</span></div>
+        <div><b><a class="link" href="https://github.com/jeedp/LoginSystem">Login System</a></b><span>Desktop sign-in and account screens in C#</span></div>
+        <div><b>Paging simulator</b><span>FIFO and LRU page replacement, step by step, in Python</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="experience-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="experience-h">Experience and education</h2>
+        <p>Real codebases, real users and a team to answer to.</p>
+      </div>
+      <ol class="timeline">
         <li>
           <time>2026</time>
           <div>
-            <h3>Web Developer Intern (OJT) <span>· IAMS</span></h3>
-            <p>Worked on IAMS, an Internal Audit Management System built in Laravel with about 260 API routes and 50+ models. Traced and fixed five bugs in the Internal Control Questionnaire module across Blade views, a 32,000-line jQuery file and the JSON API, and wrote up each fix for my mentor.</p>
-            <ul class="chips"><li>Laravel 10</li><li>PHP</li><li>jQuery</li><li>MySQL</li><li>Blade</li></ul>
+            <h3>Web Developer Intern (OJT)</h3>
+            <p class="org">IAMS, Internal Audit Management System</p>
+            <p>Worked in a production Laravel 10 app with 50+ data models. Fixed and documented five bugs in the Internal Control Questionnaire module.</p>
           </div>
         </li>
         <li>
           <time>2026</time>
           <div>
-            <h3>Thesis developer <span>· SLSU Campus Wayfinding</span></h3>
-            <p>Team of two. I own performance on the Raspberry Pi, the QR hand-off that continues a route on a visitor's phone with live GPS, and the setup script that turns a blank SD card into a working kiosk.</p>
-            <ul class="chips"><li>JavaScript</li><li>Node.js</li><li>Express</li><li>SQLite</li><li>Raspberry Pi</li></ul>
+            <h3>Thesis developer</h3>
+            <p class="org">SLSU Campus Wayfinding System, team of two</p>
+            <p>I own performance on the Raspberry Pi, the phone hand-off with live GPS, and deployment.</p>
           </div>
         </li>
         <li>
           <time>2025</time>
           <div>
-            <h3>Industry program <span>· DigiHubPH, Jakarta</span></h3>
-            <p>An industry program with The Gifted Solutions and DigiHubPH in Jakarta, Indonesia.</p>
+            <h3>Industry program participant</h3>
+            <p class="org">The Gifted Solutions and DigiHubPH, Jakarta, Indonesia</p>
+            <p>An international industry program in Jakarta.</p>
           </div>
         </li>
         <li>
           <time>Now</time>
           <div>
-            <h3>BS Computer Engineering <span>· Southern Leyte State University</span></h3>
-            <p>4th year.</p>
+            <h3>BS Computer Engineering, 4th year</h3>
+            <p class="org">Southern Leyte State University, Philippines</p>
           </div>
         </li>
       </ol>
       <div class="courses">
         <h3>Short courses</h3>
-        <ul>
-          <li>Introduction to Cybersecurity</li>
-          <li>Prompt Like an Engineer</li>
-          <li>Hardware and Upgrade Support</li>
-          <li>Engaging Stakeholders for Success</li>
-          <li>Digital Awareness</li>
-        </ul>
+        <ul><li>Introduction to Cybersecurity</li><li>Prompt Like an Engineer</li><li>Hardware and Upgrade Support</li><li>Engaging Stakeholders for Success</li><li>Digital Awareness</li></ul>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="projects" aria-labelledby="projects-h">
-      <h2 class="eyebrow" id="projects-h">03 <span>Projects</span></h2>
-      <div class="projects">
-
-        <article class="card">
-          <div class="viz" role="img" aria-label="Touchscreen kiosk talks to a Node.js server on a Raspberry Pi, which serves the map and SQLite data; a QR code hands the route to a visitor's phone.">
-            <div class="flow flow--3">
-              <div class="node">Touchscreen<small>Chromium kiosk</small></div>
-              <div class="wire"></div>
-              <div class="node node--core">Node.js + Express<small>Raspberry Pi 4</small></div>
-              <div class="wire wire--b"></div>
-              <div class="stack">
-                <div class="node">Vector map<small>floor plans</small></div>
-                <div class="node">Phone via QR<small>live GPS</small></div>
-              </div>
-            </div>
-          </div>
-          <div class="card__body">
-            <p class="card__meta"><b>Thesis</b><span>Team of two</span><span>In progress</span></p>
-            <h3>SLSU Campus Wayfinding System</h3>
-            <p>An offline touchscreen kiosk that helps students and visitors find buildings, offices and facilities on the SLSU main campus, with a 2D vector map, floor plans and walking directions. It keeps working when the campus network drops.</p>
-            <div class="metric"><b>14 MB → 1.5–3 MB</b><span>per floor drawing, so the map runs smoothly on a Raspberry Pi 4</span></div>
-            <ul class="chips"><li>JavaScript</li><li>Node.js</li><li>Express</li><li>SQLite</li><li>Raspberry Pi</li></ul>
-            <div class="card__links">
-              <a href="https://github.com/cymrcsm/slsu-map-navigation"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>Source code</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="viz" role="img" aria-label="RFID reader and ultrasonic sensors feed an ESP32 running FreeRTOS tasks, which drives the gate servos and reports to Firebase and a web dashboard.">
-            <div class="flow flow--3">
-              <div class="stack">
-                <div class="node">RFID reader</div>
-                <div class="node">Ultrasonic<small>slot sensors</small></div>
-              </div>
-              <div class="wire"></div>
-              <div class="node node--core">ESP32<small>core 0: gate · core 1: network</small></div>
-              <div class="wire wire--b"></div>
-              <div class="stack">
-                <div class="node">Gate servos<small>16×2 LCD</small></div>
-                <div class="node">Firebase<small>web dashboard</small></div>
-              </div>
-            </div>
-          </div>
-          <div class="card__body">
-            <p class="card__meta"><b>IoT</b><span>Solo</span></p>
-            <h3>Smart Parking Gate System</h3>
-            <p>A parking gate that admits RFID card holders, tracks free slots with ultrasonic sensors and reports both to a live web dashboard. An operator can open or close the gate from the browser over Bluetooth, even without internet.</p>
-            <div class="metric"><b>2 cores</b><span>gate control and network updates run as separate FreeRTOS tasks, so a slow Firebase connection never holds up the gate</span></div>
-            <ul class="chips"><li>C++</li><li>ESP32</li><li>FreeRTOS</li><li>PlatformIO</li><li>Firebase</li><li>Bluetooth LE</li></ul>
-            <div class="card__links">
-              <a href="https://github.com/jeedp/Smart-Parking-Gate-System"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>Source code</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="viz">
-            <div class="diff" role="img" aria-label="Code change in adminJs.js: the call to resetIcqYesNoForm is replaced with clearIcqYesNoRemarks.">
-              <div class="diff__head"><span>public/js/<b>adminJs.js</b></span><span>+1 −1</span></div>
-              <div class="diff__row"><i>1</i><span> </span><span><span class="k">function</span> addIcqYesNo(particularId) {</span></div>
-              <div class="diff__row"><i>2</i><span> </span><span>  $(<span class="s">"#icqYesNoModal"</span>).data(<span class="s">"mode"</span>, <span class="s">"add"</span>);</span></div>
-              <div class="diff__row diff__row--del"><i>3</i><span>−</span><span>  resetIcqYesNoForm();</span></div>
-              <div class="diff__row diff__row--add"><i>3</i><span>+</span><span>  clearIcqYesNoRemarks();</span></div>
-              <div class="diff__row"><i>4</i><span> </span><span>  $(<span class="s">"#icqSaveBtn"</span>).attr(<span class="s">"data-id"</span>, particularId);</span></div>
-            </div>
-          </div>
-          <div class="card__body">
-            <p class="card__meta"><b>Internship</b><span>Production system</span></p>
-            <h3>IAMS: five fixes in the ICQ module</h3>
-            <p>The Add Particular popup crashed with <code class="mono">ReferenceError: resetIcqYesNoForm is not defined</code>. The call pointed at a function that no longer existed after a rename, so the popup never finished setting up. One of five bugs I traced, fixed and documented, from dead toolbar buttons to an Approve button that showed too early.</p>
-            <div class="metric"><b>5 of 5</b><span>bugs fixed, each written up with its symptom, cause, fix and how I verified it</span></div>
-            <ul class="chips"><li>Laravel</li><li>jQuery</li><li>Debugging</li><li>Technical writing</li></ul>
-            <div class="card__links"><span class="muted">Private codebase</span></div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="viz">
-            <table class="table" aria-label="TrainSMART workout log: bench press, squat and deadlift with sets and weights">
-              <thead><tr><th>Exercise</th><th>Sets</th><th>Weight</th><th>Progress</th></tr></thead>
-              <tbody>
-                <tr><td>Bench press</td><td>4 × 8</td><td>60 kg</td><td><span class="bar" style="width:62px"></span></td></tr>
-                <tr><td>Squat</td><td>5 × 5</td><td>80 kg</td><td><span class="bar" style="width:78px"></span></td></tr>
-                <tr><td>Deadlift</td><td>3 × 5</td><td>100 kg</td><td><span class="bar" style="width:90px"></span></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="card__body">
-            <p class="card__meta"><b>Desktop</b><span>Solo</span></p>
-            <h3>TrainSMART</h3>
-            <p>A desktop fitness app for workout templates, exercise management, workout tracking and body measurements, with user accounts, input validation and a relational data model written in T-SQL.</p>
-            <ul class="chips"><li>C#</li><li>Windows Forms</li><li>.NET Framework</li><li>SQL Server</li></ul>
-            <div class="card__links">
-              <a href="https://github.com/jeedp/TrainSMARTApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>Source code</a>
-            </div>
-          </div>
-        </article>
+  <section id="toolkit" aria-labelledby="toolkit-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="toolkit-h">What I work with</h2>
+        <p>From the firmware to the database to the screen people tap.</p>
       </div>
-
-      <div class="archive">
-        <h3>Other projects</h3>
-        <table>
-          <tbody>
-            <tr><td>Task Manager</td><td>Task CRUD app with REST routes, Eloquent and Tailwind</td><td>Laravel 13</td></tr>
-            <tr><td><a href="https://github.com/jeedp/Calculator">Calculator</a></td><td>A copy of the Windows calculator in Windows Forms</td><td>C#</td></tr>
-            <tr><td><a href="https://github.com/jeedp/LoginSystem">Login System</a></td><td>Desktop sign-in and account screens</td><td>C#</td></tr>
-            <tr><td>Paging simulator</td><td>Step-by-step FIFO and LRU page replacement</td><td>Python</td></tr>
-            <tr><td>Console ATM</td><td>PIN login with three tries, balance, deposit, withdraw</td><td>C++</td></tr>
-          </tbody>
-        </table>
+      <div class="toolkit">
+        <div><h3>Languages</h3><ul><li>C and C++</li><li>C#</li><li>JavaScript</li><li>PHP</li><li>Python</li></ul></div>
+        <div><h3>Web</h3><ul><li>Laravel</li><li>Node.js</li><li>Express</li><li>HTML and CSS</li></ul></div>
+        <div><h3>Data</h3><ul><li>MySQL</li><li>SQL Server</li><li>SQLite</li><li>Firebase</li></ul></div>
+        <div><h3>Embedded</h3><ul><li>ESP32</li><li>FreeRTOS</li><li>Arduino</li><li>Raspberry Pi</li></ul></div>
+        <div><h3>Tools</h3><ul><li>Git and GitHub</li><li>VS Code</li><li>Visual Studio</li><li>PlatformIO</li><li>Postman</li></ul></div>
       </div>
-    </section>
+      <p class="learning">Getting better at testing and maintainable architecture, how data moves between systems, and designing hardware and software as one system. <strong>Next up: AI and machine learning.</strong></p>
+    </div>
+  </section>
 
-    <section id="skills" aria-labelledby="skills-h">
-      <h2 class="eyebrow" id="skills-h">04 <span>Skills</span></h2>
-      <dl class="skills">
-        <div><dt>Languages</dt><dd><ul class="chips"><li>C</li><li>C++</li><li>C#</li><li>Python</li><li>JavaScript</li><li>PHP</li></ul></dd></div>
-        <div><dt>Web</dt><dd><ul class="chips"><li>HTML</li><li>CSS</li><li>Laravel</li><li>Node.js</li><li>Express</li></ul></dd></div>
-        <div><dt>Databases</dt><dd><ul class="chips"><li>MySQL</li><li>SQL Server</li><li>SQLite</li><li>Firebase</li></ul></dd></div>
-        <div><dt>Embedded</dt><dd><ul class="chips"><li>ESP32</li><li>Arduino</li><li>Raspberry Pi</li><li>FreeRTOS</li></ul></dd></div>
-        <div><dt>Tools</dt><dd><ul class="chips"><li>Git</li><li>GitHub</li><li>VS Code</li><li>Visual Studio</li><li>PlatformIO</li><li>Postman</li></ul></dd></div>
-      </dl>
-    </section>
-
-    <section id="contact" class="contact" aria-labelledby="contact-h">
-      <p class="eyebrow">05 <span>Contact</span></p>
-      <h2 id="contact-h">Looking for a software engineering intern?</h2>
-      <p>I'm open to internships and collaborations. Email is the fastest way to reach me, and my code is on GitHub.</p>
-      <div class="row">
-        <a class="btn" href="mailto:jedpadro@gmail.com">Email me
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-        <a class="btn btn--ghost" href="https://github.com/jeedp">See my GitHub</a>
+  <section id="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <div class="about">
+        <h2 id="about-h">A little about me</h2>
+        <div>
+          <p>I'm a 4th-year Computer Engineering student in the Philippines, working toward a career in software engineering. My projects tend to sit where software meets hardware: firmware on an ESP32, a server on a Raspberry Pi, and the interface people actually use.</p>
+          <p>What I bring to a team: I read unfamiliar code patiently, I write down what I change and why, and I measure before I call something faster. I'm finishing my thesis now and looking for an internship where I can ship real work and learn from good engineers.</p>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
-      Built by hand with HTML and CSS, hosted on GitHub Pages. © <span id="year">2026</span> Jed B. Padro.
-    </footer>
-  </main>
-</div>
+  <div class="wrap">
+    <div class="contact" id="contact">
+      <h2>Let's build something that works in the real world.</h2>
+      <p>I'm looking for a software engineering internship. If you have a role, a project or a question about my work, I'd love to hear from you.</p>
+      <div class="actions">
+        <a class="btn btn--main" href="mailto:jedpadro@gmail.com">Email me</a>
+        <a class="btn btn--quiet" href="https://www.linkedin.com/in/jed-padro-ba9563299/">Connect on LinkedIn</a>
+      </div>
+      <p class="direct">Or write to <a class="link" href="mailto:jedpadro@gmail.com">jedpadro@gmail.com</a></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Jed B. Padro</span>
+    <span>Designed and built by hand in HTML and CSS</span>
+  </div>
+</footer>
 
 <script>
-  // theme toggle, remembered per browser
-  document.querySelector('.theme').addEventListener('click', () => {
-    const root = document.documentElement;
-    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : !matchMedia('(prefers-color-scheme: light)').matches;
-    root.dataset.theme = dark ? 'light' : 'dark';
-    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
-  });
-
-  // highlight the section in view in the left nav
-  const links = [...document.querySelectorAll('.toc a')];
-  const byId = Object.fromEntries(links.map(a => [a.hash.slice(1), a]));
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { links.forEach(a => a.classList.remove('is-on')); byId[e.target.id]?.classList.add('is-on'); }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  document.querySelectorAll('main section').forEach(s => io.observe(s));
-
   document.getElementById('year').textContent = new Date().getFullYear();
+  const bar = document.querySelector('.bar');
+  addEventListener('scroll', () => bar.classList.toggle('is-scrolled', scrollY > 8), { passive: true });
 </script>
 </body>
 </html>
