@@ -1,20 +1,19 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
 
-type Variant = 'primary' | 'secondary' | 'ghost'
+type Variant = 'primary' | 'secondary'
 
 const styles: Record<Variant, string> = {
-  primary: 'bg-accent text-on-accent hover:brightness-110 shadow-[0_8px_24px_-12px_var(--accent)]',
-  secondary: 'border border-line bg-surface text-ink hover:border-accent hover:text-accent',
-  ghost: 'text-body hover:text-accent',
+  primary: 'bg-ink text-bg hover:bg-accent hover:text-on-accent',
+  secondary: 'border border-line-strong text-ink hover:border-ink',
 }
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & { variant?: Variant; children: ReactNode }
 
-/** A link styled as a button. It steps on hover and presses on click. */
+/** A link that looks like a button. Colour changes on hover; it presses in on click. */
 export function Button({ variant = 'primary', className = '', children, ...rest }: Props) {
   return (
     <a
-      className={`inline-flex h-11 items-center justify-center gap-2 rounded-xl px-5 text-[15px] font-semibold transition-[transform,filter,border-color,color] duration-200 ease-out-expo active:scale-[.97] ${styles[variant]} ${className}`}
+      className={`inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-[background-color,color,border-color,transform] duration-200 ease-out active:scale-[.97] ${styles[variant]} ${className}`}
       {...rest}
     >
       {children}
