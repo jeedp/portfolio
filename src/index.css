@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
-/* Design tokens. Charcoal-midnight by default; [data-theme="light"] switches the whole site.
-   One accent (cyan), used for state and emphasis only: links on hover, the live dot, key figures. */
+/* Design tokens. Warm charcoal by default (it sits well with the grey backdrop of the portrait);
+   [data-theme="light"] switches the whole site. Electric blue is the only accent. */
 @theme {
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
   --color-bg: var(--bg);
@@ -22,31 +23,31 @@
 }
 
 :root {
-  --bg: #0a0c10;
-  --surface: #0f1217;
-  --raised: #151921;
-  --line: rgb(255 255 255 / 0.07);
-  --line-strong: rgb(255 255 255 / 0.13);
-  --ink: #edeef0;
-  --body: #a9afba;
-  --muted: #7b8392;
-  --accent: #3fd8f0;
-  --accent-soft: rgb(63 216 240 / 0.09);
-  --on-accent: #041318;
+  --bg: #0e0e0d;
+  --surface: #161615;
+  --raised: #1d1d1b;
+  --line: rgb(255 250 240 / 0.08);
+  --line-strong: rgb(255 250 240 / 0.15);
+  --ink: #f2f0eb;
+  --body: #b8b5ad;
+  --muted: #8a877f;
+  --accent: #4d8dff;
+  --accent-soft: rgb(77 141 255 / 0.12);
+  --on-accent: #ffffff;
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --bg: #fafaf9;
+  --bg: #f6f5f2;
   --surface: #ffffff;
-  --raised: #f2f3f5;
-  --line: rgb(10 12 16 / 0.08);
-  --line-strong: rgb(10 12 16 / 0.15);
-  --ink: #0d0f13;
-  --body: #3d4350;
-  --muted: #646b78;
-  --accent: #0779a6;
-  --accent-soft: rgb(7 121 166 / 0.08);
+  --raised: #edece8;
+  --line: rgb(20 18 14 / 0.09);
+  --line-strong: rgb(20 18 14 / 0.17);
+  --ink: #141311;
+  --body: #46433d;
+  --muted: #6e6a62;
+  --accent: #1f5fe0;
+  --accent-soft: rgb(31 95 224 / 0.08);
   --on-accent: #ffffff;
   color-scheme: light;
 }
@@ -54,7 +55,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 6rem;
     scrollbar-color: var(--line-strong) var(--bg);
     accent-color: var(--accent);
     -webkit-tap-highlight-color: transparent;
@@ -63,30 +64,29 @@
     background: var(--bg);
     color: var(--body);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 { color: var(--ink); text-wrap: balance; }
   p { text-wrap: pretty; }
   ::selection { background: var(--accent); color: var(--on-accent); }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
   input, textarea { caret-color: var(--accent); }
 }
 
 @layer components {
-  /* the page's measure: one container, the same edges everywhere */
-  .container-page { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
-  @media (min-width: 640px) { .container-page { width: min(1120px, 100% - 4rem); } }
+  .container-page { width: min(1200px, 100% - 2.5rem); margin-inline: auto; }
+  @media (min-width: 640px) { .container-page { width: min(1200px, 100% - 4rem); } }
 
-  /* underline that draws in on hover */
+  /* serif display type: the personal voice of the page */
+  .display { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.015em; line-height: 0.95; }
+
   .link-draw {
     background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
     transition: background-size .35s var(--ease-out-expo), color .2s;
   }
   .link-draw:hover { background-size: 100% 1px; }
 
-  /* a fine dot grid used inside project frames only */
   .dots {
     background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
     background-size: 18px 18px;
