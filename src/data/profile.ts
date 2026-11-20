@@ -21,16 +21,19 @@ export const profile = {
   resume: 'resume.pdf',
   availability: 'Open to software engineering internships',
 
-  headline: 'Building ideas into practical technology.',
+  headline: 'I build practical systems where software meets hardware.',
   intro:
-    'Computer Engineering student exploring software engineering, intelligent systems and hardware-software integration.',
+    "Computer Engineering student at Southern Leyte State University, focused on software engineering. I've built desktop apps, IoT devices and web systems, and I'm looking for my first software engineering internship.",
+  // Shown in the footer and on the hero spec card.
+  updated: 'November 2026',
+  timezone: 'Asia/Manila',
   // The words that cycle in the hero, after "Currently exploring".
   focusAreas: ['software development', 'embedded systems', 'the Internet of Things', 'artificial intelligence'],
 }
 
 export const about = {
   paragraphs: [
-    "I'm a 4th-year Computer Engineering student at Southern Leyte State University. I like building things that work outside a screenshot: a desktop app with a real database behind it, a gate that opens when an RFID card is tapped, a campus kiosk that keeps running when the network drops.",
+    "I'm a Computer Engineering student at Southern Leyte State University. I like building things that work outside a screenshot: a desktop app with a real database behind it, a gate that opens when an RFID card is tapped, a campus kiosk that keeps running when the network drops.",
     "Most of my projects cross the line between software and hardware, and that's where I'm happiest. I want to understand a system all the way down, from the interface a person taps to the database, the server and the microcontroller underneath.",
     "I learn by building, reading other people's code, and writing down what I changed and why. Right now I'm finishing my thesis and looking for an internship where I can ship real work and keep learning from experienced engineers.",
   ],
@@ -75,6 +78,9 @@ export type Project = {
   // Until then the card shows a diagram of how the project fits together.
   image?: string
   diagram: 'trainsmart' | 'parking' | 'wayfinding'
+  year: string
+  // The one number that sells the project, shown large on its row.
+  metric?: { value: string; label: string }
 }
 
 export const projects: Project[] = [
@@ -96,6 +102,8 @@ export const projects: Project[] = [
     tech: ['JavaScript', 'Node.js', 'Express', 'SQLite', 'Raspberry Pi'],
     repo: 'https://github.com/cymrcsm/slsu-map-navigation',
     diagram: 'wayfinding',
+    year: '2026',
+    metric: { value: '14 → 3 MB', label: 'per floor drawing, so the map runs smoothly on a Raspberry Pi 4' },
   },
   {
     id: 'parking',
@@ -115,6 +123,8 @@ export const projects: Project[] = [
     tech: ['C++', 'ESP32', 'FreeRTOS', 'RFID', 'Firebase', 'JavaScript'],
     repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
     diagram: 'parking',
+    year: '2026',
+    metric: { value: '2 cores', label: 'gate control and networking run as separate FreeRTOS tasks' },
   },
   {
     id: 'trainsmart',
@@ -135,6 +145,8 @@ export const projects: Project[] = [
     tech: ['C#', 'Windows Forms', '.NET Framework', 'SQL Server'],
     repo: 'https://github.com/jeedp/TrainSMARTApp',
     diagram: 'trainsmart',
+    year: '2025',
+    metric: { value: '5', label: 'connected features on one SQL Server data model' },
   },
 ]
 
@@ -185,7 +197,6 @@ export const timeline: TimelineItem[] = [
     title: 'BS Computer Engineering',
     org: 'Southern Leyte State University (SLSU), Philippines',
     type: 'education',
-    description: '4th year.',
   },
 ]
 
@@ -212,8 +223,8 @@ export const certificates: Certificate[] = [
 export const nav = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
   { id: 'resume', label: 'Resume' },
   { id: 'contact', label: 'Contact' },
 ]
