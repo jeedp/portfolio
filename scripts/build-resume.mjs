@@ -39,7 +39,7 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   <p>${esc(about.paragraphs[0])}</p>
 
   <h2>Education</h2>
-  <div class="row"><b>BS Computer Engineering</b><span class="muted">Currently 4th year</span></div>
+  <div class="row"><b>BS Computer Engineering</b><span class="muted">In progress</span></div>
   <p class="muted">Southern Leyte State University (SLSU), Philippines</p>
 
   <h2>Experience</h2>
