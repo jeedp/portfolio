@@ -1,37 +1,40 @@
-import { ArrowUpRight } from 'lucide-react'
-import { certificates, timeline } from '../data/profile'
+import { Award, BookOpen, Briefcase, GraduationCap, Presentation } from 'lucide-react'
+import { certificates, timeline, type TimelineItem } from '../data/profile'
 import { Section } from '../components/Section'
+import { Badge } from '../components/Badge'
 
 /** Placeholders remind you what to add while you run `npm run dev`; they never ship to the live site. */
 const showPlaceholders = import.meta.env.DEV
 
-function PlaceholderNote({ children }: { children: string }) {
-  return (
-    <span className="ml-2 rounded border border-dashed border-line-strong px-1.5 py-0.5 font-mono text-[11px] text-muted">
-      {children}
-    </span>
-  )
-}
+const icon: Record<TimelineItem['type'], typeof Briefcase> = { work: Briefcase, academic: BookOpen, training: Presentation, education: GraduationCap }
 
 export function Experience() {
   const items = timeline.filter(t => showPlaceholders || !t.placeholder)
   return (
-    <Section id="experience" label="Experience">
-      <ol className="border-t border-line">
-        {items.map(item => (
-          <li key={item.title} className="grid gap-2 border-b border-line py-7 sm:grid-cols-[200px_1fr] sm:gap-8">
-            <p className="tabular font-mono text-sm text-muted">{item.period}</p>
-            <div className={item.placeholder ? 'opacity-60' : ''}>
-              <h3 className="text-lg font-medium tracking-[-0.01em]">
-                {item.title}
-                {item.placeholder && <PlaceholderNote>placeholder · dev only</PlaceholderNote>}
-              </h3>
-              <p className="mt-1 text-[15px] text-muted">{item.org}</p>
-              {item.description && <p className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-body">{item.description}</p>}
-              {item.tech && <p className="mt-3 font-mono text-xs text-muted">{item.tech.join('  ·  ')}</p>}
-            </div>
-          </li>
-        ))}
+    <Section id="experience" eyebrow="Experience" title="Where I've been" aside="Work, study and training so far, most recent first.">
+      <ol className="relative">
+        {items.map((item, i) => {
+          const Icon = icon[item.type]
+          return (
+            <li key={item.title} className={`grid gap-4 border-t border-line py-10 md:grid-cols-[200px_1fr] md:gap-12 ${item.placeholder ? 'opacity-50' : ''} ${i === items.length - 1 ? 'border-b' : ''}`}>
+              <p className="display tabular text-3xl text-ink md:text-4xl">{item.period}</p>
+              <div className="grid gap-5 sm:grid-cols-[48px_1fr]">
+                <span className="hidden size-12 place-items-center rounded-full bg-raised text-accent sm:grid">
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="text-xl font-medium">
+                    {item.title}
+                    {item.placeholder && <span className="ml-2 rounded-full border border-dashed border-line-strong px-2 py-0.5 text-xs text-muted">placeholder, dev only</span>}
+                  </h3>
+                  <p className="mt-1 text-[15px] text-muted">{item.org}</p>
+                  {item.description && <p className="mt-4 max-w-[62ch] leading-relaxed">{item.description}</p>}
+                  {item.tech && <div className="mt-5 flex flex-wrap gap-2">{item.tech.map(t => <Badge key={t}>{t}</Badge>)}</div>}
+                </div>
+              </div>
+            </li>
+          )
+        })}
       </ol>
     </Section>
   )
@@ -39,36 +42,22 @@ export function Experience() {
 
 export function Certifications() {
   const items = certificates.filter(c => showPlaceholders || !c.placeholder)
-  const issuers = [...new Set(items.filter(c => !c.placeholder).map(c => c.issuer))]
   return (
-    <Section
-      id="certifications"
-      label="Certifications"
-      intro={issuers.length === 1 ? `All completed through ${issuers[0].replace(' · ', ', ')}.` : undefined}
-    >
-      <ul className="border-t border-line">
+    <Section id="certifications" eyebrow="Certifications" title="Always learning" aside="Courses completed through Cisco Networking Academy and the DICT-ITU DTC Initiative.">
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map(c => {
-          const row = (
+          const body = (
             <>
-              <span className={`text-[15px] ${c.placeholder ? 'text-muted' : 'text-ink'}`}>
-                {c.title}
-                {c.placeholder && <PlaceholderNote>placeholder · dev only</PlaceholderNote>}
-              </span>
-              <span className="hidden text-sm text-muted sm:block">{c.category}</span>
-              <span className="tabular flex items-center gap-1 text-right font-mono text-sm text-muted">
-                {c.date}
-                {c.file && <ArrowUpRight className="size-3.5" aria-hidden="true" />}
-              </span>
+              <Award className={`size-5 ${c.placeholder ? 'text-muted' : 'text-accent'}`} aria-hidden="true" />
+              <h3 className="mt-6 text-lg font-medium leading-snug">{c.title}</h3>
+              <p className="mt-2 text-sm text-muted">{c.placeholder ? c.issuer : 'Cisco Networking Academy'}</p>
+              <p className="mt-auto pt-6 text-sm text-muted">{c.placeholder ? 'Placeholder, dev only' : <>Completed <span className="tabular text-body">{c.date}</span></>}</p>
             </>
           )
-          const cls = 'grid grid-cols-[1fr_auto] items-baseline gap-6 border-b border-line py-4 sm:grid-cols-[1fr_160px_100px]'
+          const cls = `flex h-full flex-col rounded-[24px] p-7 ${c.placeholder ? 'border border-dashed border-line-strong' : 'border border-line bg-surface'}`
           return (
             <li key={c.title}>
-              {c.file ? (
-                <a href={`${import.meta.env.BASE_URL}${c.file}`} className={`${cls} transition-colors hover:text-accent`}>{row}</a>
-              ) : (
-                <div className={cls}>{row}</div>
-              )}
+              {c.file ? <a href={`${import.meta.env.BASE_URL}${c.file}`} className={`${cls} transition-colors hover:border-line-strong`}>{body}</a> : <div className={cls}>{body}</div>}
             </li>
           )
         })}

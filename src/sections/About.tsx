@@ -4,33 +4,21 @@ import { Section } from '../components/Section'
 export function About() {
   const [lead, ...rest] = about.paragraphs
   return (
-    <Section id="about" label="About">
-      <p className="max-w-[40ch] text-xl font-medium leading-snug tracking-[-0.015em] text-ink sm:text-2xl">
-        {lead}
-      </p>
-
-      <div className="mt-10 grid gap-6 text-base leading-relaxed sm:grid-cols-2 sm:gap-10">
-        {rest.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
-      </div>
-
-      <div className="mt-14 grid border-t border-line sm:grid-cols-3">
-        {about.highlights.map((h, i) => (
-          <div key={h.label} className={`py-6 sm:pr-6 ${i > 0 ? 'border-t border-line sm:border-l sm:border-t-0 sm:pl-6' : ''}`}>
-            <p className="tabular text-3xl font-medium tracking-tight text-ink">{h.value}</p>
-            <p className="mt-2 text-sm leading-snug text-muted">{h.label}</p>
+    <Section id="about" eyebrow="About me" title={<>Curious about how<br className="hidden sm:block" /> things work, all the way down.</>}>
+      <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+        <p className="display text-[28px] leading-[1.2] text-ink sm:text-[34px]">{lead}</p>
+        <div className="space-y-6 text-base leading-relaxed sm:text-[17px]">
+          {rest.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
+          <div className="pt-4">
+            <p className="mb-3 text-sm text-muted">Interests</p>
+            <ul className="flex flex-wrap gap-2">
+              {about.interests.map(i => (
+                <li key={i} className="rounded-full border border-line-strong px-4 py-1.5 text-sm text-ink">{i}</li>
+              ))}
+            </ul>
           </div>
-        ))}
+        </div>
       </div>
-
-      <p className="mt-8 border-t border-line pt-6 text-sm leading-relaxed text-muted">
-        <span className="text-body">Interested in</span>{' '}
-        {about.interests.map((i, n) => (
-          <span key={i}>
-            {/Internet/.test(i) ? i : i.toLowerCase()}
-            {n < about.interests.length - 2 ? ', ' : n === about.interests.length - 2 ? ' and ' : '.'}
-          </span>
-        ))}
-      </p>
     </Section>
   )
 }
