@@ -1,7 +1,6 @@
 import { MotionConfig } from 'framer-motion'
 import { Navbar } from './components/Navbar'
 import { BackToTop } from './components/BackToTop'
-import { GitHubIcon, LinkedInIcon } from './components/BrandIcons'
 import { useTheme } from './hooks/useTheme'
 import { profile } from './data/profile'
 import { Hero } from './sections/Hero'
@@ -20,20 +19,17 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Skills />
         <Projects />
+        <Skills />
         <Experience />
         <Certifications />
         <Resume />
         <Contact />
       </main>
       <footer className="border-t border-line">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 text-sm text-muted sm:flex-row sm:px-8">
-          <p>© {new Date().getFullYear()} {profile.name}. Built with React, TypeScript and Tailwind CSS.</p>
-          <div className="flex items-center gap-1">
-            <a href={profile.github} aria-label="GitHub" className="grid size-10 place-items-center rounded-lg transition-colors hover:text-accent"><GitHubIcon className="size-[18px]" /></a>
-            <a href={profile.linkedin} aria-label="LinkedIn" className="grid size-10 place-items-center rounded-lg transition-colors hover:text-accent"><LinkedInIcon className="size-[18px]" /></a>
-          </div>
+        <div className="container-page flex flex-col gap-3 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {profile.name}</p>
+          <p>Designed and built by Jed in React and Tailwind CSS · Updated {profile.updated}</p>
         </div>
       </footer>
       <BackToTop />

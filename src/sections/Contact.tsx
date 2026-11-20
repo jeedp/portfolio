@@ -1,8 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { Mail, MapPin, Send } from 'lucide-react'
+import { ArrowUpRight, Check, Copy } from 'lucide-react'
 import { formspreeId, profile } from '../data/profile'
-import { Section } from '../components/Section'
-import { GitHubIcon, LinkedInIcon } from '../components/BrandIcons'
 
 type Fields = { name: string; email: string; subject: string; message: string }
 type Errors = Partial<Record<keyof Fields, string>>
@@ -13,43 +11,62 @@ const empty: Fields = { name: '', email: '', subject: '', message: '' }
 function validate(f: Fields): Errors {
   const e: Errors = {}
   if (!f.name.trim()) e.name = 'Write your name.'
-  if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = 'Write an email address like name@example.com.'
+  if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = 'Write an email address like name@company.com.'
   if (!f.subject.trim()) e.subject = 'Add a short subject.'
   if (f.message.trim().length < 10) e.message = 'Write a message of at least 10 characters.'
   return e
 }
 
-const field = 'mt-2 w-full rounded-xl border bg-bg px-4 py-3 text-base text-ink placeholder:text-muted/70 transition-colors focus:border-accent focus:outline-none'
+function CopyEmail() {
+  const [copied, setCopied] = useState(false)
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(profile.email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch { /* clipboard blocked: the mailto link still works */ }
+  }
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-label={copied ? 'Email address copied' : 'Copy email address'}
+      className="grid size-10 shrink-0 place-items-center rounded-full border border-line-strong text-muted transition-[color,border-color,transform] hover:border-ink hover:text-ink active:scale-95"
+    >
+      {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4" />}
+      <span role="status" className="sr-only">{copied ? 'Copied' : ''}</span>
+    </button>
+  )
+}
+
+const fieldBase = 'mt-2 w-full border-0 border-b bg-transparent px-0 pb-2.5 pt-1 text-base text-ink transition-colors placeholder:text-muted/60 focus:border-accent focus:outline-none focus:ring-0'
 
 /**
- * With VITE_FORMSPREE_ID set, the form posts to Formspree and you receive the message by email.
+ * With VITE_FORMSPREE_ID set, the form posts to Formspree and the message arrives in your inbox.
  * Without it, the form opens the visitor's own email app with everything filled in. Nothing is faked.
  */
 export function Contact() {
   const [values, setValues] = useState<Fields>(empty)
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>({ kind: 'idle' })
-
   const set = (k: keyof Fields) => (e: { target: { value: string } }) => setValues(v => ({ ...v, [k]: e.target.value }))
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const found = validate(values)
     setErrors(found)
-    const first = Object.keys(found)[0]
-    if (first) {
-      document.getElementById(`c-${first}`)?.focus()
-      setStatus({ kind: 'error', text: `Check ${Object.keys(found).length === 1 ? 'the highlighted field' : 'the highlighted fields'}.` })
+    const keys = Object.keys(found)
+    if (keys.length) {
+      document.getElementById(`c-${keys[0]}`)?.focus()
+      setStatus({ kind: 'error', text: keys.length === 1 ? 'One field needs a fix.' : `${keys.length} fields need a fix.` })
       return
     }
-
     if (!formspreeId) {
       const body = `${values.message}\n\n${values.name}\n${values.email}`
       window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(values.subject)}&body=${encodeURIComponent(body)}`
-      setStatus({ kind: 'mail', text: 'Your email app should open with the message ready. Press send there to deliver it.' })
+      setStatus({ kind: 'mail', text: 'Your email app should open with the message ready. Press send there.' })
       return
     }
-
     setStatus({ kind: 'sending', text: 'Sending…' })
     try {
       const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
@@ -61,71 +78,70 @@ export function Contact() {
       setValues(empty)
       setStatus({ kind: 'sent', text: 'Message sent. I usually reply within a few days.' })
     } catch {
-      setStatus({ kind: 'error', text: `The message didn't send. Please try again, or email ${profile.email} directly.` })
+      setStatus({ kind: 'error', text: `It didn't send. Try again, or write to ${profile.email}.` })
     }
   }
 
-  const input = (k: keyof Fields, label: string, type = 'text', auto?: string) => (
-    <div>
-      <label htmlFor={`c-${k}`} className="text-sm font-medium text-ink">{label}</label>
-      <input
-        id={`c-${k}`} name={k} type={type} autoComplete={auto} value={values[k]} onChange={set(k)}
-        aria-invalid={!!errors[k]} aria-describedby={errors[k] ? `c-${k}-err` : undefined}
-        className={`${field} ${errors[k] ? 'border-red-400' : 'border-line'}`}
-      />
-      {errors[k] && <p id={`c-${k}-err`} className="mt-1.5 text-sm text-red-400">{errors[k]}</p>}
-    </div>
-  )
+  const field = (k: keyof Fields, label: string, opts: { type?: string; auto?: string; area?: boolean } = {}) => {
+    const props = {
+      id: `c-${k}`, name: k, value: values[k], onChange: set(k),
+      'aria-invalid': !!errors[k] || undefined,
+      'aria-describedby': errors[k] ? `c-${k}-err` : undefined,
+      className: `${fieldBase} ${errors[k] ? 'border-red-400' : 'border-line-strong'}`,
+    }
+    return (
+      <div>
+        <label htmlFor={`c-${k}`} className="text-sm text-muted">{label}</label>
+        {opts.area
+          ? <textarea {...props} rows={4} className={`${props.className} resize-none`} />
+          : <input {...props} type={opts.type ?? 'text'} autoComplete={opts.auto} />}
+        {errors[k] && <p id={`c-${k}-err`} className="mt-1.5 text-sm text-red-400">{errors[k]}</p>}
+      </div>
+    )
+  }
 
   return (
-    <Section id="contact" title="Let's talk" intro="I'm looking for a software engineering internship and open to collaborations. Send a message, or reach me directly.">
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-        <div className="space-y-4">
-          {[
-            { href: `mailto:${profile.email}`, icon: <Mail className="size-5" aria-hidden="true" />, label: 'Email', value: profile.email },
-            { href: profile.github, icon: <GitHubIcon />, label: 'GitHub', value: `github.com/${profile.githubUser}` },
-            { href: profile.linkedin, icon: <LinkedInIcon />, label: 'LinkedIn', value: 'Jed Padro' },
-          ].map(c => (
-            <a key={c.label} href={c.href} className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-accent/50">
-              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">{c.icon}</span>
-              <span>
-                <span className="block text-sm text-muted">{c.label}</span>
-                <span className="block font-medium text-ink">{c.value}</span>
-              </span>
-            </a>
-          ))}
-          <p className="flex items-center gap-2 px-1 pt-2 text-muted">
-            <MapPin className="size-4 text-accent" aria-hidden="true" /> {profile.location}
+    <section id="contact" aria-labelledby="contact-title" className="border-t border-line py-24 md:py-32">
+      <div className="container-page grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+        <div>
+          <p className="text-sm text-muted">Contact</p>
+          <h2 id="contact-title" className="mt-6 max-w-[16ch] text-4xl font-medium leading-[1.05] tracking-[-0.035em] sm:text-5xl">
+            Have an internship or a project in mind?
+          </h2>
+          <p className="mt-6 max-w-[44ch] text-base leading-relaxed text-body">
+            I'm looking for a software engineering internship and I'm open to collaborations. Email is the fastest way to reach me.
           </p>
+          <div className="mt-10 flex items-center gap-3">
+            <a href={`mailto:${profile.email}`} className="link-draw break-all text-xl font-medium text-ink hover:text-accent sm:text-2xl">
+              {profile.email}
+            </a>
+            <CopyEmail />
+          </div>
+          <div className="mt-8 flex gap-6 text-sm">
+            <a href={profile.github} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">GitHub <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
+            <a href={profile.linkedin} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">LinkedIn <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
+          </div>
         </div>
 
-        <form noValidate onSubmit={onSubmit} className="space-y-5 rounded-2xl border border-line bg-surface p-6 sm:p-8">
-          <div className="grid gap-5 sm:grid-cols-2">
-            {input('name', 'Name', 'text', 'name')}
-            {input('email', 'Email', 'email', 'email')}
+        <form noValidate onSubmit={onSubmit} aria-label="Send a message" className="space-y-7 lg:pt-12">
+          <div className="grid gap-7 sm:grid-cols-2">
+            {field('name', 'Name', { auto: 'name' })}
+            {field('email', 'Email', { type: 'email', auto: 'email' })}
           </div>
-          {input('subject', 'Subject')}
-          <div>
-            <label htmlFor="c-message" className="text-sm font-medium text-ink">Message</label>
-            <textarea
-              id="c-message" name="message" rows={5} value={values.message} onChange={set('message')}
-              aria-invalid={!!errors.message} aria-describedby={errors.message ? 'c-message-err' : undefined}
-              className={`${field} resize-y ${errors.message ? 'border-red-400' : 'border-line'}`}
-            />
-            {errors.message && <p id="c-message-err" className="mt-1.5 text-sm text-red-400">{errors.message}</p>}
-          </div>
-          <div className="flex flex-wrap items-center gap-4">
+          {field('subject', 'Subject')}
+          {field('message', 'Message', { area: true })}
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-2">
             <button
               type="submit"
               disabled={status.kind === 'sending'}
-              className="inline-flex h-11 items-center gap-2 rounded-xl bg-accent px-6 text-[15px] font-semibold text-on-accent transition-[transform,filter] duration-200 hover:brightness-110 active:scale-[.97] disabled:opacity-60"
+              className="inline-flex h-10 items-center rounded-full bg-ink px-5 text-sm font-medium text-bg transition-[background-color,color,transform] hover:bg-accent hover:text-on-accent active:scale-[.97] disabled:opacity-60"
             >
-              <Send className="size-4" aria-hidden="true" /> {formspreeId ? 'Send message' : 'Send with my email app'}
+              {formspreeId ? 'Send message' : 'Send with my email app'}
             </button>
             <p role="status" className={`text-sm ${status.kind === 'error' ? 'text-red-400' : 'text-muted'}`}>{status.text}</p>
           </div>
         </form>
       </div>
-    </Section>
+    </section>
   )
 }

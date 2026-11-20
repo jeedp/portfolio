@@ -1,105 +1,50 @@
-import type { ReactNode } from 'react'
-import { Download, Mail } from 'lucide-react'
-import { about, certificates, profile, projects, skills, timeline } from '../data/profile'
+import { ArrowUpRight, Download } from 'lucide-react'
+import { certificates, profile, projects, skills, timeline } from '../data/profile'
 import { Section } from '../components/Section'
 import { Button } from '../components/Button'
 
-function Block({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="border-t border-line pt-5">
-      <h3 className="mb-3 text-sm font-medium text-accent">{title}</h3>
-      {children}
-    </div>
-  )
-}
-
-/** The whole CV on one sheet, built from the same data as the rest of the site. */
+/** The résumé at a glance: four columns a recruiter can scan, plus the PDF. Built from the same data as the page. */
 export function Resume() {
-  const base = import.meta.env.BASE_URL
+  const pdf = `${import.meta.env.BASE_URL}${profile.resume}`
   const work = timeline.filter(t => !t.placeholder && t.type !== 'education')
-  const realCerts = certificates.filter(c => !c.placeholder)
+  const certs = certificates.filter(c => !c.placeholder)
+  const columns: { title: string; lines: string[] }[] = [
+    { title: 'Education', lines: ['BS Computer Engineering', 'Southern Leyte State University'] },
+    { title: 'Experience', lines: work.map(w => `${w.title}, ${w.period}`) },
+    { title: 'Projects', lines: projects.map(p => p.title) },
+    { title: 'Skills', lines: skills.map(s => `${s.name}: ${s.items.slice(0, 3).join(', ')}`) },
+  ]
+
   return (
     <Section
       id="resume"
-      title="Résumé"
-      intro="Everything above on one page. Download the PDF for applications, or read it here."
+      label="Résumé"
+      title="The one-page version, for applications."
+      intro={`Updated ${profile.updated}. Same facts as this site, formatted for print and applicant tracking systems.`}
     >
-      <div className="overflow-hidden rounded-3xl border border-line bg-surface">
-        <div className="flex flex-col gap-6 border-b border-line p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <div>
-            <p className="text-2xl font-semibold text-ink">{profile.name}</p>
-            <p className="mt-1 text-muted">{profile.title} · {profile.subtitle} · {profile.location}</p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Button href={`${base}${profile.resume}`} download>
-              <Download className="size-4" aria-hidden="true" /> Download PDF
-            </Button>
-            <Button href={`mailto:${profile.email}`} variant="secondary">
-              <Mail className="size-4" aria-hidden="true" /> Email me
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid gap-x-12 gap-y-8 p-6 sm:p-8 lg:grid-cols-[1.3fr_1fr]">
-          <div className="space-y-8">
-            <Block title="Summary">
-              <p className="leading-relaxed">{about.paragraphs[0]}</p>
-            </Block>
-            <Block title="Experience">
-              <ul className="space-y-4">
-                {work.map(w => (
-                  <li key={w.title}>
-                    <div className="flex flex-wrap justify-between gap-x-4">
-                      <span className="font-medium text-ink">{w.title}</span>
-                      <span className="font-mono text-sm text-muted">{w.period}</span>
-                    </div>
-                    <p className="text-[15px] text-muted">{w.org}</p>
-                  </li>
-                ))}
-              </ul>
-            </Block>
-            <Block title="Projects">
-              <ul className="space-y-4">
-                {projects.map(p => (
-                  <li key={p.id}>
-                    <span className="font-medium text-ink">{p.title}</span>
-                    <span className="text-muted">, {p.tech.slice(0, 3).join(', ')}</span>
-                    {p.result && <p className="text-[15px] leading-relaxed">{p.result}</p>}
-                  </li>
-                ))}
-              </ul>
-            </Block>
-          </div>
-
-          <div className="space-y-8">
-            <Block title="Education">
-              <p className="font-medium text-ink">BS Computer Engineering</p>
-              <p className="text-[15px] text-muted">Southern Leyte State University, 4th year</p>
-            </Block>
-            <Block title="Technical skills">
-              <dl className="space-y-2.5 text-[15px]">
-                {skills.map(s => (
-                  <div key={s.name}>
-                    <dt className="inline font-medium text-ink">{s.name}: </dt>
-                    <dd className="inline">{s.items.join(', ')}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Block>
-            <Block title="Certifications">
-              <ul className="space-y-1.5 text-[15px]">
-                {realCerts.map(c => (
-                  <li key={c.title} className="flex justify-between gap-4">
-                    <span>{c.title}</span>
-                    <span className="shrink-0 font-mono text-sm text-muted">{c.date}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-2 text-sm text-muted">Cisco Networking Academy, through the DICT-ITU DTC Initiative</p>
-            </Block>
-          </div>
-        </div>
+      <div className="flex flex-wrap gap-3">
+        <Button href={pdf} download>
+          <Download className="size-4" aria-hidden="true" /> Download PDF
+        </Button>
+        <Button href={pdf} target="_blank" rel="noopener" variant="secondary">
+          Open in a new tab <ArrowUpRight className="size-4" aria-hidden="true" />
+        </Button>
       </div>
+
+      {/* 1px gaps over the line colour draw the dividers between columns at every breakpoint */}
+      <div className="mt-12 grid gap-px border-y border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {columns.map(c => (
+          <div key={c.title} className="bg-bg py-6 sm:px-6 sm:first:pl-0 sm:nth-3:pl-0 lg:nth-3:pl-6">
+            <h3 className="mb-3 text-sm text-muted">{c.title}</h3>
+            <ul className="space-y-1.5 text-[15px] leading-snug text-ink">
+              {c.lines.map(l => <li key={l}>{l}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p className="pt-6 text-sm text-muted">
+        {certs.length} certifications through Cisco Networking Academy, listed in full in the PDF.
+      </p>
     </Section>
   )
 }
