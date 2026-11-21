@@ -51,14 +51,31 @@ export const about = {
   ],
 }
 
+/** Education, as on the résumé. The website shows the degree on the timeline; the PDF shows all of it. */
+export const education = {
+  degree: 'Bachelor of Science in Computer Engineering',
+  school: 'Southern Leyte State University',
+  location: 'Southern Leyte, Philippines',
+  period: 'Aug 2023 – Present',
+  expected: 'Expected May 2027',
+  coursework: [
+    'Data Structures and Algorithms', 'Object-Oriented Programming', 'Database Management Systems',
+    'Software Engineering', 'Digital Logic Design', 'Microprocessor Systems', 'Computer Networks',
+    'Operating Systems', 'Embedded Systems',
+  ],
+}
+
+/** Shown on the résumé only. */
+export const softSkills = ['Analytical problem solving', 'Critical thinking', 'Time management', 'Continuous learning']
+
 export type SkillGroup = { name: string; icon: 'code' | 'globe' | 'database' | 'cpu' | 'wrench'; items: string[] }
 
 export const skills: SkillGroup[] = [
-  { name: 'Programming', icon: 'code', items: ['C', 'C++', 'C#', 'Python', 'JavaScript', 'PHP'] },
+  { name: 'Programming', icon: 'code', items: ['C', 'C++', 'C#', 'Java', 'Python', 'JavaScript', 'PHP'] },
   { name: 'Web development', icon: 'globe', items: ['HTML', 'CSS', 'Laravel', 'Node.js', 'Express'] },
   { name: 'Databases', icon: 'database', items: ['MySQL', 'SQL Server', 'SQLite', 'Firebase'] },
   { name: 'Embedded systems', icon: 'cpu', items: ['Arduino', 'ESP32', 'Raspberry Pi', 'FreeRTOS'] },
-  { name: 'Development tools', icon: 'wrench', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Arduino IDE', 'Postman'] },
+  { name: 'Development tools', icon: 'wrench', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Arduino IDE', 'Laragon', 'Postman'] },
 ]
 
 export type Project = {
@@ -193,7 +210,7 @@ export const timeline: TimelineItem[] = [
     placeholder: true,
   },
   {
-    period: 'Present',
+    period: 'Aug 2023 – May 2027',
     title: 'BS Computer Engineering',
     org: 'Southern Leyte State University (SLSU), Philippines',
     type: 'education',
