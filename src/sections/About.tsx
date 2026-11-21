@@ -1,33 +1,39 @@
+import { Compass, Layers, Wrench } from 'lucide-react'
 import { about } from '../data/profile'
 import { Section } from '../components/Section'
+import { Card } from '../components/Card'
+
+const values = [
+  { Icon: Layers, title: 'Full-stack, all the way down', text: 'From the screen a person taps to the database, the server and the microcontroller underneath.' },
+  { Icon: Compass, title: 'Practical first', text: 'Things that keep working outside a demo: offline, on modest hardware, with real data.' },
+  { Icon: Wrench, title: 'Careful with other people’s code', text: 'I read before I change, measure before I call it faster, and write down what I did.' },
+]
 
 export function About() {
-  const [lead, ...rest] = about.paragraphs
   return (
-    <Section id="about" title="About Me">
-      <p className="text-xl leading-relaxed text-ink sm:text-2xl">{lead}</p>
-      <div className="mt-8 space-y-5 text-lg leading-relaxed">
-        {rest.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
-      </div>
-
-      <dl className="mt-12 grid gap-4 sm:grid-cols-3">
-        {about.highlights.map(h => (
-          <div key={h.label} className="rounded-2xl bg-soft p-6 ring-1 ring-line">
-            <dt className="sr-only">{h.label}</dt>
-            <dd>
-              <span className="block font-mono text-3xl font-bold tracking-tight text-accent">{h.value}</span>
-              <span className="mt-2 block text-[15px] leading-snug text-muted">{h.label}</span>
-            </dd>
-          </div>
-        ))}
-      </dl>
-
-      <div className="mt-10 flex flex-wrap gap-3">
-        {about.interests.map(i => (
-          <span key={i} className="rounded-full bg-soft px-4 py-2 font-mono text-sm font-medium text-ink ring-1 ring-line transition-colors hover:bg-accent-soft hover:text-accent">
-            {i}
-          </span>
-        ))}
+    <Section id="about" label="About" title="An engineer who likes the whole system.">
+      <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+        <div className="space-y-5 text-lg leading-relaxed">
+          {about.paragraphs.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
+          <ul className="flex flex-wrap gap-2 pt-3">
+            {about.interests.map(i => (
+              <li key={i} className="rounded-full border border-line bg-card px-3.5 py-1.5 text-sm text-ink">{i}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="grid gap-3">
+          {values.map(({ Icon, title, text }) => (
+            <Card key={title} className="flex gap-4 p-6">
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line bg-bg/60 text-accent-2">
+                <Icon className="size-5" aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className="text-base font-semibold">{title}</h3>
+                <p className="mt-1.5 text-[15px] leading-relaxed text-body">{text}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
     </Section>
   )
