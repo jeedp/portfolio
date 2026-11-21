@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowUpRight, Check, Copy } from 'lucide-react'
+import { Check, Copy, Send } from 'lucide-react'
 import { formspreeId, profile } from '../data/profile'
+import { Section } from '../components/Section'
+import { EmailIcon, GitHubIcon, LinkedInIcon } from '../components/SocialIcons'
 
 type Fields = { name: string; email: string; subject: string; message: string }
 type Errors = Partial<Record<keyof Fields, string>>
@@ -31,7 +33,7 @@ function CopyEmail() {
       type="button"
       onClick={copy}
       aria-label={copied ? 'Email address copied' : 'Copy email address'}
-      className="grid size-14 shrink-0 place-items-center rounded-full border border-line-strong text-muted transition-[color,border-color,transform] hover:border-ink hover:text-ink active:scale-95"
+      className="grid size-10 shrink-0 place-items-center rounded-full text-muted ring-1 ring-line-strong transition-[color,box-shadow,transform] hover:text-ink hover:ring-ink active:scale-95"
     >
       {copied ? <Check className="size-4 text-accent" /> : <Copy className="size-4" />}
       <span role="status" className="sr-only">{copied ? 'Copied' : ''}</span>
@@ -39,7 +41,7 @@ function CopyEmail() {
   )
 }
 
-const fieldBase = 'mt-2 w-full border-0 border-b bg-transparent px-0 pb-2.5 pt-1 text-base text-ink transition-colors placeholder:text-muted/60 focus:border-accent focus:outline-none focus:ring-0'
+const inputBase = 'mt-2 w-full rounded-xl bg-card px-4 py-3 text-base text-ink ring-1 transition-shadow placeholder:text-muted/70 focus:outline-none focus:ring-2 focus:ring-accent'
 
 /**
  * With VITE_FORMSPREE_ID set, the form posts to Formspree and the message arrives in your inbox.
@@ -87,62 +89,55 @@ export function Contact() {
       id: `c-${k}`, name: k, value: values[k], onChange: set(k),
       'aria-invalid': !!errors[k] || undefined,
       'aria-describedby': errors[k] ? `c-${k}-err` : undefined,
-      className: `${fieldBase} ${errors[k] ? 'border-red-400' : 'border-line-strong'}`,
+      className: `${inputBase} ${errors[k] ? 'ring-red-500' : 'ring-line-strong'}`,
     }
     return (
       <div>
-        <label htmlFor={`c-${k}`} className="text-sm text-muted">{label}</label>
+        <label htmlFor={`c-${k}`} className="font-mono text-sm font-medium text-ink">{label}</label>
         {opts.area
-          ? <textarea {...props} rows={4} className={`${props.className} resize-none`} />
+          ? <textarea {...props} rows={5} className={`${props.className} resize-y`} />
           : <input {...props} type={opts.type ?? 'text'} autoComplete={opts.auto} />}
-        {errors[k] && <p id={`c-${k}-err`} className="mt-1.5 text-sm text-red-400">{errors[k]}</p>}
+        {errors[k] && <p id={`c-${k}-err`} className="mt-1.5 text-sm text-red-600 dark:text-red-400">{errors[k]}</p>}
       </div>
     )
   }
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="py-24 md:py-32">
-      <div className="container-page">
-        <div className="text-center">
-          <p className="text-sm text-muted">Contact</p>
-          <h2 id="contact-title" className="display mx-auto mt-5 max-w-[14ch] text-[56px] sm:text-8xl lg:text-[120px]">
-            Let's build something together.
-          </h2>
-          <p className="mx-auto mt-6 max-w-[48ch] text-base leading-relaxed text-body sm:text-lg">
-            I'm looking for a software engineering internship and I'm open to collaborations. Email is the fastest way to reach me.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <a href={`mailto:${profile.email}`} className="inline-flex h-14 items-center rounded-full bg-accent px-8 text-lg font-medium text-on-accent transition-[filter,transform] hover:brightness-110 active:scale-[.97]">
-              {profile.email}
-            </a>
-            <CopyEmail />
-          </div>
-          <div className="mt-8 flex justify-center gap-6 text-sm">
-            <a href={profile.github} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">GitHub <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
-            <a href={profile.linkedin} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">LinkedIn <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
-          </div>
-        </div>
-
-        <form noValidate onSubmit={onSubmit} aria-label="Send a message" className="mx-auto mt-20 max-w-3xl space-y-7 rounded-[32px] border border-line bg-surface p-7 sm:p-10">
-          <p className="display text-3xl text-ink">Or leave a message</p>
-          <div className="grid gap-7 sm:grid-cols-2">
-            {field('name', 'Name', { auto: 'name' })}
-            {field('email', 'Email', { type: 'email', auto: 'email' })}
-          </div>
-          {field('subject', 'Subject')}
-          {field('message', 'Message', { area: true })}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-2">
-            <button
-              type="submit"
-              disabled={status.kind === 'sending'}
-              className="inline-flex h-12 items-center rounded-full bg-ink px-6 text-[15px] font-medium text-bg transition-[background-color,color,transform] hover:bg-accent hover:text-on-accent active:scale-[.97] disabled:opacity-60"
-            >
-              {formspreeId ? 'Send message' : 'Send with my email app'}
-            </button>
-            <p role="status" className={`text-sm ${status.kind === 'error' ? 'text-red-400' : 'text-muted'}`}>{status.text}</p>
-          </div>
-        </form>
+    <Section
+      id="contact"
+      title="Contact"
+      note="I'm looking for a software engineering internship and I'm open to collaborations. Email is the fastest way to reach me."
+    >
+      <div className="flex flex-wrap items-center gap-3">
+        <a href={`mailto:${profile.email}`} className="link-draw break-all font-mono text-xl font-semibold text-ink hover:text-accent sm:text-2xl">
+          {profile.email}
+        </a>
+        <CopyEmail />
       </div>
-    </section>
+      <div className="mt-6 flex gap-6 text-body">
+        <a href={profile.github} aria-label="GitHub" className="transition-[color,transform] hover:-translate-y-0.5 hover:text-accent"><GitHubIcon className="size-7" /></a>
+        <a href={profile.linkedin} aria-label="LinkedIn" className="transition-[color,transform] hover:-translate-y-0.5 hover:text-accent"><LinkedInIcon className="size-7" /></a>
+        <a href={`mailto:${profile.email}`} aria-label="Email" className="transition-[color,transform] hover:-translate-y-0.5 hover:text-accent"><EmailIcon className="size-7" /></a>
+      </div>
+
+      <form noValidate onSubmit={onSubmit} aria-label="Send a message" className="mt-12 space-y-6 rounded-2xl bg-soft p-6 ring-1 ring-line sm:p-8">
+        <div className="grid gap-6 sm:grid-cols-2">
+          {field('name', 'Name', { auto: 'name' })}
+          {field('email', 'Email', { type: 'email', auto: 'email' })}
+        </div>
+        {field('subject', 'Subject')}
+        {field('message', 'Message', { area: true })}
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <button
+            type="submit"
+            disabled={status.kind === 'sending'}
+            className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 font-mono text-sm font-medium text-bg transition-[background-color,color,transform] hover:bg-accent hover:text-on-accent active:scale-[.97] disabled:opacity-60"
+          >
+            <Send className="size-4" aria-hidden="true" /> {formspreeId ? 'Send message' : 'Send with my email app'}
+          </button>
+          <p role="status" className={`text-sm ${status.kind === 'error' ? 'text-red-600 dark:text-red-400' : 'text-muted'}`}>{status.text}</p>
+        </div>
+      </form>
+    </Section>
   )
 }
