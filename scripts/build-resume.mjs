@@ -48,7 +48,7 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
 
   <h2>Projects</h2>
   ${projects.map(p => `<div class="item"><div class="row"><b>${esc(p.title)}</b><span class="muted">${esc(p.kind)}${p.status ? ', ' + esc(p.status.toLowerCase()) : ''}</span></div>
-    <p>${esc(p.summary)}</p><ul>${p.result ? `<li>${esc(p.result)}</li>` : ''}${p.features.slice(0, 2).map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+    <p>${esc(p.summary)}</p><ul>${[...(p.challenges ?? []).slice(0, 1).map(c => `${c.challenge} ${c.solution}`), ...(p.challenges ? [] : p.contributions.slice(1, 2)), ...p.features.slice(0, 2)].map(t => `<li>${esc(t)}</li>`).join('')}</ul>
     <p class="muted">${esc(p.tech.join(', '))}</p></div>`).join('')}
 
   <h2>Technical skills</h2>
