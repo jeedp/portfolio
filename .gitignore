@@ -8,3 +8,5 @@ dist/
 *.local
 .env
 *.tsbuildinfo
+resume.private.json
+private/
