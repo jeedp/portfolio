@@ -1,18 +1,32 @@
 import type { Project } from '../data/profile'
 
 /**
- * The picture for a project. With `project.image` set it shows that screenshot;
- * until then it draws how the project fits together.
+ * A project's visual. A real image when the project has one (with its credit);
+ * otherwise the project's system diagram, labelled as a diagram so nobody mistakes it for a screenshot.
  */
-export function ProjectVisual({ project, tall = false }: { project: Project; tall?: boolean }) {
-  const ratio = tall ? 'aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[380px]' : 'aspect-[16/10] sm:aspect-[2/1]'
-  if (project.image) {
-    return <img src={`${import.meta.env.BASE_URL}${project.image}`} alt={`Screenshot of ${project.title}`} loading="lazy" className={`${ratio} w-full object-cover object-top`} />
+export function ProjectVisual({ project, className = '', show = 'auto' }: { project: Project; className?: string; show?: 'auto' | 'image' | 'diagram' }) {
+  if (project.image && show !== 'diagram') {
+    return (
+      <figure className={`group relative overflow-hidden rounded-[24px] border border-line bg-surface ${className}`}>
+        <img
+          src={`${import.meta.env.BASE_URL}${project.image.src}`}
+          alt={project.image.alt}
+          loading="lazy"
+          className="size-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+        />
+        {project.image.credit && (
+          <figcaption className="absolute bottom-3 right-3 rounded-md bg-black/60 px-2 py-1 font-mono text-[11px] text-white/85 backdrop-blur">{project.image.credit}</figcaption>
+        )}
+      </figure>
+    )
   }
   return (
-    <div className={`dots relative w-full ${ratio}`}>
-      <Diagram kind={project.diagram} title={project.title} />
-    </div>
+    <figure className={`group relative overflow-hidden rounded-[24px] border border-line bg-surface ${className}`}>
+      <div className="dots absolute inset-0 transition-transform duration-700 ease-out-expo group-hover:scale-[1.02]">
+        <Diagram kind={project.diagram} title={project.title} />
+      </div>
+      <figcaption className="label absolute left-4 top-4">System overview</figcaption>
+    </figure>
   )
 }
 
@@ -23,7 +37,7 @@ function Box({ n }: { n: Node }) {
     <g>
       <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={12} fill={n.core ? 'var(--accent)' : 'var(--bg)'} stroke={n.core ? 'none' : 'var(--line-strong)'} strokeWidth={1.25} />
       <text x={n.x + n.w / 2} y={n.y + (n.sub ? n.h / 2 - 2 : n.h / 2 + 5)} textAnchor="middle" fill={n.core ? 'var(--on-accent)' : 'var(--ink)'} fontSize={15} fontWeight={500} fontFamily="var(--font-sans)">{n.label}</text>
-      {n.sub && <text x={n.x + n.w / 2} y={n.y + n.h / 2 + 17} textAnchor="middle" fill={n.core ? 'var(--on-accent)' : 'var(--muted)'} fillOpacity={n.core ? 0.8 : 1} fontSize={12} fontFamily="var(--font-sans)">{n.sub}</text>}
+      {n.sub && <text x={n.x + n.w / 2} y={n.y + n.h / 2 + 17} textAnchor="middle" fill={n.core ? 'var(--on-accent)' : 'var(--muted)'} fillOpacity={n.core ? 0.85 : 1} fontSize={12} fontFamily="var(--font-sans)">{n.sub}</text>}
     </g>
   )
 }
@@ -71,9 +85,9 @@ const diagrams: Record<Project['diagram'], { nodes: Node[]; wires: string[]; das
 function Diagram({ kind, title }: { kind: Project['diagram']; title: string }) {
   const d = diagrams[kind]
   return (
-    <svg viewBox="0 0 700 320" role="img" aria-label={`${title}: ${d.alt}`} className="absolute inset-0 h-full w-full p-5 sm:p-8">
-      {d.wires.map(p => <path key={p} d={p} fill="none" stroke="var(--accent)" strokeOpacity={0.6} strokeWidth={1.5} strokeLinejoin="round" />)}
-      {d.dashed?.map(p => <path key={p} d={p} fill="none" stroke="var(--accent)" strokeOpacity={0.6} strokeWidth={1.5} strokeDasharray="4 5" />)}
+    <svg viewBox="0 0 700 320" role="img" aria-label={`${title}: ${d.alt}`} className="absolute inset-0 h-full w-full px-4 pb-4 pt-12 sm:px-8 sm:pb-8">
+      {d.wires.map(p => <path key={p} d={p} fill="none" stroke="var(--accent)" strokeOpacity={0.65} strokeWidth={1.5} strokeLinejoin="round" />)}
+      {d.dashed?.map(p => <path key={p} d={p} fill="none" stroke="var(--accent)" strokeOpacity={0.65} strokeWidth={1.5} strokeDasharray="4 5" />)}
       {d.nodes.map(n => <Box key={n.label} n={n} />)}
     </svg>
   )

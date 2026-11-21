@@ -1,24 +1,28 @@
 import type { ReactNode } from 'react'
+import { Reveal } from './Reveal'
 
-type Props = { id: string; label: string; title: ReactNode; intro?: ReactNode; action?: ReactNode; children: ReactNode; className?: string }
+type Props = { id: string; number: string; label: string; title: ReactNode; intro?: ReactNode; children: ReactNode; className?: string }
 
-/** A section: a small label, the heading, an optional line under it and an optional action on the right. */
-export function Section({ id, label, title, intro, action, children, className = '' }: Props) {
+/**
+ * Every section shares this header: a narrow left column with the number and label,
+ * the title (and an optional line) on the right. Content sits under the title column on wide screens.
+ */
+export function Section({ id, number, label, title, intro, children, className = '' }: Props) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={`py-20 sm:py-28 ${className}`}>
+    <section id={id} aria-labelledby={`${id}-title`} className={`py-22 md:py-32 ${className}`}>
       <div className="shell">
-        <header className="mb-10 flex flex-wrap items-end justify-between gap-6 sm:mb-14">
-          <div className="max-w-2xl">
-            <p className="mb-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-muted">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
-              {label}
-            </p>
-            <h2 id={`${id}-title`} className="text-3xl font-semibold sm:text-[44px] sm:leading-[1.1]">{title}</h2>
-            {intro && <p className="mt-4 text-base leading-relaxed text-body sm:text-lg">{intro}</p>}
+        <Reveal className="grid gap-5 md:grid-cols-12 md:gap-8">
+          <p className="label flex items-center gap-3 self-start md:col-span-3 md:pt-4">
+            <span className="text-accent">{number}</span>
+            <span aria-hidden="true" className="h-px w-6 bg-line-strong" />
+            {label}
+          </p>
+          <div className="md:col-span-9">
+            <h2 id={`${id}-title`} className="text-[34px] font-semibold leading-[1.08] tracking-[-0.03em] sm:text-5xl lg:text-[56px]">{title}</h2>
+            {intro && <p className="mt-5 max-w-[58ch] text-lg leading-relaxed text-body">{intro}</p>}
           </div>
-          {action}
-        </header>
-        {children}
+        </Reveal>
+        <div className="mt-14 md:mt-20">{children}</div>
       </div>
     </section>
   )
