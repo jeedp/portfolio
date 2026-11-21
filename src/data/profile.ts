@@ -81,6 +81,12 @@ export type Project = {
   year: string
   // The one number that sells the project, shown large on its row.
   metric?: { value: string; label: string }
+  // The engineering problem the project is really about, in one or two sentences.
+  focus?: string
+  // Extra technical points, shown in the expandable "Features and technical details" panel.
+  details?: string[]
+  // Where the code lives and what state it is in, said plainly.
+  availability?: string
 }
 
 export const projects: Project[] = [
@@ -104,6 +110,13 @@ export const projects: Project[] = [
     diagram: 'wayfinding',
     year: '2026',
     metric: { value: '14 → 3 MB', label: 'per floor drawing, so the map runs smoothly on a Raspberry Pi 4' },
+    focus: 'Performance and resilience on modest hardware: the map, floor plans and routes are served from the Pi itself, so the kiosk keeps working when the campus network drops.',
+    details: [
+      'Phones get the route two ways: over the kiosk’s own Wi-Fi, or from a public copy of the map for phones on mobile data.',
+      'Live GPS needs HTTPS, so the kiosk serves the phone page over a trusted certificate rather than plain HTTP.',
+      'SQLite stores settings and overrides; Chromium runs the touchscreen in kiosk mode.',
+    ],
+    availability: 'Thesis in development · team repository on GitHub',
   },
   {
     id: 'parking',
@@ -125,6 +138,13 @@ export const projects: Project[] = [
     diagram: 'parking',
     year: '2026',
     metric: { value: '2 cores', label: 'gate control and networking run as separate FreeRTOS tasks' },
+    focus: 'Reliability under a slow network: gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores, so a slow Firebase connection never holds the gate.',
+    details: [
+      'Manual control goes straight to the ESP32 over Bluetooth LE, so an operator can open the gate from the browser without the internet.',
+      'The dashboard only reads from Firebase: live slot count, gate state and the last 20 events.',
+      'Unit tests cover the gate and RFID logic; firmware is built with PlatformIO.',
+    ],
+    availability: 'Solo project · source on GitHub',
   },
   {
     id: 'trainsmart',
@@ -147,6 +167,12 @@ export const projects: Project[] = [
     diagram: 'trainsmart',
     year: '2025',
     metric: { value: '5', label: 'connected features on one SQL Server data model' },
+    focus: 'Data modelling: one relational schema, written in T-SQL, behind templates, workouts, exercises, sets and body measurements.',
+    details: [
+      'User accounts with input validation on every form.',
+      'Prebuilt routines ship with the app; users can also build and save their own templates.',
+    ],
+    availability: 'Solo project · Windows desktop app · source on GitHub',
   },
 ]
 
@@ -207,15 +233,17 @@ export type Certificate = {
   category: 'Certification' | 'Online course' | 'Seminar or workshop' | 'Achievement'
   // Put the PDF in public/certificates/ and set e.g. 'certificates/cybersecurity.pdf' to make the card open it.
   file?: string
+  // A thumbnail of the certificate (public/certificates/<name>.jpg). Rebuild them from the PDFs with `npm run thumbs`.
+  image?: string
   placeholder?: boolean
 }
 
 export const certificates: Certificate[] = [
-  { title: 'Introduction to Cybersecurity', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'May 2026', category: 'Online course' },
-  { title: 'Prompt Like an Engineer', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course' },
-  { title: 'Engaging Stakeholders for Success', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course' },
-  { title: 'Hardware and Upgrade Support', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course' },
-  { title: 'Digital Awareness', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course' },
+  { title: 'Introduction to Cybersecurity', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'May 2026', category: 'Online course', file: 'certificates/introduction-to-cybersecurity.pdf', image: 'certificates/introduction-to-cybersecurity.jpg' },
+  { title: 'Prompt Like an Engineer', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/prompt-like-an-engineer.pdf', image: 'certificates/prompt-like-an-engineer.jpg' },
+  { title: 'Engaging Stakeholders for Success', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/engaging-stakeholders-for-success.pdf', image: 'certificates/engaging-stakeholders-for-success.jpg' },
+  { title: 'Hardware and Upgrade Support', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/hardware-and-upgrade-support.pdf', image: 'certificates/hardware-and-upgrade-support.jpg' },
+  { title: 'Digital Awareness', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/digital-awareness.pdf', image: 'certificates/digital-awareness.jpg' },
   { title: 'Seminar or workshop', issuer: 'Add a seminar or workshop you attended', date: '', category: 'Seminar or workshop', placeholder: true },
   { title: 'Academic achievement', issuer: 'Add an award, honor or competition result', date: '', category: 'Achievement', placeholder: true },
 ]
