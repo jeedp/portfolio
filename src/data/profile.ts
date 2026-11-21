@@ -21,7 +21,7 @@ export const profile = {
   resume: 'resume.pdf',
   availability: 'Open to software engineering internships',
 
-  headline: 'I build practical systems where software meets hardware.',
+  headline: 'Building ideas into practical technology.',
   intro:
     "Computer Engineering student at Southern Leyte State University, focused on software engineering. I've built desktop apps, IoT devices and web systems, and I'm looking for my first software engineering internship.",
   // Shown in the footer and on the hero spec card.
@@ -54,11 +54,11 @@ export const about = {
 export type SkillGroup = { name: string; icon: 'code' | 'globe' | 'database' | 'cpu' | 'wrench'; items: string[] }
 
 export const skills: SkillGroup[] = [
-  { name: 'Languages', icon: 'code', items: ['C', 'C++', 'C#', 'Python', 'JavaScript', 'PHP'] },
-  { name: 'Web development', icon: 'globe', items: ['HTML', 'CSS', 'JavaScript', 'Laravel', 'Node.js', 'Express'] },
-  { name: 'Databases', icon: 'database', items: ['MySQL', 'Microsoft SQL Server', 'SQLite', 'Firebase'] },
+  { name: 'Programming', icon: 'code', items: ['C', 'C++', 'C#', 'Python', 'JavaScript', 'PHP'] },
+  { name: 'Web development', icon: 'globe', items: ['HTML', 'CSS', 'Laravel', 'Node.js', 'Express'] },
+  { name: 'Databases', icon: 'database', items: ['MySQL', 'SQL Server', 'SQLite', 'Firebase'] },
   { name: 'Embedded systems', icon: 'cpu', items: ['Arduino', 'ESP32', 'Raspberry Pi', 'FreeRTOS'] },
-  { name: 'Tools', icon: 'wrench', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Arduino IDE', 'PlatformIO', 'Postman'] },
+  { name: 'Development tools', icon: 'wrench', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Arduino IDE', 'Postman'] },
 ]
 
 export type Project = {
@@ -67,112 +67,86 @@ export type Project = {
   kind: string
   category: 'Desktop' | 'IoT' | 'Web'
   status?: string
+  year: string
   summary: string
-  role?: string
+  problem: string
+  objective: string
+  // What *you* did. On team projects, name your part.
+  contributions: string[]
   features: string[]
-  result?: string
+  // Only real challenges you solved. Leave out if there's nothing true to say.
+  challenges?: { challenge: string; solution: string }[]
+  result?: { value: string; label: string }
   tech: string[]
   repo?: string
-  repoNote?: string
-  // Put a screenshot in public/projects/ and set e.g. 'projects/trainsmart.png'.
-  // Until then the card shows a diagram of how the project fits together.
-  image?: string
+  availability: string
+  // A real image in public/projects/. Leave out to show the project's system diagram instead.
+  image?: { src: string; alt: string; credit?: string }
   diagram: 'trainsmart' | 'parking' | 'wayfinding'
-  year: string
-  // The one number that sells the project, shown large on its row.
-  metric?: { value: string; label: string }
-  // The engineering problem the project is really about, in one or two sentences.
-  focus?: string
-  // Extra technical points, shown in the expandable "Features and technical details" panel.
-  details?: string[]
-  // Where the code lives and what state it is in, said plainly.
-  availability?: string
 }
 
+/** Shown in this order on the page. Add screenshots by setting `image`. */
 export const projects: Project[] = [
-  {
-    id: 'wayfinding',
-    title: 'SLSU Campus Wayfinding System',
-    kind: 'Thesis project',
-    category: 'Web',
-    status: 'In development',
-    summary:
-      'An offline touchscreen kiosk that helps students, visitors and staff find buildings, offices and facilities across the SLSU main campus, with a 2D vector map, floor plans and walking directions.',
-    role: 'Team of two. I handle performance on the Raspberry Pi, the phone hand-off and deployment.',
-    features: [
-      'Runs fully offline from a Raspberry Pi, so it keeps working if the campus network drops',
-      'QR code hands the route to a visitor’s phone, with live GPS walking directions',
-      'Setup script that turns a blank SD card into a working kiosk',
-    ],
-    result: 'Cut each floor drawing from 14 MB to 1.5–3 MB so the map runs smoothly on a Raspberry Pi 4.',
-    tech: ['JavaScript', 'Node.js', 'Express', 'SQLite', 'Raspberry Pi'],
-    repo: 'https://github.com/cymrcsm/slsu-map-navigation',
-    diagram: 'wayfinding',
-    year: '2026',
-    metric: { value: '14 → 3 MB', label: 'per floor drawing, so the map runs smoothly on a Raspberry Pi 4' },
-    focus: 'Performance and resilience on modest hardware: the map, floor plans and routes are served from the Pi itself, so the kiosk keeps working when the campus network drops.',
-    details: [
-      'Phones get the route two ways: over the kiosk’s own Wi-Fi, or from a public copy of the map for phones on mobile data.',
-      'Live GPS needs HTTPS, so the kiosk serves the phone page over a trusted certificate rather than plain HTTP.',
-      'SQLite stores settings and overrides; Chromium runs the touchscreen in kiosk mode.',
-    ],
-    availability: 'Thesis in development · team repository on GitHub',
-  },
-  {
-    id: 'parking',
-    title: 'Smart Parking Gate System',
-    kind: 'IoT project',
-    category: 'IoT',
-    summary:
-      'An IoT parking system that checks RFID cards at the gate, tracks free slots with ultrasonic sensors and shows everything on a live web dashboard.',
-    role: 'Solo project, from pin mapping and firmware to the dashboard.',
-    features: [
-      'RFID-based vehicle authorization and an automated servo gate',
-      'Real-time slot availability from ultrasonic sensors',
-      'Web dashboard with live slots, gate state and the last 20 events',
-      'Manual gate control from the browser over Bluetooth, even without internet',
-    ],
-    result: 'Gate control and network updates run as separate FreeRTOS tasks on separate cores, so a slow connection never holds the gate.',
-    tech: ['C++', 'ESP32', 'FreeRTOS', 'RFID', 'Firebase', 'JavaScript'],
-    repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
-    diagram: 'parking',
-    year: '2026',
-    metric: { value: '2 cores', label: 'gate control and networking run as separate FreeRTOS tasks' },
-    focus: 'Reliability under a slow network: gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores, so a slow Firebase connection never holds the gate.',
-    details: [
-      'Manual control goes straight to the ESP32 over Bluetooth LE, so an operator can open the gate from the browser without the internet.',
-      'The dashboard only reads from Firebase: live slot count, gate state and the last 20 events.',
-      'Unit tests cover the gate and RFID logic; firmware is built with PlatformIO.',
-    ],
-    availability: 'Solo project · source on GitHub',
-  },
   {
     id: 'trainsmart',
     title: 'TrainSMART',
     kind: 'Desktop application',
     category: 'Desktop',
-    summary:
-      'A desktop workout manager that helps users organize routines, log exercises and sets, and follow their fitness measurements over time.',
-    role: 'Solo project.',
-    features: [
-      'Workout templates, with custom and prebuilt routines',
-      'Exercise and set management',
-      'Workout tracking and history',
-      'Body measurement tracking',
-      'User accounts with input validation',
-    ],
-    result: 'Backed by a relational data model I designed and wrote in T-SQL on SQL Server.',
+    year: '2025',
+    summary: 'A desktop workout manager that helps users organise routines, track exercises and sets, and follow their fitness measurements over time.',
+    problem: 'Routines, workout logs and body measurements are hard to follow when they live in separate notes.',
+    objective: 'One desktop app to plan routines, log workouts and track measurements over time.',
+    contributions: ['Built the whole application solo', 'Designed the relational data model in T-SQL', 'Implemented user accounts with input validation'],
+    features: ['Workout templates, with custom and prebuilt routines', 'Exercise and set management, with workout tracking and history', 'Body measurement tracking'],
+    result: { value: '5', label: 'connected features on one SQL Server data model' },
     tech: ['C#', 'Windows Forms', '.NET Framework', 'SQL Server'],
     repo: 'https://github.com/jeedp/TrainSMARTApp',
-    diagram: 'trainsmart',
-    year: '2025',
-    metric: { value: '5', label: 'connected features on one SQL Server data model' },
-    focus: 'Data modelling: one relational schema, written in T-SQL, behind templates, workouts, exercises, sets and body measurements.',
-    details: [
-      'User accounts with input validation on every form.',
-      'Prebuilt routines ship with the app; users can also build and save their own templates.',
-    ],
     availability: 'Solo project · Windows desktop app · source on GitHub',
+    diagram: 'trainsmart',
+  },
+  {
+    id: 'parking',
+    title: 'Smart Parking Gate System',
+    kind: 'IoT system',
+    category: 'IoT',
+    year: '2026',
+    summary: 'An IoT parking system that checks RFID cards at the gate, tracks free slots with ultrasonic sensors and shows everything on a live web dashboard.',
+    problem: 'A manual gate can’t tell drivers how many slots are free, or check who is allowed in.',
+    objective: 'Automate entry for authorised cards and show live slot availability on a web dashboard.',
+    contributions: ['Built it solo, from pin mapping and firmware to the dashboard', 'Wrote unit tests for the gate and RFID logic', 'Set up the build with PlatformIO'],
+    features: ['RFID-based vehicle authorisation with an automated servo gate', 'Real-time slot availability from ultrasonic sensors', 'Web dashboard with live slots, gate state and the last 20 events'],
+    challenges: [
+      { challenge: 'A slow Firebase connection could stall the gate.', solution: 'Gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores.' },
+      { challenge: 'Operators need control even when the internet is down.', solution: 'Manual open and close from the browser, sent straight to the ESP32 over Bluetooth LE.' },
+    ],
+    result: { value: '2 cores', label: 'gate control and networking kept apart, so the gate never waits on the network' },
+    tech: ['C++', 'ESP32', 'FreeRTOS', 'Firebase', 'JavaScript', 'PlatformIO'],
+    repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
+    availability: 'Solo project · source on GitHub',
+    diagram: 'parking',
+  },
+  {
+    id: 'wayfinding',
+    title: 'SLSU Campus Wayfinding System',
+    kind: 'Undergraduate thesis',
+    category: 'Web',
+    status: 'In development',
+    year: '2026',
+    summary: 'An offline touchscreen kiosk that helps students, visitors and staff find buildings, offices and facilities on the SLSU main campus, with a 2D vector map, floor plans and walking directions.',
+    problem: 'First-time students and visitors struggle to find buildings, offices and facilities on the main campus.',
+    objective: 'Help students, visitors and other campus users locate university buildings, offices, facilities and other important destinations.',
+    contributions: ['Performance on the Raspberry Pi 4', 'The QR hand-off that continues a route on a visitor’s phone with live GPS', 'The setup script and guide that turn a blank SD card into a working kiosk'],
+    features: ['Runs fully offline from a Raspberry Pi, so it keeps working when the campus network drops', '2D vector campus map with floor plans and walking directions', 'Routes continue on a visitor’s phone through a QR code'],
+    challenges: [
+      { challenge: 'Floor drawings were 14 MB each, too heavy for a Raspberry Pi 4.', solution: 'Optimised them to 1.5–3 MB per floor so the map pans smoothly.' },
+      { challenge: 'Browsers only allow live GPS over HTTPS.', solution: 'The kiosk serves the phone page over a trusted certificate.' },
+    ],
+    result: { value: '14 → 3 MB', label: 'per floor drawing, so the map runs smoothly on a Raspberry Pi 4' },
+    tech: ['JavaScript', 'Node.js', 'Express', 'SQLite', 'Raspberry Pi'],
+    repo: 'https://github.com/cymrcsm/slsu-map-navigation',
+    availability: 'Team of two · thesis in development · team repository on GitHub',
+    image: { src: 'projects/slsu-campus-map.jpg', alt: 'OpenStreetMap view of the Southern Leyte State University main campus, the area the kiosk maps', credit: '© OpenStreetMap contributors' },
+    diagram: 'wayfinding',
   },
 ]
 
@@ -251,10 +225,9 @@ export const certificates: Certificate[] = [
 export const nav = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Projects' },
   { id: 'experience', label: 'Experience' },
-  { id: 'resume', label: 'Resume' },
   { id: 'contact', label: 'Contact' },
 ]
 
