@@ -6,6 +6,8 @@ Live at **https://jeedp.github.io/portfolio/**
 
 Built with React, TypeScript, Vite, Tailwind CSS, Lucide icons and Framer Motion.
 
+The design is adapted from [DevPortfolio](https://github.com/RyanFitzgerald/devportfolio) by Ryan Fitzgerald (MIT License); see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
 ## Run it locally
 
 You need [Node.js](https://nodejs.org) 20 or newer.
