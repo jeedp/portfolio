@@ -54,7 +54,7 @@ Almost everything lives in **`src/data/profile.ts`**. Change it, save, and the s
 - **Your photo:** put a square photo at `public/profile.jpg` and set `photo: 'profile.jpg'`. Until then a "JP" monogram shows.
 - **About me:** the `about.paragraphs`, `about.highlights` and `about.interests` lists.
 - **Skills:** the `skills` list. Each group has a name, an icon (`code`, `globe`, `database`, `cpu` or `wrench`) and its items.
-- **Projects:** the `projects` list. To add a screenshot, put the image in `public/projects/` (for example `public/projects/trainsmart.png`) and set `image: 'projects/trainsmart.png'` on that project. Until then the card shows a diagram of how the project works. `category` (`Desktop`, `IoT` or `Web`) drives the filter buttons.
+- **Projects:** the `projects` list (problem, objective, contributions, features, challenges, result, availability). To add a screenshot, put the image in `public/projects/` (for example `public/projects/trainsmart.png`) and set `image: 'projects/trainsmart.png'` on that project. Until then the card shows a diagram of how the project works. `category` (`Desktop`, `IoT` or `Web`) drives the filter buttons.
 - **Experience and education:** the `timeline` list. Entries with `placeholder: true` show as dashed "add this" cards; replace them with real entries or delete them.
 - **Certificates:** the `certificates` list. Put the PDF in `public/certificates/`, set `file: 'certificates/<name>.pdf'` and `image: 'certificates/<name>.jpg'`, then run `npm run thumbs` to render the thumbnail from the PDF (needs Python with PyMuPDF: `pip install pymupdf`).
 - **Project write-ups:** each project's `focus` (the engineering problem it's really about), `details` (shown in the expandable panel) and `availability` (where the code lives) are in the `projects` list.
@@ -69,17 +69,16 @@ npm run resume
 
 It looks for Chrome or Edge. If it can't find one, set `CHROME_PATH` to your browser's path. You can also simply replace `public/resume.pdf` with a résumé you made elsewhere; the download buttons will serve whatever file is there.
 
-### The contact form
+### Contact
 
-Out of the box the form does not pretend to send anything. When a visitor presses the button, their own email app opens with the name, subject and message filled in, addressed to you.
+The contact section uses email only: a large mailto link, a "Send an email" button and a copy button.
+There is deliberately no form, so nothing can silently fail to send. (`formspreeId` in `profile.ts` is kept
+for a future form; it isn't used by the current design.)
 
-To receive messages directly instead:
+### Content plan
 
-1. Create a free form at [formspree.io](https://formspree.io) and copy its form ID (the part after `/f/`).
-2. For local development, create a `.env` file in the project folder containing `VITE_FORMSPREE_ID=your_id`.
-3. For the live site on GitHub Pages: repo **Settings → Secrets and variables → Actions → Variables**, add a variable named `VITE_FORMSPREE_ID` with your ID, then push or re-run the deploy workflow.
-
-The button then reads "Send message" and only shows "Message sent" after Formspree confirms it.
+`docs/PORTFOLIO_PLAN.md` holds the content strategy, section order, recruiter checklist and the visual system
+this design follows, plus a checklist of content still to add (real screenshots first).
 
 ## Deploying
 
