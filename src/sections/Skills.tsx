@@ -1,4 +1,4 @@
-import { CodeXml, Cpu, Database, Globe, Sparkles, Wrench } from 'lucide-react'
+import { CodeXml, Cpu, Database, Globe, Wrench } from 'lucide-react'
 import { skills, type SkillGroup } from '../data/profile'
 import { Section } from '../components/Section'
 
@@ -6,37 +6,28 @@ const icons: Record<SkillGroup['icon'], typeof Cpu> = { code: CodeXml, globe: Gl
 
 export function Skills() {
   return (
-    <Section
-      id="skills"
-      eyebrow="Skills"
-      title="What I work with"
-      aside="Tools I've used in real projects, from firmware on a microcontroller to the database and the screen. No ratings: the projects show the depth."
-    >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <Section id="skills" title="Skills" note="Tools I've used in real projects. No percentage bars: the projects show the depth.">
+      <div className="space-y-8">
         {skills.map(group => {
           const Icon = icons[group.icon]
           return (
-            <div key={group.name} className="rounded-[24px] border border-line bg-surface p-7">
-              <div className="flex items-center justify-between">
-                <h3 className="display text-[28px]">{group.name}</h3>
-                <Icon className="size-5 text-muted" aria-hidden="true" />
-              </div>
-              <ul className="mt-6 flex flex-wrap gap-2">
+            <div key={group.name} className="grid gap-4 sm:grid-cols-[220px_1fr] sm:gap-8">
+              <h3 className="flex items-center gap-3 font-mono text-base font-semibold sm:pt-1.5">
+                <Icon className="size-5 text-accent" aria-hidden="true" /> {group.name}
+              </h3>
+              <ul className="flex flex-wrap gap-2.5">
                 {group.items.map(item => (
-                  <li key={item} className="rounded-full bg-raised px-3.5 py-1.5 text-sm text-ink">{item}</li>
+                  <li key={item} className="rounded-full bg-soft px-4 py-2 font-mono text-[15px] font-medium text-ink ring-1 ring-line transition-colors hover:bg-accent-soft hover:text-accent">
+                    {item}
+                  </li>
                 ))}
               </ul>
             </div>
           )
         })}
-        <div className="rounded-[24px] border border-accent/30 bg-accent-soft p-7">
-          <div className="flex items-center justify-between">
-            <h3 className="display text-[28px]">Learning next</h3>
-            <Sparkles className="size-5 text-accent" aria-hidden="true" />
-          </div>
-          <p className="mt-6 text-[15px] leading-relaxed text-body">
-            Artificial intelligence and machine learning, plus better testing and cleaner architecture in the code I already write.
-          </p>
+        <div className="grid gap-4 border-t border-line pt-8 sm:grid-cols-[220px_1fr] sm:gap-8">
+          <h3 className="font-mono text-base font-semibold text-muted sm:pt-0.5">Learning next</h3>
+          <p className="text-lg leading-relaxed">Artificial intelligence and machine learning, plus better testing and cleaner architecture in the code I already write.</p>
         </div>
       </div>
     </Section>

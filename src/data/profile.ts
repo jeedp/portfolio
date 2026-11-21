@@ -39,7 +39,7 @@ export const about = {
   ],
   highlights: [
     { value: '3', label: 'projects built across desktop, IoT and web' },
-    { value: '14 MB → 3 MB', label: 'floor drawings shrunk to run on a Raspberry Pi' },
+    { value: '14 → 3 MB', label: 'floor drawings shrunk to run on a Raspberry Pi' },
     { value: '5', label: 'bugs fixed in a production Laravel system' },
   ],
   interests: [
@@ -224,6 +224,7 @@ export const nav = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' },
   { id: 'skills', label: 'Skills' },
   { id: 'resume', label: 'Resume' },
   { id: 'contact', label: 'Contact' },
