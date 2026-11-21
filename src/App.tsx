@@ -1,42 +1,29 @@
 import { MotionConfig } from 'framer-motion'
-import { ArrowUp } from 'lucide-react'
-import { Navbar } from './components/Navbar'
-import { GitHubIcon, LinkedInIcon } from './components/SocialIcons'
+import { Header, SideRail } from './components/Chrome'
 import { useTheme } from './hooks/useTheme'
-import { profile } from './data/profile'
 import { Hero } from './sections/Hero'
+import { Work } from './sections/Work'
 import { About } from './sections/About'
-import { Skills } from './sections/Skills'
-import { Projects } from './sections/Projects'
-import { Certifications, Experience } from './sections/Experience'
-import { Resume } from './sections/Resume'
 import { Contact } from './sections/Contact'
 
+/** The whole site sits on one white sheet over a warm grey page. */
 export default function App() {
   const { theme, toggle } = useTheme()
   return (
     <MotionConfig reducedMotion="user">
-      <Navbar theme={theme} onToggleTheme={toggle} />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Certifications />
-        <Resume />
-        <Contact />
-      </main>
-      <footer className="border-t border-line">
-        <div className="shell flex flex-col gap-5 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {profile.name}</p>
-          <div className="flex items-center gap-2">
-            <a href={profile.github} aria-label="GitHub" className="grid size-10 place-items-center rounded-full transition-colors hover:text-ink"><GitHubIcon className="size-[18px]" /></a>
-            <a href={profile.linkedin} aria-label="LinkedIn" className="grid size-10 place-items-center rounded-full transition-colors hover:text-ink"><LinkedInIcon className="size-[18px]" /></a>
-            <a href="#home" className="ml-3 inline-flex items-center gap-1.5 transition-colors hover:text-ink">Back to top <ArrowUp className="size-3.5" aria-hidden="true" /></a>
-          </div>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sheet">Skip to content</a>
+      <div id="top" className="sm:px-6 sm:py-8 lg:py-10">
+        <div className="sheet mx-auto max-w-[1240px] sm:rounded-[24px]">
+          <Header theme={theme} onToggleTheme={toggle} />
+          <SideRail />
+          <main id="main" className="px-5 sm:px-8 md:px-12 xl:pl-28">
+            <Hero />
+            <Work />
+            <About />
+            <Contact />
+          </main>
         </div>
-      </footer>
+      </div>
     </MotionConfig>
   )
 }

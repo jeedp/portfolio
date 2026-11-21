@@ -97,51 +97,13 @@ export type Project = {
   tech: string[]
   repo?: string
   availability: string
-  // A real image in public/projects/. Leave out to show the project's system diagram instead.
-  image?: { src: string; alt: string; credit?: string }
-  diagram: 'trainsmart' | 'parking' | 'wayfinding'
+  // Real screenshots of the running system, in public/projects/. 'wide' for desktop/web views, 'phone' for tall app windows.
+  shots: { src: string; alt: string }[]
+  shotLayout: 'wide' | 'phone'
 }
 
 /** Shown in this order on the page. Add screenshots by setting `image`. */
 export const projects: Project[] = [
-  {
-    id: 'trainsmart',
-    title: 'TrainSMART',
-    kind: 'Desktop application',
-    category: 'Desktop',
-    year: '2025',
-    summary: 'A desktop workout manager that helps users organise routines, track exercises and sets, and follow their fitness measurements over time.',
-    problem: 'Routines, workout logs and body measurements are hard to follow when they live in separate notes.',
-    objective: 'One desktop app to plan routines, log workouts and track measurements over time.',
-    contributions: ['Built the whole application solo', 'Designed the relational data model in T-SQL', 'Implemented user accounts with input validation'],
-    features: ['Workout templates, with custom and prebuilt routines', 'Exercise and set management, with workout tracking and history', 'Body measurement tracking'],
-    result: { value: '5', label: 'connected features on one SQL Server data model' },
-    tech: ['C#', 'Windows Forms', '.NET Framework', 'SQL Server'],
-    repo: 'https://github.com/jeedp/TrainSMARTApp',
-    availability: 'Solo project · Windows desktop app · source on GitHub',
-    diagram: 'trainsmart',
-  },
-  {
-    id: 'parking',
-    title: 'Smart Parking Gate System',
-    kind: 'IoT system',
-    category: 'IoT',
-    year: '2026',
-    summary: 'An IoT parking system that checks RFID cards at the gate, tracks free slots with ultrasonic sensors and shows everything on a live web dashboard.',
-    problem: 'A manual gate can’t tell drivers how many slots are free, or check who is allowed in.',
-    objective: 'Automate entry for authorised cards and show live slot availability on a web dashboard.',
-    contributions: ['Built it solo, from pin mapping and firmware to the dashboard', 'Wrote unit tests for the gate and RFID logic', 'Set up the build with PlatformIO'],
-    features: ['RFID-based vehicle authorisation with an automated servo gate', 'Real-time slot availability from ultrasonic sensors', 'Web dashboard with live slots, gate state and the last 20 events'],
-    challenges: [
-      { challenge: 'A slow Firebase connection could stall the gate.', solution: 'Gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores.' },
-      { challenge: 'Operators need control even when the internet is down.', solution: 'Manual open and close from the browser, sent straight to the ESP32 over Bluetooth LE.' },
-    ],
-    result: { value: '2 cores', label: 'gate control and networking kept apart, so the gate never waits on the network' },
-    tech: ['C++', 'ESP32', 'FreeRTOS', 'Firebase', 'JavaScript', 'PlatformIO'],
-    repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
-    availability: 'Solo project · source on GitHub',
-    diagram: 'parking',
-  },
   {
     id: 'wayfinding',
     title: 'SLSU Campus Wayfinding System',
@@ -162,8 +124,52 @@ export const projects: Project[] = [
     tech: ['JavaScript', 'Node.js', 'Express', 'SQLite', 'Raspberry Pi'],
     repo: 'https://github.com/cymrcsm/slsu-map-navigation',
     availability: 'Team of two · thesis in development · team repository on GitHub',
-    image: { src: 'projects/slsu-campus-map.jpg', alt: 'OpenStreetMap view of the Southern Leyte State University main campus, the area the kiosk maps', credit: '© OpenStreetMap contributors' },
-    diagram: 'wayfinding',
+    shots: [{ src: 'projects/wayfinding-kiosk.webp', alt: 'The SLSU campus kiosk: search and quick-find on the left, the campus vector map with floor switcher in the centre, and the building directory on the right' }],
+    shotLayout: 'wide',
+  },
+  {
+    id: 'parking',
+    title: 'Smart Parking Gate System',
+    kind: 'IoT system',
+    category: 'IoT',
+    year: '2026',
+    summary: 'An IoT parking system that checks RFID cards at the gate, tracks free slots with ultrasonic sensors and shows everything on a live web dashboard.',
+    problem: 'A manual gate can’t tell drivers how many slots are free, or check who is allowed in.',
+    objective: 'Automate entry for authorised cards and show live slot availability on a web dashboard.',
+    contributions: ['Built it solo, from pin mapping and firmware to the dashboard', 'Wrote unit tests for the gate and RFID logic', 'Set up the build with PlatformIO'],
+    features: ['RFID-based vehicle authorisation with an automated servo gate', 'Real-time slot availability from ultrasonic sensors', 'Web dashboard with live slots, gate state and the last 20 events'],
+    challenges: [
+      { challenge: 'A slow Firebase connection could stall the gate.', solution: 'Gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores.' },
+      { challenge: 'Operators need control even when the internet is down.', solution: 'Manual open and close from the browser, sent straight to the ESP32 over Bluetooth LE.' },
+    ],
+    result: { value: '2 cores', label: 'gate control and networking kept apart, so the gate never waits on the network' },
+    tech: ['C++', 'ESP32', 'FreeRTOS', 'Firebase', 'JavaScript', 'PlatformIO'],
+    repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
+    availability: 'Solo project · source on GitHub',
+    shots: [{ src: 'projects/parking-dashboard.webp', alt: 'Smart Parking Gate web dashboard showing 5 of 6 spaces free, entries and exits today, gate status, a 24-hour vehicle chart, Bluetooth controls and the access log' }],
+    shotLayout: 'wide',
+  },
+  {
+    id: 'trainsmart',
+    title: 'TrainSMART',
+    kind: 'Desktop application',
+    category: 'Desktop',
+    year: '2025',
+    summary: 'A desktop workout manager that helps users organise routines, track exercises and sets, and follow their fitness measurements over time.',
+    problem: 'Routines, workout logs and body measurements are hard to follow when they live in separate notes.',
+    objective: 'One desktop app to plan routines, log workouts and track measurements over time.',
+    contributions: ['Built the whole application solo', 'Designed the relational data model in T-SQL', 'Implemented user accounts with input validation'],
+    features: ['Workout templates, with custom and prebuilt routines', 'Exercise and set management, with workout tracking and history', 'Body measurement tracking'],
+    result: { value: '5', label: 'connected features on one SQL Server data model' },
+    tech: ['C#', 'Windows Forms', '.NET Framework', 'SQL Server'],
+    repo: 'https://github.com/jeedp/TrainSMARTApp',
+    availability: 'Solo project · Windows desktop app · source on GitHub',
+    shots: [
+      { src: 'projects/trainsmart-login.webp', alt: 'TrainSMART welcome screen with Register and Log in buttons' },
+      { src: 'projects/trainsmart-workout.webp', alt: 'TrainSMART Workout tab: start an empty workout, your templates and sample templates' },
+      { src: 'projects/trainsmart-exercises.webp', alt: 'TrainSMART exercise library listing 122 exercises by muscle group' },
+    ],
+    shotLayout: 'phone',
   },
 ]
 
@@ -240,12 +246,27 @@ export const certificates: Certificate[] = [
 ]
 
 export const nav = [
-  { id: 'home', label: 'Home' },
+  { id: 'work', label: 'Work' },
   { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' },
+]
+
+/**
+ * How I work. DRAFT for Jed to approve: each principle is taken from something he actually built.
+ */
+export const philosophy = [
+  {
+    title: 'Keep working when the network doesn’t',
+    body: 'The campus kiosk runs fully offline, and the parking gate keeps its control loop on a separate core from the network. A system should do its main job even when the connection drops.',
+  },
+  {
+    title: 'Fit the hardware you actually have',
+    body: 'Floor drawings went from 14 MB to 1.5–3 MB so the map pans smoothly on a Raspberry Pi 4. I’d rather make the software lighter than ask for a bigger machine.',
+  },
+  {
+    title: 'Leave it easy to pick up',
+    body: 'Every bug I fixed during my OJT was written up, the kiosk ships with a setup script and guide, and the gate logic has unit tests. The next person should not have to guess.',
+  },
 ]
 
 /**

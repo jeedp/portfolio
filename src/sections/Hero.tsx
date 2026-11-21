@@ -1,74 +1,79 @@
+import { ArrowDown, ArrowRight, FileText, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowUpRight, Download } from 'lucide-react'
-import { profile } from '../data/profile'
-import { Button } from '../components/Button'
+import { profile, projects } from '../data/profile'
+import { Shots } from '../components/Shots'
+import { resumeHref } from '../components/Chrome'
 
 const ease = [0.16, 1, 0.3, 1] as const
-/** The one entrance on the page: the hero's lines rise in turn on load. */
-const rise = (i: number) => ({
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay: 0.08 * i, ease },
-})
 
+/** Name, role and pitch on the left; the strongest project, running for real, on the right. */
 export function Hero() {
-  const pdf = `${import.meta.env.BASE_URL}${profile.resume}`
+  const featured = projects[0]
   return (
-    <section id="home" aria-labelledby="home-title" className="pt-32 pb-22 md:pt-44 md:pb-32">
-      <div className="shell grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-7">
-          <motion.div {...rise(0)} className="flex flex-wrap items-center gap-x-5 gap-y-3">
-            <p className="label">Computer Engineering Student</p>
-            <p className="inline-flex items-center gap-2 text-sm text-body">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-              </span>
-              Open to internships
-            </p>
-          </motion.div>
-
-          <motion.h1 {...rise(1)} id="home-title" className="mt-7 max-w-[13ch] text-[46px] font-semibold leading-[1.02] tracking-[-0.04em] sm:text-7xl lg:text-[84px]">
-            {profile.headline}
-          </motion.h1>
-
-          <motion.p {...rise(2)} className="mt-8 max-w-[50ch] text-lg leading-relaxed text-body sm:text-xl sm:leading-relaxed">
-            I’m <span className="text-ink">{profile.name}</span>, a 4th-year Computer Engineering student at Southern Leyte State University. I build desktop apps, IoT systems and web software, and I’m looking for a software engineering internship.
-          </motion.p>
-
-          <motion.div {...rise(3)} className="mt-10 flex flex-wrap items-center gap-3">
-            <Button href="#projects">View projects <ArrowRight className="size-4" aria-hidden="true" /></Button>
-            <Button href={pdf} variant="secondary" download><Download className="size-4" aria-hidden="true" /> Download résumé</Button>
-          </motion.div>
-
-          <motion.div {...rise(4)} className="mt-8 flex gap-6 text-sm">
-            <a href={profile.github} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">GitHub <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
-            <a href={profile.linkedin} className="link-draw inline-flex items-center gap-1 text-body hover:text-ink">LinkedIn <ArrowUpRight className="size-3.5" aria-hidden="true" /></a>
-          </motion.div>
+    <section aria-labelledby="hero-title" className="grid items-center gap-12 pb-16 pt-12 md:pt-16 lg:grid-cols-12 lg:gap-14 lg:pb-24">
+      <motion.div
+        className="lg:col-span-5"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease }}
+      >
+        <div className="flex items-center gap-4">
+          <img
+            src={`${import.meta.env.BASE_URL}${profile.photo}`}
+            alt={profile.name}
+            width={64}
+            height={64}
+            className="size-16 rounded-full object-cover object-top ring-4 ring-panel"
+          />
+          <p className="text-[15px] text-muted">Hello, it’s me</p>
         </div>
 
-        <motion.figure
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.15, ease }}
-          className="mx-auto w-full max-w-[360px] lg:col-span-5 lg:mr-0 lg:max-w-[440px]"
-        >
-          <div className="overflow-hidden rounded-[28px] border border-line bg-surface">
-            <img
-              src={`${import.meta.env.BASE_URL}${profile.photo}`}
-              alt={`Portrait of ${profile.name}`}
-              width={960}
-              height={1199}
-              fetchPriority="high"
-              className="aspect-[4/5] w-full object-cover object-[50%_28%]"
-            />
+        <h1 id="hero-title" className="mt-8">
+          <span className="spaced block text-[15px] font-medium uppercase text-ink">{profile.name}</span>
+          <span className="mt-4 block text-[44px] font-black uppercase leading-[0.98] tracking-[-0.03em] sm:text-[56px]">
+            Aspiring software engineer
+          </span>
+        </h1>
+
+        <p className="mt-6 max-w-[46ch] text-[17px] leading-relaxed">
+          Computer Engineering student at Southern Leyte State University. I build software that runs on real hardware:
+          desktop apps with their own database, an ESP32 parking gate and an offline campus kiosk.
+        </p>
+
+        <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[14px] text-muted">
+          <span className="inline-flex items-center gap-1.5"><MapPin className="size-4" aria-hidden="true" />{profile.location}</span>
+          <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="size-2 rounded-full bg-accent" />{profile.availability}</span>
+        </p>
+
+        <div className="mt-9 flex flex-wrap gap-3">
+          <a href={`mailto:${profile.email}`} className="inline-flex h-12 items-center gap-2 rounded-full bg-accent px-6 text-[15px] font-medium text-on-accent shadow-[0_10px_24px_-10px_var(--accent)] transition-[filter,transform] hover:brightness-110 active:scale-[.97]">
+            Let’s talk <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+          <a href={resumeHref} target="_blank" rel="noopener" className="inline-flex h-12 items-center gap-2 rounded-full border border-line-strong px-6 text-[15px] font-medium text-ink transition-[background-color,transform] hover:bg-panel active:scale-[.97]">
+            <FileText className="size-4" aria-hidden="true" /> Résumé
+          </a>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="lg:col-span-7"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.12, ease }}
+      >
+        <a href={`#${featured.id}`} className="group block" aria-label={`Featured work: ${featured.title}. Go to the project.`}>
+          <Shots project={featured} eager />
+          <div className="mt-5 flex flex-col gap-3 px-1 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+            <div>
+              <p className="eyebrow"><span aria-hidden="true" className="mr-2 inline-block size-1.5 rounded-full bg-accent align-middle" />Featured · {featured.kind} · {featured.status}</p>
+              <p className="mt-2 text-[22px] font-bold leading-snug tracking-[-0.01em] text-ink">{featured.title}</p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-1.5 text-[15px] font-medium text-accent-text">
+              See the project <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+            </span>
           </div>
-          <figcaption className="mt-4 flex items-center justify-between text-sm">
-            <span className="text-ink">{profile.name}</span>
-            <span className="text-muted">Southern Leyte, Philippines</span>
-          </figcaption>
-        </motion.figure>
-      </div>
+        </a>
+      </motion.div>
     </section>
   )
 }

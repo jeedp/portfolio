@@ -1,41 +1,131 @@
-import { about } from '../data/profile'
-import { Section } from '../components/Section'
+import { ArrowUpRight } from 'lucide-react'
+import { about, certificates, education, philosophy, profile, skills, timeline } from '../data/profile'
+import { SectionTitle } from '../components/Chrome'
+import { TechBadge } from '../components/TechBadge'
 import { Reveal } from '../components/Reveal'
 
+function Sub({ children, id }: { children: string; id: string }) {
+  return (
+    <h3 id={id} className="flex items-center gap-3 text-[13px] font-medium uppercase tracking-[0.16em] text-ink">
+      <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />{children}
+    </h3>
+  )
+}
+
 const facts = [
-  { label: 'Education', value: 'BS Computer Engineering, 4th year' },
-  { label: 'University', value: 'Southern Leyte State University' },
-  { label: 'Location', value: 'Southern Leyte, Philippines' },
-  { label: 'Current focus', value: 'Software development and embedded systems' },
+  { k: 'Studying', v: `BS Computer Engineering, ${education.school}` },
+  { k: 'Graduating', v: education.expected.replace('Expected ', '') },
+  { k: 'Based in', v: profile.location },
+  { k: 'Looking for', v: 'A software engineering internship' },
 ]
 
-/** Editorial: the heading on the left column line, two short paragraphs, then a quiet row of facts. */
 export function About() {
-  const [first, second, third] = about.paragraphs
+  const experience = timeline.filter(t => !t.placeholder)
+  const certs = certificates.filter(c => !c.placeholder)
   return (
-    <Section id="about" number="01" label="About" title="A little about me.">
-      <div className="grid gap-8 md:grid-cols-12 md:gap-8">
-        <Reveal className="md:col-span-9 md:col-start-4">
-          <p className="max-w-[40ch] text-2xl font-medium leading-snug tracking-[-0.015em] text-ink sm:text-[28px]">
-            {first}
-          </p>
-          <div className="mt-10 grid gap-6 text-[17px] leading-relaxed sm:grid-cols-2 sm:gap-10">
-            <p>{second}</p>
-            <p>{third}</p>
-          </div>
+    <section aria-labelledby="about" className="py-16 md:py-24">
+      <SectionTitle id="about" title="About Me" subtitle="Who I am, what I’ve done, and how I work." />
+
+      {/* Bio and portrait */}
+      <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="space-y-5 text-[17px] leading-relaxed lg:col-span-7">
+          {about.paragraphs.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
+          <dl className="!mt-10 grid gap-x-8 gap-y-5 border-t border-line pt-8 sm:grid-cols-2">
+            {facts.map(f => (
+              <div key={f.k}>
+                <dt className="eyebrow">{f.k}</dt>
+                <dd className="mt-1 text-[16px] font-medium text-ink">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+        <Reveal delay={0.1} className="lg:col-span-5">
+          <figure className="relative mx-auto max-w-[400px]">
+            <span aria-hidden="true" className="absolute inset-0 translate-x-4 translate-y-4 rounded-[24px] bg-accent-soft ring-1 ring-accent/30" />
+            <img
+              src={`${import.meta.env.BASE_URL}${profile.photo}`}
+              alt={`Portrait of ${profile.name}`}
+              loading="lazy"
+              className="relative aspect-[4/5] w-full rounded-[24px] object-cover object-top"
+            />
+          </figure>
         </Reveal>
       </div>
 
-      <Reveal>
-        <dl className="mt-16 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
-          {facts.map(f => (
-            <div key={f.label} className="border-t border-line-strong pt-5">
-              <dt className="label">{f.label}</dt>
-              <dd className="mt-3 text-[17px] leading-snug text-ink">{f.value}</dd>
+      {/* Experience */}
+      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
+        <div className="lg:col-span-4">
+          <Sub id="exp-title">Experience</Sub>
+          <p className="mt-4 max-w-[34ch] text-muted">Internship, thesis and training so far, newest first.</p>
+        </div>
+        <ol className="divide-y divide-line border-y border-line lg:col-span-8">
+          {experience.map(t => (
+            <Reveal key={t.title}>
+              <li className="grid gap-2 py-6 sm:grid-cols-[160px_1fr] sm:gap-8">
+                <p className="tabular font-mono text-[13px] uppercase tracking-[0.08em] text-muted sm:pt-1">{t.period}</p>
+                <div>
+                  <p className="text-[19px] font-bold text-ink">{t.title}</p>
+                  <p className="text-[15px] text-muted">{t.org}</p>
+                  {t.description && <p className="mt-2 text-[16px]">{t.description}</p>}
+                </div>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+
+      {/* How I work */}
+      <div className="mt-24" aria-labelledby="how-title">
+        <Sub id="how-title">How I work</Sub>
+        <ol className="mt-8 grid gap-4 md:grid-cols-3">
+          {philosophy.map((p, i) => (
+            <Reveal key={p.title} delay={i * 0.06}>
+              <li className="h-full rounded-[22px] bg-panel p-7">
+                <p className="tabular font-mono text-[13px] text-accent-text">{String(i + 1).padStart(2, '0')}</p>
+                <p className="mt-5 text-[20px] font-bold leading-snug tracking-[-0.01em] text-ink">{p.title}</p>
+                <p className="mt-3 text-[16px] leading-relaxed">{p.body}</p>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+
+      {/* Toolkit */}
+      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="tools-title">
+        <div className="lg:col-span-4">
+          <Sub id="tools-title">Toolkit</Sub>
+          <p className="mt-4 max-w-[34ch] text-muted">What I’ve used in coursework, projects and my internship.</p>
+        </div>
+        <dl className="space-y-6 lg:col-span-8">
+          {skills.map(g => (
+            <div key={g.name} className="grid gap-3 sm:grid-cols-[160px_1fr] sm:gap-8">
+              <dt className="text-[15px] font-medium text-ink sm:pt-1.5">{g.name}</dt>
+              <dd className="flex flex-wrap gap-2">{g.items.map(t => <TechBadge key={t} name={t} size="sm" />)}</dd>
             </div>
           ))}
         </dl>
-      </Reveal>
-    </Section>
+      </div>
+
+      {/* Certifications */}
+      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="cert-title">
+        <div className="lg:col-span-4">
+          <Sub id="cert-title">Certifications</Sub>
+          <p className="mt-4 max-w-[34ch] text-muted">Cisco Networking Academy courses through the DICT-ITU DTC Initiative.</p>
+        </div>
+        <ul className="divide-y divide-line border-y border-line lg:col-span-8">
+          {certs.map(c => (
+            <li key={c.title}>
+              <a href={c.file ? `${import.meta.env.BASE_URL}${c.file}` : undefined} target="_blank" rel="noopener" className="group flex items-center justify-between gap-6 py-4">
+                <span className="text-[16px] font-medium text-ink transition-colors group-hover:text-accent-text">{c.title}</span>
+                <span className="flex shrink-0 items-center gap-3 text-[14px] text-muted">
+                  <span className="tabular">{c.date}</span>
+                  <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   )
 }
