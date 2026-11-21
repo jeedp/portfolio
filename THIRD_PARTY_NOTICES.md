@@ -4,7 +4,7 @@
   released under CC0 1.0. The logos remain trademarks of their respective owners.
 - **Tabler Icons** (https://tabler.io/icons): the GitHub, LinkedIn and email outline icons, MIT License.
 - **Lucide** (https://lucide.dev): interface icons, ISC License.
-- **OpenStreetMap** (https://www.openstreetmap.org/copyright): the SLSU campus map image in the Campus Wayfinding project.
+- **OpenStreetMap** (https://www.openstreetmap.org/copyright): the map tiles visible in the Campus Wayfinding kiosk screenshot.
   Map data © OpenStreetMap contributors, available under the Open Database License.
 
 Earlier versions of this site (before November 21, 2026) adapted the layout of DevPortfolio by

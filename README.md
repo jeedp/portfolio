@@ -54,7 +54,8 @@ Almost everything lives in **`src/data/profile.ts`**. Change it, save, and the s
 - **Your photo:** put a square photo at `public/profile.jpg` and set `photo: 'profile.jpg'`. Until then a "JP" monogram shows.
 - **About me:** the `about.paragraphs`, `about.highlights` and `about.interests` lists.
 - **Skills:** the `skills` list. Each group has a name, an icon (`code`, `globe`, `database`, `cpu` or `wrench`) and its items.
-- **Projects:** the `projects` list (problem, objective, contributions, features, challenges, result, availability). To add a screenshot, put the image in `public/projects/` (for example `public/projects/trainsmart.png`) and set `image: 'projects/trainsmart.png'` on that project. Until then the card shows a diagram of how the project works. `category` (`Desktop`, `IoT` or `Web`) drives the filter buttons.
+- **Projects:** the `projects` list (problem, objective, contributions, features, challenges, result, availability). Each project needs `shots`: real screenshots in `public/projects/`, with `shotLayout: 'wide'` for desktop or web views and `'phone'` for tall app windows. The first project is also featured in the hero.
+- **How I work:** the `philosophy` list, shown in the About section.
 - **Experience and education:** the `timeline` list. Entries with `placeholder: true` show as dashed "add this" cards; replace them with real entries or delete them.
 - **Certificates:** the `certificates` list. Put the PDF in `public/certificates/`, set `file: 'certificates/<name>.pdf'` and `image: 'certificates/<name>.jpg'`, then run `npm run thumbs` to render the thumbnail from the PDF (needs Python with PyMuPDF: `pip install pymupdf`).
 - **Project write-ups:** each project's `focus` (the engineering problem it's really about), `details` (shown in the expandable panel) and `availability` (where the code lives) are in the `projects` list.
