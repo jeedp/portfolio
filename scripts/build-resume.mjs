@@ -54,9 +54,9 @@ const projectBullets = {
     'Wrote the setup script and guide that turn a blank SD card into a working kiosk.',
   ],
   parking: [
-    'Automated vehicle entry with RFID authorisation, ultrasonic slot sensing and a servo-driven gate on an ESP32.',
+    'Wrote the ESP32 firmware for RFID entry, slot sensing and the servo gate; teammates built the hardware.',
     'Kept gate control and networking on separate FreeRTOS cores, so the gate never waits on the network.',
-    'Built a live slot dashboard with Bluetooth LE manual control; unit-tested the gate and RFID logic.',
+    'Built the live web dashboard on my own, with Bluetooth LE manual control; unit-tested the gate logic.',
   ],
   trainsmart: [
     'Desktop app to plan routines, log workouts and sets, and track body measurements over time.',
