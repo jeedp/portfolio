@@ -6,7 +6,7 @@ Live at **https://jeedp.github.io/portfolio/**
 
 Built with React, TypeScript, Vite, Tailwind CSS, Lucide icons and Framer Motion.
 
-The design is adapted from [DevPortfolio](https://github.com/RyanFitzgerald/devportfolio) by Ryan Fitzgerald (MIT License); see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Technology logos come from [Simple Icons](https://simpleicons.org) (CC0); see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for all third-party assets.
 
 ## Run it locally
 
