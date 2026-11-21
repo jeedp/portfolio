@@ -136,7 +136,7 @@ export const projects: Project[] = [
     summary: 'An IoT parking system that checks RFID cards at the gate, tracks free slots with ultrasonic sensors and shows everything on a live web dashboard.',
     problem: 'A manual gate can’t tell drivers how many slots are free, or check who is allowed in.',
     objective: 'Automate entry for authorised cards and show live slot availability on a web dashboard.',
-    contributions: ['Built it solo, from pin mapping and firmware to the dashboard', 'Wrote unit tests for the gate and RFID logic', 'Set up the build with PlatformIO'],
+    contributions: ['Wrote the ESP32 firmware, from pin mapping to the FreeRTOS tasks', 'Built the web dashboard on my own', 'Wrote unit tests for the gate and RFID logic and set up the PlatformIO build'],
     features: ['RFID-based vehicle authorisation with an automated servo gate', 'Real-time slot availability from ultrasonic sensors', 'Web dashboard with live slots, gate state and the last 20 events'],
     challenges: [
       { challenge: 'A slow Firebase connection could stall the gate.', solution: 'Gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores.' },
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     result: { value: '2 cores', label: 'gate control and networking kept apart, so the gate never waits on the network' },
     tech: ['C++', 'ESP32', 'FreeRTOS', 'Firebase', 'JavaScript', 'PlatformIO'],
     repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
-    availability: 'Solo project · source on GitHub',
+    availability: 'Team project: I wrote the firmware and the dashboard, my teammates built the hardware · source on GitHub',
     shots: [{ src: 'projects/parking-dashboard.webp', alt: 'Smart Parking Gate web dashboard showing 5 of 6 spaces free, entries and exits today, gate status, a 24-hour vehicle chart, Bluetooth controls and the access log' }],
     shotLayout: 'wide',
   },
