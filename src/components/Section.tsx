@@ -1,29 +1,24 @@
 import type { ReactNode } from 'react'
-import { motion } from 'framer-motion'
 
-type Props = { id: string; title: string; note?: ReactNode; children: ReactNode; className?: string }
+type Props = { id: string; label: string; title: ReactNode; intro?: ReactNode; action?: ReactNode; children: ReactNode; className?: string }
 
-/**
- * The template's section: a large monospace title with a short accent bar on the left four columns,
- * the content on the right eight. The bar draws in once when the section first comes into view.
- */
-export function Section({ id, title, note, children, className = '' }: Props) {
+/** A section: a small label, the heading, an optional line under it and an optional action on the right. */
+export function Section({ id, label, title, intro, action, children, className = '' }: Props) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={`py-20 sm:py-24 lg:py-28 ${className}`}>
-      <div className="shell grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:sticky lg:top-28 lg:col-span-4">
-          <h2 id={`${id}-title`} className="text-4xl font-bold tracking-tight sm:text-5xl xl:text-6xl">{title}</h2>
-          <motion.div
-            aria-hidden="true"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-3 h-[5px] w-[75px] origin-left rounded-full bg-accent"
-          />
-          {note && <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-muted">{note}</p>}
-        </div>
-        <div className="min-w-0 lg:col-span-8">{children}</div>
+    <section id={id} aria-labelledby={`${id}-title`} className={`py-20 sm:py-28 ${className}`}>
+      <div className="shell">
+        <header className="mb-10 flex flex-wrap items-end justify-between gap-6 sm:mb-14">
+          <div className="max-w-2xl">
+            <p className="mb-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-muted">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
+              {label}
+            </p>
+            <h2 id={`${id}-title`} className="text-3xl font-semibold sm:text-[44px] sm:leading-[1.1]">{title}</h2>
+            {intro && <p className="mt-4 text-base leading-relaxed text-body sm:text-lg">{intro}</p>}
+          </div>
+          {action}
+        </header>
+        {children}
       </div>
     </section>
   )

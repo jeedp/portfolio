@@ -10,7 +10,7 @@ export function ProjectVisual({ project, tall = false }: { project: Project; tal
     return <img src={`${import.meta.env.BASE_URL}${project.image}`} alt={`Screenshot of ${project.title}`} loading="lazy" className={`${ratio} w-full object-cover object-top`} />
   }
   return (
-    <div className={`dots relative w-full bg-soft ${ratio}`}>
+    <div className={`dots relative w-full ${ratio}`}>
       <Diagram kind={project.diagram} title={project.title} />
     </div>
   )
@@ -21,7 +21,7 @@ type Node = { x: number; y: number; w: number; h: number; label: string; sub?: s
 function Box({ n }: { n: Node }) {
   return (
     <g>
-      <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={12} fill={n.core ? 'var(--accent)' : 'var(--card)'} stroke={n.core ? 'none' : 'var(--line-strong)'} strokeWidth={1.25} />
+      <rect x={n.x} y={n.y} width={n.w} height={n.h} rx={12} fill={n.core ? 'var(--accent)' : 'var(--bg)'} stroke={n.core ? 'none' : 'var(--line-strong)'} strokeWidth={1.25} />
       <text x={n.x + n.w / 2} y={n.y + (n.sub ? n.h / 2 - 2 : n.h / 2 + 5)} textAnchor="middle" fill={n.core ? 'var(--on-accent)' : 'var(--ink)'} fontSize={15} fontWeight={500} fontFamily="var(--font-sans)">{n.label}</text>
       {n.sub && <text x={n.x + n.w / 2} y={n.y + n.h / 2 + 17} textAnchor="middle" fill={n.core ? 'var(--on-accent)' : 'var(--muted)'} fillOpacity={n.core ? 0.8 : 1} fontSize={12} fontFamily="var(--font-sans)">{n.sub}</text>}
     </g>
