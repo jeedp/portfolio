@@ -6,7 +6,7 @@ export function Avatar({ className = '' }: { className?: string }) {
   const [failed, setFailed] = useState(false)
   const src = profile.photo && !failed ? `${import.meta.env.BASE_URL}${profile.photo}` : ''
   return (
-    <div className={`relative overflow-hidden bg-raised ${className}`}>
+    <div className={`relative overflow-hidden bg-soft ${className}`}>
       {src ? (
         <img
           src={src}
@@ -18,7 +18,7 @@ export function Avatar({ className = '' }: { className?: string }) {
           className="size-full object-cover object-[50%_30%]"
         />
       ) : (
-        <div role="img" aria-label={`${profile.name}'s monogram`} className="display grid size-full place-items-center text-7xl text-ink">JP</div>
+        <div role="img" aria-label={`${profile.name}'s monogram`} className="grid size-full place-items-center font-mono text-6xl font-bold text-ink">JP</div>
       )}
     </div>
   )

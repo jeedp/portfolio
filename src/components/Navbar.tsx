@@ -5,33 +5,42 @@ import { nav, profile } from '../data/profile'
 import { useActiveSection } from '../hooks/useActiveSection'
 
 const ids = nav.map(n => n.id)
-const pill = 'border border-line bg-surface/75 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.5)] backdrop-blur-xl'
 
-/** A floating navigation: the name on the left, the sections in a centred pill, actions on the right. */
+/**
+ * The template's header (centred links, a frosted bar once you scroll past the hero),
+ * extended with the name on the left, a theme switch, a résumé link and a mobile menu.
+ */
 export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onToggleTheme: () => void }) {
   const active = useActiveSection(ids)
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+    return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
+  const solid = scrolled || open
   return (
-    <header className="fixed inset-x-0 top-0 z-50 pt-4">
-      <a href="#about" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:text-on-accent">
+    <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${solid ? 'bg-bg/80 shadow-[0_1px_0_var(--line)] backdrop-blur-md' : ''}`}>
+      <a href="#about" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-10 focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-on-accent">
         Skip to content
       </a>
-      <nav aria-label="Main" className="container-page flex items-center justify-between gap-4">
-        <a href="#home" className={`flex h-11 items-center gap-2.5 rounded-full pl-1.5 pr-4 text-sm font-medium text-ink ${pill}`}>
-          <img src={`${import.meta.env.BASE_URL}${profile.photo}`} alt="" width={32} height={32} className="size-8 rounded-full object-cover object-top" />
-          {profile.shortName}
+      <nav aria-label="Main" className="shell flex h-16 items-center justify-between gap-6">
+        <a href="#home" className={`font-mono text-[15px] font-semibold text-ink transition-opacity duration-300 ${solid ? 'opacity-100' : 'md:opacity-0 md:pointer-events-none'}`}>
+          {profile.shortName}<span className="text-accent">.</span>
         </a>
 
-        <ul className={`hidden h-11 items-center rounded-full px-1.5 md:flex ${pill}`}>
+        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {nav.filter(n => n.id !== 'home').map(item => {
             const isActive = active === item.id
             return (
@@ -39,12 +48,12 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
                 <a
                   href={`#${item.id}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`relative block rounded-full px-4 py-1.5 text-sm transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
+                  className={`relative py-1 font-mono text-[15px] font-medium transition-colors ${isActive ? 'text-ink' : 'text-muted hover:text-ink'}`}
                 >
+                  {item.label}
                   {isActive && (
-                    <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-raised" transition={{ type: 'spring', stiffness: 450, damping: 38 }} />
+                    <motion.span layoutId="nav-bar" aria-hidden="true" className="absolute inset-x-0 -bottom-1 h-0.5 rounded-full bg-accent" transition={{ type: 'spring', stiffness: 500, damping: 40 }} />
                   )}
-                  <span className="relative">{item.label}</span>
                 </a>
               </li>
             )
@@ -56,12 +65,16 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
             type="button"
             onClick={onToggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-            className={`grid size-11 place-items-center rounded-full text-muted transition-colors hover:text-ink ${pill}`}
+            className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:bg-soft hover:text-ink"
           >
-            {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            {theme === 'dark' ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
           </button>
-          <a href="#contact" className="hidden h-11 items-center rounded-full bg-accent px-5 text-sm font-medium text-on-accent transition-[filter,transform] hover:brightness-110 active:scale-[.97] lg:inline-flex">
-            Let's talk
+          <a
+            href={`${import.meta.env.BASE_URL}${profile.resume}`}
+            download
+            className="hidden h-10 items-center rounded-full bg-ink px-5 font-mono text-sm font-medium text-bg transition-[background-color,color,transform] hover:bg-accent hover:text-on-accent active:scale-[.97] md:inline-flex"
+          >
+            Résumé
           </a>
           <button
             type="button"
@@ -69,7 +82,7 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className={`grid size-11 place-items-center rounded-full text-ink md:hidden ${pill}`}
+            className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-soft md:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -80,28 +93,30 @@ export function Navbar({ theme, onToggleTheme }: { theme: 'dark' | 'light'; onTo
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className={`container-page mt-3 rounded-3xl p-3 md:hidden ${pill}`}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden md:hidden"
           >
-            <ul>
+            <ul className="shell pb-6">
               {nav.map(item => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
                     onClick={() => setOpen(false)}
-                    className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-lg ${active === item.id ? 'bg-raised text-ink' : 'text-body'}`}
+                    className={`block border-b border-line py-3.5 font-mono text-lg ${active === item.id ? 'text-accent' : 'text-ink'}`}
                   >
                     {item.label}
                   </a>
                 </li>
               ))}
+              <li className="pt-5">
+                <a href={`${import.meta.env.BASE_URL}${profile.resume}`} download className="flex h-12 items-center justify-center rounded-full bg-ink font-mono text-sm font-medium text-bg">
+                  Download résumé
+                </a>
+              </li>
             </ul>
-            <a href={`${import.meta.env.BASE_URL}${profile.resume}`} download className="mt-2 flex h-12 items-center justify-center rounded-2xl bg-accent text-[15px] font-medium text-on-accent">
-              Download résumé
-            </a>
           </motion.div>
         )}
       </AnimatePresence>
