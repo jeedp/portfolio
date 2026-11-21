@@ -1,15 +1,18 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-/* Design tokens. Warm charcoal by default (it sits well with the grey backdrop of the portrait);
-   [data-theme="light"] switches the whole site. Electric blue is the only accent. */
+/*
+  Layout and visual language adapted from DevPortfolio by Ryan Fitzgerald (MIT License):
+  https://github.com/RyanFitzgerald/devportfolio
+  Light by default like the original, with a dark theme added. One accent: electric blue.
+*/
 @theme {
-  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-raised: var(--raised);
+  --color-soft: var(--soft);
+  --color-card: var(--card);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-ink: var(--ink);
@@ -23,41 +26,43 @@
 }
 
 :root {
-  --bg: #0e0e0d;
-  --surface: #161615;
-  --raised: #1d1d1b;
-  --line: rgb(255 250 240 / 0.08);
-  --line-strong: rgb(255 250 240 / 0.15);
-  --ink: #f2f0eb;
-  --body: #b8b5ad;
-  --muted: #8a877f;
-  --accent: #4d8dff;
-  --accent-soft: rgb(77 141 255 / 0.12);
+  --bg: #ffffff;
+  --soft: #f8f9fb;
+  --card: #ffffff;
+  --line: #e7e9ee;
+  --line-strong: #d3d7df;
+  --ink: #111827;
+  --body: #4b5563;
+  --muted: #6b7280;
+  --accent: #1d4ed8;
+  --accent-soft: rgb(29 78 216 / 0.08);
   --on-accent: #ffffff;
-  color-scheme: dark;
+  --hero-grid: #e5e7eb;
+  color-scheme: light;
 }
 
-:root[data-theme="light"] {
-  --bg: #f6f5f2;
-  --surface: #ffffff;
-  --raised: #edece8;
-  --line: rgb(20 18 14 / 0.09);
-  --line-strong: rgb(20 18 14 / 0.17);
-  --ink: #141311;
-  --body: #46433d;
-  --muted: #6e6a62;
-  --accent: #1f5fe0;
-  --accent-soft: rgb(31 95 224 / 0.08);
+:root[data-theme="dark"] {
+  --bg: #0b0f17;
+  --soft: #0f1520;
+  --card: #111827;
+  --line: #1f2937;
+  --line-strong: #2d3748;
+  --ink: #f3f4f6;
+  --body: #b4bccb;
+  --muted: #8b95a7;
+  --accent: #5b8cff;
+  --accent-soft: rgb(91 140 255 / 0.12);
   --on-accent: #ffffff;
-  color-scheme: light;
+  --hero-grid: #1c2433;
+  color-scheme: dark;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
-    scrollbar-color: var(--line-strong) var(--bg);
+    scroll-padding-top: 5rem;
     accent-color: var(--accent);
+    scrollbar-color: var(--line-strong) var(--bg);
     -webkit-tap-highlight-color: transparent;
   }
   body {
@@ -65,9 +70,8 @@
     color: var(--body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4 { color: var(--ink); text-wrap: balance; }
+  h1, h2, h3 { color: var(--ink); font-family: var(--font-mono); text-wrap: balance; }
   p { text-wrap: pretty; }
   ::selection { background: var(--accent); color: var(--on-accent); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
@@ -75,11 +79,9 @@
 }
 
 @layer components {
-  .container-page { width: min(1200px, 100% - 2.5rem); margin-inline: auto; }
-  @media (min-width: 640px) { .container-page { width: min(1200px, 100% - 4rem); } }
-
-  /* serif display type: the personal voice of the page */
-  .display { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.015em; line-height: 0.95; }
+  .shell { width: 100%; margin-inline: auto; max-width: 1400px; padding-inline: 1.5rem; }
+  @media (min-width: 640px) { .shell { padding-inline: 3rem; } }
+  @media (min-width: 1024px) { .shell { padding-inline: 6rem; } }
 
   .link-draw {
     background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
