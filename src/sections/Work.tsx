@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Plus, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Plus, X } from 'lucide-react'
 import { projects, type Project } from '../data/profile'
 import { SectionTitle } from '../components/Chrome'
 import { Shots } from '../components/Shots'
@@ -69,14 +69,20 @@ function CaseStudy({ project, onClose }: { project: Project; onClose: () => void
   )
 }
 
-/** `featured`: the hero already shows this project's screenshot, so on small screens the row skips it. */
-function ProjectRow({ project, n, flip, featured, onOpen }: { project: Project; n: number; flip: boolean; featured: boolean; onOpen: () => void }) {
+/** One project: its real screenshots beside what it is, what I did, the stack and the links. */
+function ProjectSlide({ project, n, total, onOpen }: { project: Project; n: number; total: number; onOpen: () => void }) {
   return (
-    <article id={project.id} aria-labelledby={`t-${project.id}`} className="grid scroll-mt-8 items-center gap-8 lg:grid-cols-12 lg:gap-14">
-      <Reveal className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''} ${featured ? 'hidden lg:block' : ''}`}>
+    <article
+      id={project.id}
+      aria-labelledby={`t-${project.id}`}
+      aria-roledescription="slide"
+      aria-label={`${n} of ${total}`}
+      className="grid w-full shrink-0 snap-start snap-always scroll-mt-8 items-start gap-8 lg:grid-cols-12 lg:gap-14"
+    >
+      <div className="lg:col-span-7">
         <Shots project={project} />
-      </Reveal>
-      <Reveal delay={0.08} className="lg:col-span-5">
+      </div>
+      <div className="lg:col-span-5">
         <p className="eyebrow"><span className="text-accent-text">{String(n).padStart(2, '0')}</span> <span aria-hidden="true" className="mx-1.5 inline-block h-px w-5 bg-line-strong align-middle" /> {label(project)}</p>
         <h3 id={`t-${project.id}`} className="mt-4 text-[28px] font-bold leading-tight tracking-[-0.02em] sm:text-[32px]">{project.title}</h3>
         <p className="mt-4 leading-relaxed">{project.summary}</p>
@@ -105,20 +111,85 @@ function ProjectRow({ project, n, flip, featured, onOpen }: { project: Project; 
             </a>
           )}
         </div>
-      </Reveal>
+      </div>
     </article>
   )
 }
 
+const arrow = 'grid size-11 place-items-center rounded-full border border-line-strong text-ink transition-[background-color,opacity,transform] hover:bg-panel active:scale-95 disabled:pointer-events-none disabled:opacity-30'
+
+/** The projects as a carousel: one per slide, moved by arrows, dots, swipe, trackpad or the arrow keys. */
 export function Work() {
+  const track = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
   const [open, setOpen] = useState<number | null>(null)
   const close = useCallback(() => setOpen(null), [])
+  const total = projects.length
+
+  useEffect(() => {
+    const el = track.current
+    if (!el) return
+    const update = () => setActive(Math.min(total - 1, Math.max(0, Math.round(el.scrollLeft / el.clientWidth))))
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => { el.removeEventListener('scroll', update); window.removeEventListener('resize', update) }
+  }, [total])
+
+  const go = (i: number) => {
+    const el = track.current
+    if (!el) return
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    el.scrollTo({ left: Math.min(total - 1, Math.max(0, i)) * el.clientWidth, behavior: reduce ? 'auto' : 'smooth' })
+  }
+
   return (
     <section aria-labelledby="work" className="py-16 md:py-24">
-      <SectionTitle id="work" title="Selected Work" subtitle="Three systems I built, each shown running for real." />
-      <div className="space-y-24 md:space-y-32">
-        {projects.map((p, i) => <ProjectRow key={p.id} project={p} n={i + 1} flip={i % 2 === 1} featured={i === 0} onOpen={() => setOpen(i)} />)}
+      <div className="flex flex-wrap items-end justify-between gap-x-8">
+        <SectionTitle id="work" title="Selected Work" subtitle="Three systems I built, each shown running for real." />
+        <div className="mb-12 flex items-center gap-5 md:mb-16">
+          <p className="tabular font-mono text-[14px] text-muted" aria-live="polite">
+            <span className="text-ink">{String(active + 1).padStart(2, '0')}</span> / {String(total).padStart(2, '0')}
+          </p>
+          <div className="flex gap-2">
+            <button type="button" onClick={() => go(active - 1)} disabled={active === 0} aria-label="Previous project" className={arrow}><ArrowLeft className="size-4" /></button>
+            <button type="button" onClick={() => go(active + 1)} disabled={active === total - 1} aria-label="Next project" className={arrow}><ArrowRight className="size-4" /></button>
+          </div>
+        </div>
       </div>
+
+      <Reveal>
+        <div
+          ref={track}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Selected work"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); go(active + 1) }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); go(active - 1) }
+          }}
+          className="flex snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain rounded-[22px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {projects.map((p, i) => <ProjectSlide key={p.id} project={p} n={i + 1} total={total} onOpen={() => setOpen(i)} />)}
+        </div>
+      </Reveal>
+
+      <div className="mt-10 flex justify-center gap-2" role="group" aria-label="Choose a project">
+        {projects.map((p, i) => (
+          <button
+            key={p.id}
+            type="button"
+            onClick={() => go(i)}
+            aria-label={`${p.title}${i === active ? ' (showing)' : ''}`}
+            aria-current={i === active}
+            className="group grid h-8 place-items-center px-1"
+          >
+            <span className={`block h-[3px] rounded-full transition-[width,background-color] duration-300 ${i === active ? 'w-10 bg-accent' : 'w-5 bg-line-strong group-hover:bg-muted'}`} />
+          </button>
+        ))}
+      </div>
+
       {open !== null && <CaseStudy project={projects[open]} onClose={close} />}
     </section>
   )
