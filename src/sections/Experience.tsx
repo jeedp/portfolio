@@ -1,4 +1,4 @@
-import { Award, BookOpen, Briefcase, GraduationCap, Presentation } from 'lucide-react'
+import { ArrowUpRight, Award, BookOpen, Briefcase, GraduationCap, Presentation } from 'lucide-react'
 import { certificates, timeline, type TimelineItem } from '../data/profile'
 import { Section } from '../components/Section'
 import { Card } from '../components/Card'
@@ -50,16 +50,35 @@ export function Experience() {
 
 export function Certifications() {
   const items = certificates.filter(c => showPlaceholders || !c.placeholder)
+  const base = import.meta.env.BASE_URL
   return (
-    <Section id="certifications" label="Certifications" title="Always learning." intro="Courses completed through Cisco Networking Academy, offered by the DICT-ITU DTC Initiative.">
+    <Section id="certifications" label="Certifications" title="Always learning." intro="Courses completed through Cisco Networking Academy, offered by the DICT-ITU DTC Initiative. Open any certificate to see the original.">
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {items.map(c => (
           <li key={c.title}>
-            <Card className={`flex h-full flex-col p-6 ${c.placeholder ? 'border-dashed opacity-60' : ''}`}>
-              <Award className="size-5 text-accent-2" aria-hidden="true" />
-              <h3 className="mt-5 text-base font-semibold">{c.title}</h3>
-              <p className="mt-1 text-sm text-muted">{c.placeholder ? `${c.issuer} (dev only)` : 'Cisco Networking Academy'}</p>
-              {c.date && <p className="tabular mt-auto pt-5 font-mono text-xs text-muted">Completed {c.date}</p>}
+            <Card className={`group flex h-full flex-col p-3 ${c.placeholder ? 'border-dashed opacity-60' : ''}`}>
+              {c.image ? (
+                <a href={`${base}${c.file ?? c.image}`} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true" className="block overflow-hidden rounded-xl border border-line bg-white">
+                  <img src={`${base}${c.image}`} alt="" width={800} height={542} loading="lazy" className="aspect-[800/542] w-full object-cover transition-transform duration-500 ease-out-expo group-hover:scale-[1.03]" />
+                </a>
+              ) : (
+                <div className="grid aspect-[800/542] place-items-center rounded-xl border border-dashed border-line-strong">
+                  <Award className="size-6 text-muted" aria-hidden="true" />
+                </div>
+              )}
+              <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
+                <h3 className="text-base font-semibold">{c.title}</h3>
+                <p className="mt-1 text-sm text-muted">{c.placeholder ? `${c.issuer} (dev only)` : 'Cisco Networking Academy'}</p>
+                <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+                  {c.date && <span className="tabular font-mono text-xs text-muted">{c.date}</span>}
+                  {c.file && (
+                    <a href={`${base}${c.file}`} target="_blank" rel="noopener" className="link-draw inline-flex items-center gap-1 text-sm font-medium text-ink hover:text-accent-2">
+                      View certificate <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                      <span className="sr-only">: {c.title} (PDF)</span>
+                    </a>
+                  )}
+                </div>
+              </div>
             </Card>
           </li>
         ))}
