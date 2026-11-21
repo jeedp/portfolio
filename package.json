@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "resume": "node scripts/build-resume.mjs"
+    "resume": "node scripts/build-resume.mjs",
+    "thumbs": "python scripts/build-cert-thumbs.py"
   },
   "dependencies": {
     "framer-motion": "^14.14.0",
