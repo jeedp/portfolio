@@ -29,6 +29,7 @@ Other commands:
 | `npm run build` | Type-checks and builds the production site into `dist/` |
 | `npm run preview` | Serves the built `dist/` folder so you can check it before deploying |
 | `npm run resume` | Rebuilds `public/resume.pdf` from your data (needs Chrome or Edge installed) |
+| `npm run thumbs` | Renders certificate thumbnails from the PDFs in `public/certificates/` |
 
 ## Project structure
 
@@ -55,7 +56,8 @@ Almost everything lives in **`src/data/profile.ts`**. Change it, save, and the s
 - **Skills:** the `skills` list. Each group has a name, an icon (`code`, `globe`, `database`, `cpu` or `wrench`) and its items.
 - **Projects:** the `projects` list. To add a screenshot, put the image in `public/projects/` (for example `public/projects/trainsmart.png`) and set `image: 'projects/trainsmart.png'` on that project. Until then the card shows a diagram of how the project works. `category` (`Desktop`, `IoT` or `Web`) drives the filter buttons.
 - **Experience and education:** the `timeline` list. Entries with `placeholder: true` show as dashed "add this" cards; replace them with real entries or delete them.
-- **Certificates:** the `certificates` list. To let visitors open a certificate, put the PDF in `public/certificates/` and set `file: 'certificates/<name>.pdf'`. Placeholders work the same way as in the timeline.
+- **Certificates:** the `certificates` list. Put the PDF in `public/certificates/`, set `file: 'certificates/<name>.pdf'` and `image: 'certificates/<name>.jpg'`, then run `npm run thumbs` to render the thumbnail from the PDF (needs Python with PyMuPDF: `pip install pymupdf`).
+- **Project write-ups:** each project's `focus` (the engineering problem it's really about), `details` (shown in the expandable panel) and `availability` (where the code lives) are in the `projects` list.
 
 ### The résumé PDF
 
