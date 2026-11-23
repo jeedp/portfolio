@@ -43,7 +43,6 @@ const contacts = [
 
 // Experience: real roles only (no placeholders, no education)
 const ojt = timeline.find(t => t.type === 'work')
-const industry = timeline.find(t => t.type === 'training' && !t.placeholder)
 
 // Résumé bullets per project, built from the same facts as the site, in résumé voice
 const projectBullets = {
@@ -151,7 +150,6 @@ ${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: $
       'Traced, fixed and documented five bugs in a production Laravel app with about 260 API routes.',
       'Debugged the Internal Control Questionnaire module across Blade views, jQuery and the JSON API.',
     ] }) : ''}
-    ${industry ? entry({ title: industry.title, right: industry.period, sub: `<b>${esc(industry.org)}</b>` }) : ''}
   </section>
 
   <section>
