@@ -20,7 +20,8 @@ const facts = [
 ]
 
 export function About() {
-  const experience = timeline.filter(t => !t.placeholder)
+  const experience = timeline.filter(t => !t.placeholder && t.type !== 'education')
+  const degree = timeline.find(t => t.type === 'education')
   const certs = certificates.filter(c => !c.placeholder)
   return (
     <section aria-labelledby="about" className="py-16 md:py-24">
@@ -52,11 +53,34 @@ export function About() {
         </Reveal>
       </div>
 
+      {/* Education */}
+      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="edu-title">
+        <div className="lg:col-span-4">
+          <Sub id="edu-title">Education</Sub>
+          <p className="mt-4 max-w-[34ch] text-muted">Where I’m studying and what I’ve covered so far.</p>
+        </div>
+        <div className="border-y border-line lg:col-span-8">
+          <Reveal>
+            <div className="grid gap-2 py-6 sm:grid-cols-[160px_1fr] sm:gap-8">
+              <p className="tabular font-mono text-[13px] uppercase tracking-[0.08em] text-muted sm:pt-1">{degree?.period ?? education.period}<span className="block text-accent-text">Expected</span></p>
+              <div>
+                <p className="text-[19px] font-bold text-ink">{education.degree}</p>
+                <p className="text-[15px] text-muted">{education.school} · {education.location}</p>
+                <p className="eyebrow mt-5">Relevant coursework</p>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {education.coursework.map(c => <li key={c} className="rounded-full border border-line px-3 py-1 text-[14px] text-ink">{c}</li>)}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
       {/* Experience */}
       <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
         <div className="lg:col-span-4">
           <Sub id="exp-title">Experience</Sub>
-          <p className="mt-4 max-w-[34ch] text-muted">Internship, thesis and training so far, newest first.</p>
+          <p className="mt-4 max-w-[34ch] text-muted">My internship and thesis, newest first.</p>
         </div>
         <ol className="divide-y divide-line border-y border-line lg:col-span-8">
           {experience.map(t => (
