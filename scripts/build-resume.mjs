@@ -134,7 +134,7 @@ ${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: $
   <header>
     <div>
       <h1>${esc(profile.name)}</h1>
-      <p class="role">${esc(profile.title)} · ${esc(profile.subtitle)}</p>
+      <p class="role">${esc(profile.title)}</p>
     </div>
     <div class="contact">${contacts.map(c => `<a href="${esc(c.href)}">${c.i}${esc(c.text)}</a>`).join('')}</div>
   </header>
