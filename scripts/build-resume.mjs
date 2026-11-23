@@ -16,7 +16,7 @@ const isPrivate = args.includes('--private')
 const outArg = args.includes('--out') ? args[args.indexOf('--out') + 1] : null
 const out = resolve(outArg ?? (isPrivate ? 'private/Jed-Padro-Resume.pdf' : 'public/resume.pdf'))
 
-const { profile, skills, projects, timeline, certificates, education, softSkills } = await import('../src/data/profile.ts')
+const { profile, skills, projects, timeline, certificates, education, seniorHigh, softSkills } = await import('../src/data/profile.ts')
 const phone = isPrivate && existsSync('resume.private.json') ? JSON.parse(readFileSync('resume.private.json', 'utf8')).phone : null
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
@@ -166,6 +166,10 @@ ${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: $
       <div class="row"><h3>${esc(education.degree)}</h3><span class="date">${esc(education.period)} · ${esc(education.expected)}</span></div>
       <p class="sub"><b>${esc(education.school)}</b> · ${esc(education.location)}</p>
       <p class="coursework"><b>Relevant coursework:</b> ${esc(education.coursework.join(', '))}</p>
+    </div>
+    <div class="entry">
+      <div class="row"><h3>${esc(seniorHigh.level)} <span class="tag">${esc(seniorHigh.honors)}</span></h3><span class="date">${esc(seniorHigh.period)}</span></div>
+      <p class="sub"><b>${esc(seniorHigh.school)}</b> · ${esc(seniorHigh.location)}</p>
     </div>
   </section>
 
