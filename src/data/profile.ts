@@ -202,13 +202,6 @@ export const timeline: TimelineItem[] = [
     tech: ['Node.js', 'SQLite', 'Raspberry Pi'],
   },
   {
-    period: '2025',
-    title: 'International industry program',
-    org: 'The Gifted Solutions and DigiHubPH, Jakarta, Indonesia',
-    type: 'training',
-    description: 'Took part in an international industry program in Jakarta.',
-  },
-  {
     period: 'Add date',
     title: 'Technical training or academic experience',
     org: 'Add a workshop, bootcamp, organization role or competition',

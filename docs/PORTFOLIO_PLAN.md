@@ -67,7 +67,6 @@ For each project: number and title · one-line overview · status · the problem
 - BS Computer Engineering, SLSU (present).
 - Web Developer Intern (OJT), IAMS: Laravel, five production bugs fixed and documented.
 - Thesis: SLSU Campus Wayfinding System (in development).
-- DigiHubPH international industry program, Jakarta (2025).
 - With limited formal employment, the OJT, thesis and real projects *are* the experience. Present them with the same care as jobs: role, organisation, dates, what you did.
 
 **Certifications**
@@ -152,9 +151,8 @@ Skill bars · generic taglines ("passionate developer") · listing every tutoria
 - [x] Three projects: overview, problem, features, contribution, stack, result, status, repo
 - [ ] **Real screenshots**: TrainSMART app windows; parking gate hardware photo and dashboard; wayfinding kiosk screens
 - [ ] Optional: a 30–60 second demo video per project
-- [x] Timeline: degree, OJT, thesis, DigiHubPH program
+- [x] Timeline: degree, OJT, thesis
 - [ ] Degree start year and expected graduation (add when you want them shown)
-- [ ] What you did in the DigiHubPH program
 - [x] Certificates with originals
 - [x] Résumé PDF consistent with the site
 - [x] Email, LinkedIn, GitHub
