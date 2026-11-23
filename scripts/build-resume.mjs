@@ -141,7 +141,7 @@ ${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: $
 
   <section>
     <h2>Summary</h2>
-    <p class="summary">Fourth-year Computer Engineering student at Southern Leyte State University with hands-on experience in web development, databases and embedded systems, from bug fixes in a production Laravel app to an ESP32 parking gate and an offline Raspberry Pi kiosk. Seeking a software engineering internship to contribute to real projects and keep growing.</p>
+    <p class="summary">Fourth-year Computer Engineering student at Southern Leyte State University with hands-on experience in web development, databases and embedded systems, from bug fixes in a production Laravel app to an ESP32 parking gate and an offline Raspberry Pi kiosk.</p>
   </section>
 
   <section>
