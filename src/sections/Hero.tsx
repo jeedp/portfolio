@@ -25,13 +25,13 @@ function Collage() {
   const move = 'transition-transform duration-700 ease-out-expo'
   return (
     <a href="#work" className="group block" aria-label={`Selected work: ${projects.length} projects. Go to the projects.`}>
-      <div className="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-panel">
-        <Frame src={kiosk.shots[0].src} alt={kiosk.shots[0].alt} className={`absolute left-[4%] top-[6%] w-[70%] ${move} group-hover:-translate-y-1`} />
-        <Frame src={parking.shots[0].src} alt={parking.shots[0].alt} className={`absolute bottom-[5%] right-[4%] w-[42%] ${move} group-hover:translate-y-1`} />
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-panel">
+        <Frame src={kiosk.shots[0].src} alt={kiosk.shots[0].alt} className={`absolute left-[4%] top-[6%] w-[74%] ${move} group-hover:-translate-y-1`} />
+        <Frame src={parking.shots[0].src} alt={parking.shots[0].alt} className={`absolute bottom-[5%] right-[4%] w-[46%] ${move} group-hover:translate-y-1`} />
         <img
           src={asset(trainsmart.shots[1].src)}
           alt={trainsmart.shots[1].alt}
-          className={`absolute bottom-[6%] left-[8%] w-[17%] rounded-xl border border-line shadow-[0_22px_45px_-20px_rgb(0_0_0/0.55)] ${move} group-hover:-translate-y-1.5`}
+          className={`absolute bottom-[6%] left-[8%] w-[19%] rounded-xl border border-line shadow-[0_22px_45px_-20px_rgb(0_0_0/0.55)] ${move} group-hover:-translate-y-1.5`}
         />
       </div>
       <div className="mt-4 flex items-end justify-between gap-6 px-1">
