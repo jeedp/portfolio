@@ -22,7 +22,7 @@ export const profile = {
 
   headline: 'Building ideas into practical technology.',
   intro:
-    "Computer Engineering student at Southern Leyte State University, focused on software engineering. I've built desktop apps, IoT devices and web systems, and I'm looking for my first software engineering internship.",
+    "Computer Engineering student at Southern Leyte State University, focused on software engineering. I've built desktop apps, IoT devices and web systems.",
   // Shown in the footer and on the hero spec card.
   updated: 'November 2026',
   timezone: 'Asia/Manila',
@@ -34,7 +34,7 @@ export const about = {
   paragraphs: [
     "I'm a Computer Engineering student at Southern Leyte State University. I like building things that work outside a screenshot: a desktop app with a real database behind it, a gate that opens when an RFID card is tapped, a campus kiosk that keeps running when the network drops.",
     "Most of my projects cross the line between software and hardware, and that's where I'm happiest. I want to understand a system all the way down, from the interface a person taps to the database, the server and the microcontroller underneath.",
-    "I learn by building, reading other people's code, and writing down what I changed and why. Right now I'm finishing my thesis and looking for an internship where I can ship real work and keep learning from experienced engineers.",
+    "I learn by building, reading other people's code, and writing down what I changed and why. Right now I'm finishing my thesis, the SLSU Campus Wayfinding System.",
   ],
   highlights: [
     { value: '3', label: 'projects built across desktop, IoT and web' },

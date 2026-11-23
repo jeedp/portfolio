@@ -16,7 +16,7 @@ const facts = [
   { k: 'Studying', v: `BS Computer Engineering, ${education.school}` },
   { k: 'Graduating', v: education.expected.replace('Expected ', '') },
   { k: 'Based in', v: profile.location },
-  { k: 'Looking for', v: 'A software engineering internship' },
+  { k: 'Interested in', v: 'Software engineering, embedded systems, IoT' },
 ]
 
 export function About() {
