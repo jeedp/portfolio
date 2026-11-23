@@ -33,7 +33,7 @@ export function Header({ theme, onToggleTheme }: { theme: 'light' | 'dark'; onTo
     <header className="flex items-center justify-between gap-4 px-5 pt-6 sm:px-8 md:px-12 md:pt-8">
       <div className="flex items-center gap-6 md:gap-12">
         <Logo />
-        <a href={`mailto:${profile.email}`} className="hidden items-center gap-2 text-[14px] font-medium text-body transition-colors hover:text-ink md:inline-flex">
+        <a href={`mailto:${profile.email}`} className="hidden items-center gap-2 text-[14px] font-medium text-body transition-colors hover:text-ink lg:inline-flex">
           <Mail className="size-4" aria-hidden="true" /> {profile.email}
         </a>
         <button
