@@ -7,7 +7,7 @@ import { Reveal } from '../components/Reveal'
 export function Contact() {
   return (
     <footer aria-labelledby="contact" className="pt-16 md:pt-24">
-      <SectionTitle id="contact" title="Keep in Touch" subtitle="Open to software engineering internships. Email is the quickest way to reach me." />
+      <SectionTitle id="contact" title="Keep in Touch" subtitle="Open to internships. Email is the quickest way to reach me." />
       <Reveal>
         <div className="rounded-[28px] bg-panel px-6 py-12 sm:px-12 md:py-16">
           <p className="eyebrow">Say hello</p>

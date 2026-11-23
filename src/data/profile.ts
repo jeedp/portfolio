@@ -18,7 +18,7 @@ export const profile = {
   photo: 'profile.jpg',
   // The PDF in public/resume.pdf. Rebuild it with `npm run resume`, or replace the file with your own.
   resume: 'resume.pdf',
-  availability: 'Open to software engineering internships',
+  availability: 'Open to internships',
 
   headline: 'Building ideas into practical technology.',
   intro:
