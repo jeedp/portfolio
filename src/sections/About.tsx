@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
-import { about, certificates, education, philosophy, profile, skills, timeline } from '../data/profile'
+import { about, certificates, education, philosophy, profile, seniorHigh, skills, timeline } from '../data/profile'
 import { SectionTitle } from '../components/Chrome'
 import { TechBadge } from '../components/TechBadge'
 import { Reveal } from '../components/Reveal'
@@ -57,7 +57,7 @@ export function About() {
       <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="edu-title">
         <div className="lg:col-span-4">
           <Sub id="edu-title">Education</Sub>
-          <p className="mt-4 max-w-[34ch] text-muted">Where I’m studying and what I’ve covered so far.</p>
+          <p className="mt-4 max-w-[34ch] text-muted">Computer Engineering now, after a STEM strand in senior high.</p>
         </div>
         <div className="border-y border-line lg:col-span-8">
           <Reveal>
@@ -70,6 +70,16 @@ export function About() {
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {education.coursework.map(c => <li key={c} className="rounded-full border border-line px-3 py-1 text-[14px] text-ink">{c}</li>)}
                 </ul>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="grid gap-2 border-t border-line py-6 sm:grid-cols-[160px_1fr] sm:gap-8">
+              <p className="tabular font-mono text-[13px] uppercase tracking-[0.08em] text-muted sm:pt-1">{seniorHigh.period}</p>
+              <div>
+                <p className="text-[19px] font-bold text-ink">{seniorHigh.level}</p>
+                <p className="text-[15px] text-muted">{seniorHigh.school} · {seniorHigh.location}</p>
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-[14px] font-medium text-accent-text">{seniorHigh.honors}</p>
               </div>
             </div>
           </Reveal>

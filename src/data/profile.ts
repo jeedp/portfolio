@@ -65,6 +65,15 @@ export const education = {
   ],
 }
 
+/** Senior high school, shown under the degree on the site and the résumé. */
+export const seniorHigh = {
+  level: 'Senior High School, STEM strand',
+  school: 'Saint Joseph College',
+  location: 'Maasin City, Southern Leyte',
+  period: '2021 – 2023',
+  honors: 'Graduated With Honors',
+}
+
 /** Shown on the résumé only. */
 export const softSkills = ['Analytical problem solving', 'Critical thinking', 'Time management', 'Continuous learning']
 
