@@ -29,9 +29,9 @@ export function Hero() {
         </div>
 
         <h1 id="hero-title" className="mt-8">
-          <span className="spaced block text-[15px] font-medium uppercase text-ink">{profile.name}</span>
-          <span className="mt-4 block text-[44px] font-black uppercase leading-[0.98] tracking-[-0.03em] sm:text-[56px]">
-            Aspiring software engineer
+          <span className="spaced block text-[13px] font-medium uppercase tracking-[0.3em] text-ink sm:text-[15px] sm:tracking-[0.42em]">Aspiring software engineer</span>
+          <span className="mt-4 block text-[52px] font-black uppercase leading-[0.95] tracking-[-0.03em] sm:text-[68px]">
+            {profile.name}
           </span>
         </h1>
 
