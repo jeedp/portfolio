@@ -1,6 +1,6 @@
 # Jed B. Padro — Portfolio and online résumé
 
-Personal portfolio of Jed B. Padro, Computer Engineering student at Southern Leyte State University and aspiring software engineer.
+Personal portfolio of Jed B. Padro, Computer Engineering student at Southern Leyte State University.
 
 Live at **https://jeedp.github.io/portfolio/**
 
