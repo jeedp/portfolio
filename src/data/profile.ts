@@ -8,7 +8,6 @@ export const profile = {
   name: 'Jed B. Padro',
   shortName: 'Jed Padro',
   title: 'Computer Engineering Student',
-  subtitle: 'Aspiring Software Engineer',
   location: 'Southern Leyte, Philippines',
   email: 'jedpadro@gmail.com',
   github: 'https://github.com/jeedp',

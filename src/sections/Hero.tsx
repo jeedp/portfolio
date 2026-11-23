@@ -29,14 +29,14 @@ export function Hero() {
         </div>
 
         <h1 id="hero-title" className="mt-8">
-          <span className="spaced block text-[13px] font-medium uppercase tracking-[0.3em] text-ink sm:text-[15px] sm:tracking-[0.42em]">Aspiring software engineer</span>
+          <span className="spaced block text-[13px] font-medium uppercase tracking-[0.3em] text-ink sm:text-[14px] sm:tracking-[0.34em] lg:text-[13px] lg:tracking-[0.18em] xl:text-[14px] xl:tracking-[0.34em]">{profile.title}</span>
           <span className="mt-4 block text-[52px] font-black uppercase leading-[0.95] tracking-[-0.03em] sm:text-[68px]">
             {profile.name}
           </span>
         </h1>
 
         <p className="mt-6 max-w-[46ch] text-[17px] leading-relaxed">
-          Computer Engineering student at Southern Leyte State University. I build software that runs on real hardware:
+          I study at Southern Leyte State University and build software that runs on real hardware:
           desktop apps with their own database, an ESP32 parking gate and an offline campus kiosk.
         </p>
 
