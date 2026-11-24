@@ -113,8 +113,8 @@ export function Hero() {
 
         <In at={0.8} ready={ready}>
           <p className="mt-7 max-w-[46ch] text-[17px] leading-relaxed">
-            I build software for the web, IoT devices and the desktop. As a summer intern, I fixed five bugs in a live
-            Laravel system. Now I’m building my thesis at Southern Leyte State University: an offline campus kiosk.
+            I build software for the web, IoT devices and the desktop. I’ve interned as a web developer and I’m now
+            working on my undergraduate thesis.
           </p>
         </In>
 
