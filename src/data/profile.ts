@@ -259,21 +259,22 @@ export const nav = [
   { id: 'contact', label: 'Contact' },
 ]
 
-/**
- * How I work. DRAFT for Jed to approve: each principle is taken from something he actually built.
- */
+/** How I work: Jed's own three principles (title, tagline, explanation). */
 export const philosophy = [
   {
-    title: 'Keep working when the network doesn’t',
-    body: 'The campus kiosk runs fully offline, and the parking gate keeps its control loop on a separate core from the network. A system should do its main job even when the connection drops.',
+    title: 'Practical Learning',
+    tagline: 'Turning knowledge into experience.',
+    body: 'I learn by applying what I study, through hands-on projects and experiments.',
   },
   {
-    title: 'Fit the hardware you actually have',
-    body: 'Floor drawings went from 14 MB to 1.5–3 MB so the map pans smoothly on a Raspberry Pi 4. I’d rather make the software lighter than ask for a bigger machine.',
+    title: 'Analytical Problem-Solving',
+    tagline: 'Understanding problems before building solutions.',
+    body: 'I break challenges down and understand the requirements before choosing the right tools.',
   },
   {
-    title: 'Leave it easy to pick up',
-    body: 'Every bug I fixed during my summer internship was written up, the kiosk ships with a setup script and guide, and the gate logic has unit tests. The next person should not have to guess.',
+    title: 'Continuous Development',
+    tagline: 'Staying curious. Building forward.',
+    body: 'I keep learning, strengthening my foundations and looking for ways to grow as an engineer.',
   },
 ]
 

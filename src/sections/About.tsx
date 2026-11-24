@@ -118,7 +118,8 @@ export function About() {
               <li className="h-full rounded-[22px] bg-panel p-7">
                 <p className="tabular font-mono text-[13px] text-accent-text">{String(i + 1).padStart(2, '0')}</p>
                 <p className="mt-5 text-[20px] font-bold leading-snug tracking-[-0.01em] text-ink">{p.title}</p>
-                <p className="mt-3 text-[16px] leading-relaxed">{p.body}</p>
+                <p className="mt-1.5 text-[15px] font-medium text-accent-text">{p.tagline}</p>
+                <p className="mt-4 text-[16px] leading-relaxed">{p.body}</p>
               </li>
             </Reveal>
           ))}
