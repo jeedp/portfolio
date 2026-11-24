@@ -200,6 +200,14 @@ export type TimelineItem = {
 
 export const timeline: TimelineItem[] = [
   {
+    period: '2026 – present',
+    title: 'Thesis: SLSU Campus Wayfinding System',
+    org: 'Southern Leyte State University',
+    type: 'academic',
+    description: 'Building an offline campus navigation kiosk on a Raspberry Pi with a two-person team.',
+    tech: ['Node.js', 'SQLite', 'Raspberry Pi'],
+  },
+  {
     period: '2026',
     title: 'Web Developer Intern (Summer Internship)',
     org: 'IAMS, Internal Audit Management System',
@@ -207,14 +215,6 @@ export const timeline: TimelineItem[] = [
     description:
       'Worked in a production Laravel app with about 260 API routes. Traced, fixed and documented five bugs in the Internal Control Questionnaire module, across Blade views, jQuery and the JSON API.',
     tech: ['Laravel', 'PHP', 'jQuery', 'MySQL'],
-  },
-  {
-    period: '2026 – present',
-    title: 'Thesis: SLSU Campus Wayfinding System',
-    org: 'Southern Leyte State University',
-    type: 'academic',
-    description: 'Building an offline campus navigation kiosk on a Raspberry Pi with a two-person team.',
-    tech: ['Node.js', 'SQLite', 'Raspberry Pi'],
   },
   {
     period: 'Add date',

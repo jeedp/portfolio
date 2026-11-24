@@ -91,7 +91,7 @@ export function About() {
       <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
         <div className="lg:col-span-4">
           <Sub id="exp-title">Experience</Sub>
-          <p className="mt-4 max-w-[34ch] text-muted">My internship and thesis, newest first.</p>
+          <p className="mt-4 max-w-[34ch] text-muted">My thesis and internship, newest first.</p>
         </div>
         <ol className="divide-y divide-line border-y border-line lg:col-span-8">
           {experience.map(t => (
