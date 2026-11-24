@@ -64,6 +64,13 @@ export const education = {
   ],
 }
 
+/** Scholarship, shown with the degree on the site and the résumé. */
+export const scholarship = {
+  name: 'DOST-SEI Undergraduate Scholar',
+  law: 'RA 7687',
+  period: '2023 – present',
+}
+
 /** Senior high school, shown under the degree on the site and the résumé. */
 export const seniorHigh = {
   level: 'Senior High School, STEM strand',

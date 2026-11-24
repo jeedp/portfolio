@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
-import { about, certificates, education, philosophy, profile, seniorHigh, skills, timeline } from '../data/profile'
+import { about, certificates, education, philosophy, profile, scholarship, seniorHigh, skills, timeline } from '../data/profile'
 import { SectionTitle } from '../components/Chrome'
 import { TechBadge } from '../components/TechBadge'
 import { Reveal } from '../components/Reveal'
@@ -66,6 +66,7 @@ export function About() {
               <div>
                 <p className="text-[19px] font-bold text-ink">{education.degree}</p>
                 <p className="text-[15px] text-muted">{education.school} · {education.location}</p>
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-[14px] font-medium text-accent-text">{scholarship.name} ({scholarship.law}) · {scholarship.period}</p>
                 <p className="eyebrow mt-5">Relevant coursework</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {education.coursework.map(c => <li key={c} className="rounded-full border border-line px-3 py-1 text-[14px] text-ink">{c}</li>)}
