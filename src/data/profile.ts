@@ -32,9 +32,10 @@ export const profile = {
 
 export const about = {
   paragraphs: [
-    "I'm a Computer Engineering student at Southern Leyte State University. I like building things that work outside a screenshot: a desktop app with a real database behind it, a gate that opens when an RFID card is tapped, a campus kiosk that keeps running when the network drops.",
-    "Most of my projects cross the line between software and hardware, and that's where I'm happiest. I want to understand a system all the way down, from the interface a person taps to the database, the server and the microcontroller underneath.",
-    "I learn by building, reading other people's code, and writing down what I changed and why. Right now I'm finishing my thesis, the SLSU Campus Wayfinding System.",
+    "I'm a Computer Engineering student at Southern Leyte State University. I like figuring out how things work and building things that solve real problems.",
+    "My projects range from user interfaces to circuit boards. I've built desktop applications and web-based systems, and I've worked with microcontrollers, embedded systems and IoT devices. Moving between them has taught me to keep the whole system in mind while paying close attention to the small details that decide whether it actually works.",
+    "I'm comfortable with problems I haven't seen before. I'd rather learn a new tool and get an idea working than stay in one lane.",
+    "Right now I'm going deeper into software engineering, AI and machine learning, and data engineering. My goal is to build systems that people actually use and that hold up as they grow.",
   ],
   highlights: [
     { value: '3', label: 'projects built across desktop, IoT and web' },
