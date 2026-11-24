@@ -14,7 +14,7 @@ Goal: the most *effective* portfolio, not the longest. Every section must help a
 | 3 | About | The person behind the projects: background, interests, how you work | Essential |
 | 4 | Technical skills | Scannable stack, grouped, no ratings | Essential |
 | 5 | Selected works | The proof. The most important section on the page | Essential |
-| 6 | Education & experience | Context and credibility: degree, OJT, thesis, training | Essential |
+| 6 | Education & experience | Context and credibility: degree, summer internship, thesis, training | Essential |
 | 7 | Certifications | Supporting evidence, visually secondary | Essential (short) |
 | 8 | Résumé | One-page version for applications | Essential |
 | 9 | Contact | One obvious way to reach you | Essential |
@@ -30,7 +30,7 @@ Goal: the most *effective* portfolio, not the longest. Every section must help a
 | Publications / research | **Skip for now**; add the thesis paper when published | Nothing published yet |
 | GitHub activity | **Optional, small** (recent repos list) | Proves you code regularly; keep it under the projects |
 | Blog / articles | **Skip until you have 2–3 posts** | An empty blog hurts credibility. Your IAMS bug write-up is a great first post |
-| Testimonials | **Skip** unless your OJT supervisor or thesis adviser gives a real quote | Never invent them |
+| Testimonials | **Skip** unless your internship supervisor or thesis adviser gives a real quote | Never invent them |
 | Volunteering | **Skip** unless it is technical (e.g. teaching, org tech lead) | Not relevant otherwise |
 | Personal philosophy | **One sentence inside About** | A whole section reads as filler |
 
@@ -65,9 +65,9 @@ For each project: number and title · one-line overview · status · the problem
 
 **Education & experience** (one timeline)
 - BS Computer Engineering, SLSU (present).
-- Web Developer Intern (OJT), IAMS: Laravel, five production bugs fixed and documented.
+- Web Developer Intern (Summer Internship), IAMS: Laravel, five production bugs fixed and documented.
 - Thesis: SLSU Campus Wayfinding System (in development).
-- With limited formal employment, the OJT, thesis and real projects *are* the experience. Present them with the same care as jobs: role, organisation, dates, what you did.
+- With limited formal employment, the summer internship, thesis and real projects *are* the experience. Present them with the same care as jobs: role, organisation, dates, what you did.
 
 **Certifications**
 - Show only completed, verifiable credentials: the five Cisco Networking Academy courses, with thumbnails and links to the originals.
@@ -88,7 +88,7 @@ For each project: number and title · one-line overview · status · the problem
 |---|---|---|
 | Technical recruiter | Name, role, availability, location, résumé | Clear title, "open to internships", one-click résumé |
 | Hiring manager | 1–2 strong projects and *your* part in them | Real constraints solved: 14 MB → 1.5–3 MB on a Pi; dual-core FreeRTOS; production Laravel bug fixes |
-| Internship coordinator | Degree, year, school, OJT, contact | Education & experience timeline, certificates |
+| Internship coordinator | Degree, year, school, internship, contact | Education & experience timeline, certificates |
 | Collaborator | What you build, stack, repos | Skills, repository links, GitHub activity |
 
 **Immediately visible:** name, role, availability, what you build, the two main buttons.
@@ -151,7 +151,7 @@ Skill bars · generic taglines ("passionate developer") · listing every tutoria
 - [x] Three projects: overview, problem, features, contribution, stack, result, status, repo
 - [ ] **Real screenshots**: TrainSMART app windows; parking gate hardware photo and dashboard; wayfinding kiosk screens
 - [ ] Optional: a 30–60 second demo video per project
-- [x] Timeline: degree, OJT, thesis
+- [x] Timeline: degree, summer internship, thesis
 - [ ] Degree start year and expected graduation (add when you want them shown)
 - [x] Certificates with originals
 - [x] Résumé PDF consistent with the site
