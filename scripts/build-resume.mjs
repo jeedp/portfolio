@@ -16,7 +16,7 @@ const isPrivate = args.includes('--private')
 const outArg = args.includes('--out') ? args[args.indexOf('--out') + 1] : null
 const out = resolve(outArg ?? (isPrivate ? 'private/Jed-Padro-Resume.pdf' : 'public/resume.pdf'))
 
-const { profile, skills, projects, timeline, certificates, education, seniorHigh, softSkills } = await import('../src/data/profile.ts')
+const { profile, skills, projects, timeline, certificates, education, seniorHigh, scholarship, softSkills } = await import('../src/data/profile.ts')
 const phone = isPrivate && existsSync('resume.private.json') ? JSON.parse(readFileSync('resume.private.json', 'utf8')).phone : null
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
@@ -141,7 +141,7 @@ ${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: $
 
   <section>
     <h2>Summary</h2>
-    <p class="summary">Fourth-year Computer Engineering student at Southern Leyte State University with hands-on experience in web development, databases and embedded systems, from bug fixes in a production Laravel app to an ESP32 parking gate and an offline Raspberry Pi kiosk.</p>
+    <p class="summary">Fourth-year Computer Engineering student and DOST-SEI scholar at Southern Leyte State University with hands-on experience in web development, databases and embedded systems, from bug fixes in a production Laravel app to an ESP32 parking gate and an offline Raspberry Pi kiosk.</p>
   </section>
 
   <section>
@@ -164,7 +164,7 @@ ${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: $
     <h2>Education</h2>
     <div class="entry">
       <div class="row"><h3>${esc(education.degree)}</h3><span class="date">${esc(education.period)} · ${esc(education.expected)}</span></div>
-      <p class="sub"><b>${esc(education.school)}</b> · ${esc(education.location)}</p>
+      <p class="sub"><b>${esc(education.school)}</b> · ${esc(education.location)} <span class="tag">${esc(scholarship.name)} (${esc(scholarship.law)}) · ${esc(scholarship.period)}</span></p>
       <p class="coursework"><b>Relevant coursework:</b> ${esc(education.coursework.join(', '))}</p>
     </div>
     <div class="entry">
