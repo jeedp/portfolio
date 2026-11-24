@@ -201,7 +201,7 @@ export type TimelineItem = {
 export const timeline: TimelineItem[] = [
   {
     period: '2026',
-    title: 'Web Developer Intern (OJT)',
+    title: 'Web Developer Intern (Summer Internship)',
     org: 'IAMS, Internal Audit Management System',
     type: 'work',
     description:
@@ -273,7 +273,7 @@ export const philosophy = [
   },
   {
     title: 'Leave it easy to pick up',
-    body: 'Every bug I fixed during my OJT was written up, the kiosk ships with a setup script and guide, and the gate logic has unit tests. The next person should not have to guess.',
+    body: 'Every bug I fixed during my summer internship was written up, the kiosk ships with a setup script and guide, and the gate logic has unit tests. The next person should not have to guess.',
   },
 ]
 
