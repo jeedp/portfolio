@@ -53,7 +53,7 @@ const projectBullets = {
     'Wrote the setup script and guide that turn a blank SD card into a working kiosk.',
   ],
   parking: [
-    'Wrote the ESP32 firmware for RFID entry, slot sensing and the servo gate; teammates built the hardware.',
+    'Wrote the ESP32 firmware for RFID entry, the servo gates and a live free-space count; teammates built the hardware.',
     'Kept gate control and networking on separate FreeRTOS cores, so the gate never waits on the network.',
     'Built the live web dashboard on my own, with Bluetooth LE manual control; unit-tested the gate logic.',
   ],
