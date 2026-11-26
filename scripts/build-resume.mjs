@@ -1,11 +1,13 @@
 // Builds the résumé PDF from src/data/profile.ts, so the PDF always matches the website.
+// Plain layout on purpose: black text, no tags or icons, verb-first bullets.
 //
 //   npm run resume            -> public/resume.pdf  (public: no phone number; served by the website)
 //   npm run resume:private    -> private/Jed-Padro-Resume.pdf  (adds the phone number from resume.private.json)
 //
 // Options: --private (include the phone from resume.private.json), --out <file>.
+// The internship is covered by a non-disclosure agreement: keep its bullets general.
 // Needs Chrome or Edge; set CHROME_PATH if it is not found.
-import { writeFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { writeFileSync, existsSync, mkdirSync, readFileSync, statSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
@@ -13,192 +15,115 @@ import { pathToFileURL } from 'node:url'
 
 const args = process.argv.slice(2)
 const isPrivate = args.includes('--private')
-const outArg = args.includes('--out') ? args[args.indexOf('--out') + 1] : null
-const out = resolve(outArg ?? (isPrivate ? 'private/Jed-Padro-Resume.pdf' : 'public/resume.pdf'))
+const out = resolve(args.includes('--out') ? args[args.indexOf('--out') + 1] : (isPrivate ? 'private/Jed-Padro-Resume.pdf' : 'public/resume.pdf'))
 
-const { profile, skills, projects, timeline, certificates, education, seniorHigh, scholarship, softSkills } = await import('../src/data/profile.ts')
+const { profile, certificates, education, seniorHigh, scholarship } = await import('../src/data/profile.ts')
 const phone = isPrivate && existsSync('resume.private.json') ? JSON.parse(readFileSync('resume.private.json', 'utf8')).phone : null
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
 const bare = url => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
-// small outline icons (Lucide / Tabler, MIT/ISC), drawn instead of emoji so every PDF reader shows them
-const icon = d => `<svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`
-const icons = {
-  mail: icon('<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>'),
-  phone: icon('<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>'),
-  linkedin: icon('<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>'),
-  github: icon('<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>'),
-  globe: icon('<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'),
-}
+const contact = [
+  `<a href="mailto:${profile.email}">${esc(profile.email)}</a>`,
+  phone && esc(phone),
+  `<a href="${profile.github}">${esc(bare(profile.github))}</a>`,
+  `<a href="${profile.linkedin}">${esc(bare(profile.linkedin))}</a>`,
+  `<a href="https://jeedp.github.io/portfolio/">jeedp.github.io/portfolio</a>`,
+].filter(Boolean).join('<span class="sep">|</span>')
 
-const contacts = [
-  { i: icons.mail, text: profile.email, href: `mailto:${profile.email}` },
-  // with the phone: a two-column grid, the long LinkedIn address in the first column; without it: one column
-  ...(phone
-    ? [{ i: icons.phone, text: phone, href: `tel:${phone.replace(/\s/g, '')}` }, { i: icons.linkedin, text: bare(profile.linkedin), href: profile.linkedin }, { i: icons.github, text: bare(profile.github), href: profile.github }]
-    : [{ i: icons.github, text: bare(profile.github), href: profile.github }, { i: icons.linkedin, text: bare(profile.linkedin), href: profile.linkedin }]),
-  { i: icons.globe, text: 'jeedp.github.io/portfolio', href: 'https://jeedp.github.io/portfolio/' },
-].filter(Boolean)
-
-// Experience: real roles only (no placeholders, no education)
-const ojt = timeline.find(t => t.type === 'work')
-
-// Résumé bullets per project, built from the same facts as the site, in résumé voice
-const projectBullets = {
-  wayfinding: [
-    'Offline touchscreen kiosk that guides visitors to buildings and offices on the SLSU campus; team of two.',
-    'Cut floor-plan drawings from 14 MB to 1.5–3 MB each so the vector map runs smoothly on a Raspberry Pi 4.',
-    'Built the QR hand-off that continues a route on a visitor’s phone with live GPS over HTTPS.',
-    'Wrote the setup script and guide that turn a blank SD card into a working kiosk.',
-  ],
-  parking: [
-    'Wrote the ESP32 firmware for RFID entry, the servo gates and a live free-space count; teammates built the hardware.',
-    'Kept gate control and networking on separate FreeRTOS cores, so the gate never waits on the network.',
-    'Built the live web dashboard on my own, with Bluetooth LE manual control; unit-tested the gate logic.',
-  ],
-  trainsmart: [
-    'Desktop app to plan routines, log workouts and sets, and track body measurements over time.',
-    'Designed the relational data model in T-SQL and built user accounts with input validation.',
-  ],
-}
-const projectStack = {
-  wayfinding: ['JavaScript', 'Node.js', 'Express', 'SQLite', 'Raspberry Pi'],
-  parking: ['C++', 'ESP32', 'FreeRTOS', 'Firebase', 'Node.js', 'Vite'],
-  trainsmart: ['C#', 'Windows Forms', 'SQL Server'],
-}
-const projectOrder = ['wayfinding', 'parking', 'trainsmart']
-
-const skillRows = [
-  ['Languages', [...skills.find(s => s.name === 'Programming').items, 'SQL']],
-  ['Web & backend', skills.find(s => s.name === 'Web development').items],
-  ['Databases', skills.find(s => s.name === 'Databases').items],
-  ['Embedded', skills.find(s => s.name === 'Embedded systems').items],
-  ['Tools', [...skills.find(s => s.name === 'Development tools').items, 'PlatformIO']],
-  ['Soft skills', softSkills],
-]
-const certs = certificates.filter(c => !c.placeholder)
-
-const bullets = list => `<ul>${list.map(b => `<li>${esc(b)}</li>`).join('')}</ul>`
-const entry = ({ title, tag, right, sub, list }) => `
+// title, place, dates, bullets
+const job = (title, org, dates, items) => `
   <div class="entry">
-    <div class="row"><h3>${esc(title)}${tag ? ` <span class="tag">${esc(tag)}</span>` : ''}</h3><span class="date">${esc(right ?? '')}</span></div>
-    ${sub ? `<p class="sub">${sub}</p>` : ''}
-    ${list ? bullets(list) : ''}
+    <div class="row"><p><b>${title}</b></p><p class="date">${dates}</p></div>
+    <p class="org">${org}</p>
+    ${items ? `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
   </div>`
 
-const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(profile.name)} — Résumé</title>
+const certs = certificates.filter(c => !c.placeholder)
+
+const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(profile.name)} Résumé</title>
 <style>
-${[400, 500, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: ${w}; font-display: block; src: url(https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/files/inter-latin-${w}-normal.woff2) format("woff2"); }`).join(' ')}
+  ${[400, 600, 700].map(w => `@font-face { font-family: Inter; font-weight: ${w}; font-display: block; src: url(https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/files/inter-latin-${w}-normal.woff2) format("woff2"); }`).join(' ')}
   @page { size: Letter; margin: 0; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --ink: #0f172a; --body: #334155; --muted: #64748b; --line: #e2e8f0; --accent: #2563eb; }
-  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body { width: 8.5in; height: 11in; padding: 0.46in 0.55in 0.4in; font: 400 9pt/1.4 Inter, "Segoe UI", Arial, sans-serif; color: var(--body); position: relative; }
-  body::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--accent); }
+  body { width: 8.5in; height: 11in; padding: 0.5in 0.6in; font: 400 9.5pt/1.4 Inter, Arial, sans-serif; color: #111; }
   a { color: inherit; text-decoration: none; }
-
-  header { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: 4px 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-  h1 { font-size: 24pt; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
-  .role { white-space: nowrap; margin-top: 6px; font-size: 9.6pt; font-weight: 500; color: var(--accent); }
-  .contact { justify-self: end; display: grid; grid-template-columns: ${phone ? 'auto auto' : 'auto'}; gap: 3px 10px; font-size: 8.1pt; color: var(--body); }
-  .contact a { white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
-  .contact svg { color: var(--accent); }
-
-  section { margin-top: 10px; }
-  h2 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 7.6pt; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
-  h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-
-  .summary { color: var(--body); }
-  .entry + .entry { margin-top: 6px; }
-  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-  h3 { font-size: 9.6pt; font-weight: 600; color: var(--ink); letter-spacing: -0.005em; }
-  .tag { margin-left: 4px; padding: 0.5px 5px; border-radius: 3px; background: #eff6ff; color: var(--accent); font-size: 7.2pt; font-weight: 600; vertical-align: 1px; }
-  .date { flex-shrink: 0; font-size: 8.3pt; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .sub { margin-top: 1px; font-size: 8.5pt; color: var(--muted); }
-  .sub b { font-weight: 500; color: var(--body); }
-  ul { margin-top: 3px; list-style: none; }
-  li { position: relative; padding-left: 11px; }
-  li + li { margin-top: 1px; }
-  li::before { content: ""; position: absolute; left: 1px; top: 0.62em; width: 4px; height: 1px; background: var(--accent); }
-
-  .skills { display: grid; grid-template-columns: 96px 1fr; gap: 2px 10px; }
-  .skills dt { font-weight: 600; color: var(--ink); }
-  .coursework { margin-top: 3px; }
-  .coursework b { font-weight: 600; color: var(--ink); }
-  .certs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px 24px; }
-  .certs div { display: flex; justify-content: space-between; gap: 8px; }
-  .certs span:first-child { color: var(--ink); }
-  .issuer { font-weight: 500; letter-spacing: 0.02em; text-transform: none; font-size: 8pt; color: var(--muted); }
+  h1 { font-size: 21pt; font-weight: 700; letter-spacing: -0.01em; text-align: center; }
+  .contact { margin-top: 4px; text-align: center; font-size: 8.4pt; white-space: nowrap; color: #333; }
+  .sep { margin: 0 4px; color: #999; }
+  h2 { margin-top: 11px; padding-bottom: 2px; border-bottom: 1px solid #111; font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .entry { margin-top: 6px; }
+  .row { display: flex; justify-content: space-between; gap: 16px; }
+  .date { flex-shrink: 0; }
+  .org { font-style: italic; color: #222; }
+  ul { margin-top: 2px; padding-left: 15px; }
+  li { margin-top: 0; }
+  .plain { margin-top: 4px; }
+  .skills p { margin-top: 2px; }
 </style></head><body>
-  <header>
-    <div>
-      <h1>${esc(profile.name)}</h1>
-      <p class="role">${esc(profile.title)}</p>
-    </div>
-    <div class="contact">${contacts.map(c => `<a href="${esc(c.href)}">${c.i}${esc(c.text)}</a>`).join('')}</div>
-  </header>
+  <h1>${esc(profile.name)}</h1>
+  <p class="contact">${contact}</p>
 
-  <section>
-    <h2>Summary</h2>
-    <p class="summary">Fourth-year Computer Engineering student and DOST-SEI scholar at Southern Leyte State University with hands-on experience in web development, databases and embedded systems, from bug fixes in a production Laravel app to an ESP32 parking gate and an offline Raspberry Pi kiosk.</p>
-  </section>
+  <h2>Education</h2>
+  ${job(esc(education.degree), `${esc(education.school)}, ${esc(education.location)}`, `Aug 2023 – May 2027 (expected)`, [
+    `${esc(scholarship.name)} (${esc(scholarship.law)}), 2023 – present`,
+    `Relevant coursework: ${esc(education.coursework.join(', '))}`,
+  ])}
+  ${job(`${esc(seniorHigh.level)}`, `${esc(seniorHigh.school)}, ${esc(seniorHigh.location)}`, '2021 – 2023', ['Graduated with honors'])}
 
-  <section>
-    <h2>Experience</h2>
-    ${ojt ? entry({ title: ojt.title, right: ojt.period, sub: `<b>${esc(ojt.org)}</b> · ${esc((ojt.tech ?? []).join(' · '))}`, list: [
-      'Traced, fixed and documented five bugs in a production Laravel app with about 260 API routes.',
-      'Debugged the Internal Control Questionnaire module across Blade views, jQuery and the JSON API.',
-    ] }) : ''}
-  </section>
+  <h2>Experience</h2>
+  ${job('Web Developer Intern, Project LODI', 'DOST Central Office, Planning and Evaluation Service, Information Technology Division', 'Jul – Sep 2026', [
+    'Completed a 240-hour internship under the League of Developers Initiative.',
+    'Fixed and documented bugs in an internal Laravel web application.',
+    'Traced each issue through the front end, back end and database before fixing it.',
+    'Followed the division’s coding standards.',
+  ])}
 
-  <section>
-    <h2>Projects</h2>
-    ${projectOrder.map(id => {
-      const p = projects.find(x => x.id === id)
-      return entry({ title: p.title, tag: p.status ? `${p.kind.replace('Undergraduate thesis', 'Thesis')} · ${p.status}` : null, right: p.year, sub: esc(projectStack[id].join(' · ')), list: projectBullets[id] })
-    }).join('')}
-  </section>
+  <h2>Projects</h2>
+  ${job('SLSU Campus Wayfinding System', 'Undergraduate thesis · JavaScript, Node.js, Express, SQLite, Raspberry Pi', '2026 – present', [
+    'Building an offline touchscreen kiosk, with one teammate, that guides visitors around campus.',
+    'Cut floor-plan files from 14 MB to under 3 MB each to keep the map smooth on a Raspberry Pi 4.',
+    'Built a QR code hand-off that continues the route on a visitor’s phone with live GPS.',
+    'Wrote a setup script that turns a blank SD card into a working kiosk.',
+  ])}
+  ${job('Smart Parking Gate System', 'Team project, hardware built by teammates · C++, ESP32, FreeRTOS, Firebase, JavaScript', '2026', [
+    'Wrote the ESP32 firmware for RFID entry, the two servo gates and the free-space count.',
+    'Ran gate control and Firebase sync as separate FreeRTOS tasks on the two cores.',
+    'Built the web dashboard, including manual gate control over Bluetooth LE.',
+    'Wrote unit tests for the gate and RFID logic with PlatformIO.',
+  ])}
+  ${job('TrainSMART', 'Solo project · C#, Windows Forms, SQL Server', '2025', [
+    'Built a Windows desktop app for planning workouts, logging sets and tracking body measurements.',
+    'Designed a nine-table SQL Server database and added user accounts with hashed passwords.',
+  ])}
 
-  <section>
-    <h2>Education</h2>
-    <div class="entry">
-      <div class="row"><h3>${esc(education.degree)}</h3><span class="date">${esc(education.period)} · ${esc(education.expected)}</span></div>
-      <p class="sub"><b>${esc(education.school)}</b> · ${esc(education.location)} <span class="tag">${esc(scholarship.name)} (${esc(scholarship.law)}) · ${esc(scholarship.period)}</span></p>
-      <p class="coursework"><b>Relevant coursework:</b> ${esc(education.coursework.join(', '))}</p>
-    </div>
-    <div class="entry">
-      <div class="row"><h3>${esc(seniorHigh.level)} <span class="tag">${esc(seniorHigh.honors)}</span></h3><span class="date">${esc(seniorHigh.period)}</span></div>
-      <p class="sub"><b>${esc(seniorHigh.school)}</b> · ${esc(seniorHigh.location)}</p>
-    </div>
-  </section>
+  <h2>Skills</h2>
+  <div class="skills">
+    <p><b>Languages:</b> C, C++, C#, Java, Python, JavaScript, PHP, SQL</p>
+    <p><b>Web:</b> HTML, CSS, Laravel, Node.js, Express</p>
+    <p><b>Databases:</b> MySQL, SQL Server, SQLite, Firebase</p>
+    <p><b>Embedded:</b> Arduino, ESP32, Raspberry Pi, FreeRTOS</p>
+    <p><b>Tools:</b> Git, GitHub, VS Code, Visual Studio, PlatformIO, Postman, Laragon</p>
+  </div>
 
-  <section>
-    <h2>Technical skills</h2>
-    <dl class="skills">${skillRows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v.join(', '))}</dd>`).join('')}</dl>
-  </section>
-
-  <section>
-    <h2>Certifications <span class="issuer">Cisco Networking Academy · DICT-ITU DTC Initiative</span></h2>
-    <div class="certs">${certs.map(c => `<div><span>${esc(c.title)}</span><span class="date">${esc(c.date)}</span></div>`).join('')}</div>
-  </section>
+  <h2>Certifications</h2>
+  <p class="plain">Cisco Networking Academy (DICT-ITU DTC Initiative): ${certs.map(c => `${esc(c.title)} (${esc(c.date)})`).join(', ')}</p>
 </body></html>`
 
 const tmp = join(tmpdir(), `jed-resume-${isPrivate ? 'private' : 'public'}.html`)
 writeFileSync(tmp, html)
-
-const candidates = [
-  process.env.CHROME_PATH,
-  'C:/Program Files/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  '/usr/bin/google-chrome',
-  '/usr/bin/chromium',
-].filter(Boolean)
-const browser = candidates.find(p => existsSync(p))
+const browser = [process.env.CHROME_PATH, 'C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe', 'C:/Program Files/Microsoft/Edge/Application/msedge.exe', '/usr/bin/google-chrome', '/usr/bin/chromium'].filter(Boolean).find(p => existsSync(p))
 if (!browser) { console.error('No Chrome or Edge found. Set CHROME_PATH and run again.'); process.exit(1) }
-
 mkdirSync(dirname(out), { recursive: true })
-execFileSync(browser, ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', '--virtual-time-budget=8000', `--print-to-pdf=${out}`, pathToFileURL(tmp).href], { stdio: 'ignore' })
+const before = existsSync(out) ? statSync(out).mtimeMs : 0
+// A separate profile, so an already-running Chrome/Edge can't swallow the job without printing.
+const profileDir = join(tmpdir(), `jed-resume-browser-${Date.now()}`)
+execFileSync(browser, ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', `--user-data-dir=${profileDir}`, '--virtual-time-budget=8000', `--print-to-pdf=${out}`, pathToFileURL(tmp).href], { stdio: 'ignore' })
+// Edge's launcher can return before the PDF is written; wait for a fresh file (up to 30 s).
+const started = Date.now()
+while (!(existsSync(out) && statSync(out).mtimeMs > before && statSync(out).size > 0)) {
+  if (Date.now() - started > 30000) { console.error(`Timed out waiting for ${out}`); process.exit(1) }
+  await new Promise(r => setTimeout(r, 250))
+}
+await new Promise(r => setTimeout(r, 300)) // let the writer finish
 console.log(`Wrote ${out}${isPrivate ? ' (private: includes phone)' : ' (public: no phone)'}`)
