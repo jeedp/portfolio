@@ -209,13 +209,14 @@ export const timeline: TimelineItem[] = [
     tech: ['Node.js', 'SQLite', 'Raspberry Pi'],
   },
   {
-    period: '2026',
-    title: 'Web Developer Intern (Summer Internship)',
-    org: 'IAMS, Internal Audit Management System',
+    period: 'Jul – Sep 2026',
+    title: 'Web Developer Intern, Project LODI',
+    org: 'DOST Central Office, Planning and Evaluation Service, Information Technology Division',
     type: 'work',
+    // Kept general on purpose: the internship is covered by a non-disclosure agreement.
     description:
-      'Worked in a production Laravel app with about 260 API routes. Traced, fixed and documented five bugs in the Internal Control Questionnaire module, across Blade views, jQuery and the JSON API.',
-    tech: ['Laravel', 'PHP', 'jQuery', 'MySQL'],
+      'Completed a 240-hour internship under the League of Developers Initiative. Fixed and documented bugs in an internal Laravel web application, tracing each issue through the front end, back end and database.',
+    tech: ['Laravel', 'PHP'],
   },
   {
     period: 'Add date',
