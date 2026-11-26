@@ -29,7 +29,7 @@ Goal: the most *effective* portfolio, not the longest. Every section must help a
 | Achievements | **Merge into Certifications** until you have awards | An empty "Achievements" heading looks worse than none |
 | Publications / research | **Skip for now**; add the thesis paper when published | Nothing published yet |
 | GitHub activity | **Optional, small** (recent repos list) | Proves you code regularly; keep it under the projects |
-| Blog / articles | **Skip until you have 2–3 posts** | An empty blog hurts credibility. Your IAMS bug write-up is a great first post |
+| Blog / articles | **Skip until you have 2–3 posts** | An empty blog hurts credibility. Don't write about the internship's internal system: it's covered by a non-disclosure agreement |
 | Testimonials | **Skip** unless your internship supervisor or thesis adviser gives a real quote | Never invent them |
 | Volunteering | **Skip** unless it is technical (e.g. teaching, org tech lead) | Not relevant otherwise |
 | Personal philosophy | **One sentence inside About** | A whole section reads as filler |
@@ -65,7 +65,7 @@ For each project: number and title · one-line overview · status · the problem
 
 **Education & experience** (one timeline)
 - BS Computer Engineering, SLSU (present).
-- Web Developer Intern (Summer Internship), IAMS: Laravel, five production bugs fixed and documented.
+- Web Developer Intern, Project LODI (DOST Central Office, IT Division), Jul – Sep 2026: bug fixes in an internal Laravel web application. Keep details general (NDA).
 - Thesis: SLSU Campus Wayfinding System (in development).
 - With limited formal employment, the summer internship, thesis and real projects *are* the experience. Present them with the same care as jobs: role, organisation, dates, what you did.
 
@@ -156,7 +156,6 @@ Skill bars · generic taglines ("passionate developer") · listing every tutoria
 - [x] Certificates with originals
 - [x] Résumé PDF consistent with the site
 - [x] Email, LinkedIn, GitHub
-- [ ] Optional: blog post from the IAMS bug write-up
 
 ---
 
