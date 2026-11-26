@@ -215,8 +215,7 @@ export const timeline: TimelineItem[] = [
     type: 'work',
     // Kept general on purpose: the internship is covered by a non-disclosure agreement.
     description:
-      'Completed a 240-hour internship under the League of Developers Initiative. Fixed and documented bugs in an internal Laravel web application, tracing each issue through the front end, back end and database.',
-    tech: ['Laravel', 'PHP'],
+      'Completed a 240-hour internship under the League of Developers Initiative. Fixed and documented bugs in an internal web application, tracing each issue through the front end, back end and database.',
   },
   {
     period: 'Add date',
