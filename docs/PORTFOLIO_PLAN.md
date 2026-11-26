@@ -65,7 +65,7 @@ For each project: number and title · one-line overview · status · the problem
 
 **Education & experience** (one timeline)
 - BS Computer Engineering, SLSU (present).
-- Web Developer Intern, Project LODI (DOST Central Office, IT Division), Jul – Sep 2026: bug fixes in an internal Laravel web application. Keep details general (NDA).
+- Web Developer Intern, Project LODI (DOST Central Office, IT Division), Jul – Sep 2026: bug fixes in an internal web application. Keep details general (NDA): no system names, stack, numbers or bug details.
 - Thesis: SLSU Campus Wayfinding System (in development).
 - With limited formal employment, the summer internship, thesis and real projects *are* the experience. Present them with the same care as jobs: role, organisation, dates, what you did.
 
