@@ -74,7 +74,7 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   <h2>Experience</h2>
   ${job('Web Developer Intern, Project LODI', 'DOST Central Office, Planning and Evaluation Service, Information Technology Division', 'Jul – Sep 2026', [
     'Completed a 240-hour internship under the League of Developers Initiative.',
-    'Fixed and documented bugs in an internal Laravel web application.',
+    'Fixed and documented bugs in an internal web application.',
     'Traced each issue through the front end, back end and database before fixing it.',
     'Followed the division’s coding standards.',
   ])}
