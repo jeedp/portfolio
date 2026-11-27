@@ -116,6 +116,8 @@ export type Project = {
   // Real screenshots of the running system, in public/projects/. 'wide' for desktop/web views, 'phone' for tall app windows.
   shots: { src: string; alt: string }[]
   shotLayout: 'wide' | 'phone'
+  // Optional muted screen recording of the real system (public/projects/*.mp4), shown in place of a screenshot.
+  video?: string
 }
 
 /** Shown in this order on the page. Add screenshots by setting `image`. */
@@ -142,6 +144,7 @@ export const projects: Project[] = [
     availability: 'Team of two · thesis in development · team repository on GitHub',
     shots: [{ src: 'projects/wayfinding-kiosk.webp', alt: 'The SLSU campus kiosk: search and quick-find on the left, the campus vector map with floor switcher in the centre, and the building directory on the right' }],
     shotLayout: 'wide',
+    video: 'projects/wayfinding-demo.mp4',
   },
   {
     id: 'parking',
@@ -184,6 +187,7 @@ export const projects: Project[] = [
       { src: 'projects/trainsmart-exercises.webp', alt: 'TrainSMART exercise library listing 122 exercises by muscle group' },
     ],
     shotLayout: 'phone',
+    video: 'projects/trainsmart-demo.mp4',
   },
 ]
 
