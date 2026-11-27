@@ -57,7 +57,7 @@ export function About() {
       <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="edu-title">
         <div className="lg:col-span-4">
           <Sub id="edu-title">Education</Sub>
-          <p className="mt-4 max-w-[34ch] text-muted">Computer Engineering now, after a STEM strand in senior high.</p>
+          <p className="mt-4 max-w-[34ch] text-muted">From a STEM strand to Computer Engineering.</p>
         </div>
         <div className="border-y border-line lg:col-span-8">
           <Reveal>
