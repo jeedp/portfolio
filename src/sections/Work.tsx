@@ -119,9 +119,13 @@ function ProjectSlide({ project, n, total, onOpen }: { project: Project; n: numb
 const arrow = 'grid size-11 place-items-center rounded-full border border-line-strong text-ink transition-[background-color,opacity,transform] hover:bg-panel active:scale-95 disabled:pointer-events-none disabled:opacity-30'
 
 /** The projects as a carousel: one per slide, moved by arrows, dots, swipe, trackpad or the arrow keys. */
+/** Short names for the project tabs under the carousel. */
+const tabName: Record<string, string> = { wayfinding: 'Campus Wayfinding', parking: 'Parking Gate', trainsmart: 'TrainSMART' }
+
 export function Work() {
   const track = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
+  const [height, setHeight] = useState<number | undefined>(undefined)
   const [open, setOpen] = useState<number | null>(null)
   const close = useCallback(() => setOpen(null), [])
   const total = projects.length
@@ -135,6 +139,18 @@ export function Work() {
     window.addEventListener('resize', update)
     return () => { el.removeEventListener('scroll', update); window.removeEventListener('resize', update) }
   }, [total])
+
+  // The track takes the height of the slide on show, so a short project doesn't leave a gap under it.
+  useEffect(() => {
+    const el = track.current
+    const slide = el?.children[active] as HTMLElement | undefined
+    if (!el || !slide) return
+    const measure = () => setHeight(slide.offsetHeight)
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(slide)
+    return () => ro.disconnect()
+  }, [active])
 
   const go = (i: number) => {
     const el = track.current
@@ -169,13 +185,14 @@ export function Work() {
             if (e.key === 'ArrowRight') { e.preventDefault(); go(active + 1) }
             if (e.key === 'ArrowLeft') { e.preventDefault(); go(active - 1) }
           }}
-          className="flex snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain rounded-[22px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          style={{ height }}
+          className="flex items-start snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain rounded-[22px] transition-[height] duration-500 ease-out-expo [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {projects.map((p, i) => <ProjectSlide key={p.id} project={p} n={i + 1} total={total} onOpen={() => setOpen(i)} />)}
         </div>
       </Reveal>
 
-      <div className="mt-10 flex justify-center gap-2" role="group" aria-label="Choose a project">
+      <div className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2" role="group" aria-label="Choose a project">
         {projects.map((p, i) => (
           <button
             key={p.id}
@@ -183,9 +200,10 @@ export function Work() {
             onClick={() => go(i)}
             aria-label={`${p.title}${i === active ? ' (showing)' : ''}`}
             aria-current={i === active}
-            className="group grid h-8 place-items-center px-1"
+            className={`group flex flex-col items-center gap-2 py-1 text-[14px] font-medium transition-colors ${i === active ? 'text-ink' : 'text-muted hover:text-ink'}`}
           >
-            <span className={`block h-[3px] rounded-full transition-[width,background-color] duration-300 ${i === active ? 'w-10 bg-accent' : 'w-5 bg-line-strong group-hover:bg-muted'}`} />
+            {tabName[p.id] ?? p.title}
+            <span aria-hidden="true" className={`block h-[3px] rounded-full transition-[width,background-color] duration-300 ${i === active ? 'w-10 bg-accent' : 'w-5 bg-line-strong group-hover:bg-muted'}`} />
           </button>
         ))}
       </div>
