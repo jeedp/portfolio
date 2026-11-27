@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { profile, projects } from '../data/profile'
 import { FadeImg } from '../components/FadeImg'
 import { resumeHref } from '../components/Chrome'
+import { GitHubIcon, LinkedInIcon } from '../components/SocialIcons'
 
 const ease = [0.16, 1, 0.3, 1] as const
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`
@@ -153,6 +154,16 @@ export function Hero() {
             <a href={resumeHref} target="_blank" rel="noopener" className="inline-flex h-12 items-center gap-2 rounded-full border border-line-strong px-6 text-[15px] font-medium text-ink transition-[background-color,transform] hover:bg-panel active:scale-[.97]">
               <FileText className="size-4" aria-hidden="true" /> Résumé
             </a>
+          </motion.span>
+          <motion.span
+            className="inline-flex gap-3"
+            initial={{ opacity: 0, y: 10 }} animate={ready ? { opacity: 1, y: 0 } : undefined} transition={{ duration: 0.6, delay: 1.3, ease }}
+          >
+            {[{ href: profile.github, label: 'GitHub', Icon: GitHubIcon }, { href: profile.linkedin, label: 'LinkedIn', Icon: LinkedInIcon }].map(({ href, label, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener" aria-label={label} title={label} className="grid size-12 place-items-center rounded-full border border-line-strong text-ink transition-[background-color,color,transform] hover:bg-panel hover:text-accent active:scale-[.97]">
+                <Icon className="size-5" />
+              </a>
+            ))}
           </motion.span>
         </div>
       </div>
