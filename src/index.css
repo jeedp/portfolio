@@ -98,3 +98,10 @@
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Images fade in once loaded (FadeImg). Unlayered on purpose so it wins over Tailwind's
+   transition utilities, and it keeps their hover movement smooth too. */
+img[data-fade] {
+  transition: opacity .5s ease, transform .7s var(--ease-out-expo), translate .7s var(--ease-out-expo), scale .7s var(--ease-out-expo);
+}
+img[data-fade="out"] { opacity: 0; }

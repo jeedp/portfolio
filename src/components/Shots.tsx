@@ -1,4 +1,5 @@
 import type { Project } from '../data/profile'
+import { FadeImg } from './FadeImg'
 
 const src = (path: string) => `${import.meta.env.BASE_URL}${path}`
 
@@ -18,7 +19,7 @@ export function Shots({ project, caption, eager = false, className = '' }: { pro
               <span className="size-2 rounded-full bg-line-strong" />
               <span className="size-2 rounded-full bg-line-strong" />
             </div>
-            <img
+            <FadeImg
               src={src(project.shots[0].src)}
               alt={project.shots[0].alt}
               loading={loading}
@@ -30,7 +31,7 @@ export function Shots({ project, caption, eager = false, className = '' }: { pro
       ) : (
         <div className="flex items-start justify-center gap-3 px-4 pb-0 pt-6 sm:gap-5 sm:px-8 sm:pt-8">
           {project.shots.map((s, i) => (
-            <img
+            <FadeImg
               key={s.src}
               src={src(s.src)}
               alt={s.alt}

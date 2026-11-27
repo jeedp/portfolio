@@ -2,6 +2,7 @@ import { ArrowDown, ArrowRight, FileText, MapPin } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { profile, projects } from '../data/profile'
+import { FadeImg } from '../components/FadeImg'
 import { resumeHref } from '../components/Chrome'
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -14,7 +15,7 @@ function Frame({ src, alt, className = '' }: { src: string; alt: string; classNa
       <div aria-hidden="true" className="flex h-5 items-center gap-1 border-b border-line px-2.5">
         <span className="size-1.5 rounded-full bg-line-strong" /><span className="size-1.5 rounded-full bg-line-strong" /><span className="size-1.5 rounded-full bg-line-strong" />
       </div>
-      <img src={asset(src)} alt={alt} fetchPriority="high" className="block w-full" />
+      <FadeImg src={asset(src)} alt={alt} fetchPriority="high" className="block w-full" />
     </div>
   )
 }
@@ -29,7 +30,7 @@ function Collage() {
       <div className="relative aspect-[4/3] overflow-hidden rounded-[22px] bg-panel">
         <Frame src={kiosk.shots[0].src} alt={kiosk.shots[0].alt} className={`absolute left-[4%] top-[6%] w-[74%] ${move} group-hover:-translate-y-1`} />
         <Frame src={parking.shots[0].src} alt={parking.shots[0].alt} className={`absolute bottom-[5%] right-[4%] w-[46%] ${move} group-hover:translate-y-1`} />
-        <img
+        <FadeImg
           src={asset(trainsmart.shots[1].src)}
           alt={trainsmart.shots[1].alt}
           className={`absolute bottom-[6%] left-[8%] w-[19%] rounded-xl border border-line shadow-[0_22px_45px_-20px_rgb(0_0_0/0.55)] ${move} group-hover:-translate-y-1.5`}
