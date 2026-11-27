@@ -40,6 +40,9 @@ const job = (title, org, dates, items) => `
   </div>`
 
 const certs = certificates.filter(c => !c.placeholder)
+// One line on the résumé: the courses closest to software and embedded work (the site lists them all).
+const resumeCourses = ['Data Structures and Algorithms', 'Object-Oriented Programming', 'Software Engineering']
+  .filter(c => education.coursework.includes(c))
 
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(profile.name)} Résumé</title>
 <style>
@@ -59,7 +62,10 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   ul { margin-top: 2px; padding-left: 15px; }
   li { margin-top: 0; }
   .plain { margin-top: 4px; }
-  .skills p { margin-top: 2px; }
+  .skills { margin-top: 5px; display: grid; grid-template-columns: 1.2in 1fr; row-gap: 3px; }
+  .skills dt { font-weight: 700; }
+  .certs-from { margin-top: 5px; }
+  .certs { margin-top: 3px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 36px; row-gap: 1px; }
 </style></head><body>
   <h1>${esc(profile.name)}</h1>
   <p class="contact">${contact}</p>
@@ -67,7 +73,7 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   <h2>Education</h2>
   ${job(esc(education.degree), `${esc(education.school)}, ${esc(education.location)}`, `Aug 2023 – May 2027 (expected)`, [
     `${esc(scholarship.name)} (${esc(scholarship.law)}), 2023 – present`,
-    `Relevant coursework: ${esc(education.coursework.join(', '))}`,
+    `Coursework: ${esc(resumeCourses.join(', '))}`,
   ])}
   ${job(`${esc(seniorHigh.level)}`, `${esc(seniorHigh.school)}, ${esc(seniorHigh.location)}`, '2021 – 2023', ['Graduated with honors'])}
 
@@ -98,16 +104,17 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   ])}
 
   <h2>Skills</h2>
-  <div class="skills">
-    <p><b>Languages:</b> C, C++, C#, Java, Python, JavaScript, PHP, SQL</p>
-    <p><b>Web:</b> HTML, CSS, Laravel, Node.js, Express</p>
-    <p><b>Databases:</b> MySQL, SQL Server, SQLite, Firebase</p>
-    <p><b>Embedded:</b> Arduino, ESP32, Raspberry Pi, FreeRTOS</p>
-    <p><b>Tools:</b> Git, GitHub, VS Code, Visual Studio, PlatformIO, Postman, Laragon</p>
-  </div>
+  <dl class="skills">
+    <dt>Languages</dt><dd>C, C++, C#, Java, Python, JavaScript, PHP, SQL</dd>
+    <dt>Web &amp; backend</dt><dd>HTML, CSS, Laravel, Node.js, Express</dd>
+    <dt>Databases</dt><dd>MySQL, SQL Server, SQLite, Firebase</dd>
+    <dt>Embedded</dt><dd>Arduino, ESP32, Raspberry Pi, FreeRTOS</dd>
+    <dt>Tools</dt><dd>Git, GitHub, VS Code, Visual Studio, PlatformIO, Postman, Laragon</dd>
+  </dl>
 
   <h2>Certifications</h2>
-  <p class="plain">Cisco Networking Academy (DICT-ITU DTC Initiative): ${certs.map(c => `${esc(c.title)} (${esc(c.date)})`).join(', ')}</p>
+  <p class="org certs-from">Cisco Networking Academy, through the DICT-ITU DTC Initiative</p>
+  <div class="certs">${certs.map(c => `<div class="row"><p>${esc(c.title)}</p><p class="date">${esc(c.date)}</p></div>`).join('')}</div>
 </body></html>`
 
 const tmp = join(tmpdir(), `jed-resume-${isPrivate ? 'private' : 'public'}.html`)
