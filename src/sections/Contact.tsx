@@ -31,6 +31,7 @@ export function Contact() {
           <ul className="flex gap-6">
             <li><a href="#work" className="transition-colors hover:text-ink">Work</a></li>
             <li><a href="#about" className="transition-colors hover:text-ink">About</a></li>
+            <li><a href="#experience" className="transition-colors hover:text-ink">Experience</a></li>
             <li><a href={resumeHref} target="_blank" rel="noopener" className="transition-colors hover:text-ink">Résumé</a></li>
           </ul>
         </nav>

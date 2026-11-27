@@ -1,4 +1,4 @@
-import { Briefcase, FileText, Mail, Moon, Sun, User } from 'lucide-react'
+import { Briefcase, FileText, Mail, Milestone, Moon, Sun, User } from 'lucide-react'
 import { profile } from '../data/profile'
 import { GitHubIcon, LinkedInIcon } from './SocialIcons'
 
@@ -26,7 +26,7 @@ export function SectionTitle({ id, title, subtitle }: { id: string; title: strin
   )
 }
 
-const navIcons = { work: Briefcase, about: User, contact: Mail }
+const navIcons = { work: Briefcase, about: User, experience: Milestone, contact: Mail }
 
 export function Header({ theme, onToggleTheme }: { theme: 'light' | 'dark'; onToggleTheme: () => void }) {
   return (
@@ -47,14 +47,14 @@ export function Header({ theme, onToggleTheme }: { theme: 'light' | 'dark'; onTo
       </div>
       <nav aria-label="Main">
         <ul className="flex items-center gap-1 sm:gap-2">
-          {(['work', 'about', 'contact'] as const).map(id => {
+          {(['work', 'about', 'experience', 'contact'] as const).map(id => {
             const Icon = navIcons[id]
             return (
               <li key={id}>
                 <a href={`#${id}`} className="inline-flex h-10 items-center gap-2 rounded-full px-3 text-[15px] text-body transition-colors hover:bg-panel hover:text-ink">
                   <Icon className="size-4" aria-hidden="true" />
-                  <span className="hidden capitalize sm:inline">{id}</span>
-                  <span className="sr-only sm:hidden">{id}</span>
+                  <span className="hidden capitalize lg:inline">{id}</span>
+                  <span className="sr-only lg:hidden">{id}</span>
                 </a>
               </li>
             )
@@ -62,8 +62,8 @@ export function Header({ theme, onToggleTheme }: { theme: 'light' | 'dark'; onTo
           <li>
             <a href={resumeHref} target="_blank" rel="noopener" className="inline-flex h-10 items-center gap-2 rounded-full px-3 text-[15px] text-body transition-colors hover:bg-panel hover:text-ink">
               <FileText className="size-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Résumé</span>
-              <span className="sr-only sm:hidden">Résumé</span>
+              <span className="hidden lg:inline">Résumé</span>
+              <span className="sr-only lg:hidden">Résumé</span>
             </a>
           </li>
         </ul>

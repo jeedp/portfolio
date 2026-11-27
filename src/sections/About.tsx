@@ -88,7 +88,7 @@ export function About() {
       </div>
 
       {/* Experience */}
-      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
+      <div id="experience" className="mt-24 grid scroll-mt-8 gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
         <div className="lg:col-span-4">
           <Sub id="exp-title">Experience</Sub>
           <p className="mt-4 max-w-[34ch] text-muted">My thesis and internship, newest first.</p>
