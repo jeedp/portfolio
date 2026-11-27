@@ -130,7 +130,7 @@ export const projects: Project[] = [
     summary: 'An offline touchscreen kiosk that helps students, visitors and staff find buildings, offices and facilities on the SLSU main campus, with a 2D vector map, floor plans and walking directions.',
     problem: 'First-time students and visitors struggle to find buildings, offices and facilities on the main campus.',
     objective: 'Help students, visitors and other campus users locate university buildings, offices, facilities and other important destinations.',
-    contributions: ['Performance on the Raspberry Pi 4', 'The QR hand-off that continues a route on a visitor’s phone with live GPS', 'The setup script and guide that turn a blank SD card into a working kiosk'],
+    contributions: ['Optimised the map to run smoothly on a Raspberry Pi 4', 'Built the QR hand-off that continues a route on a visitor’s phone with live GPS', 'Wrote the setup script and guide that turn a blank SD card into a working kiosk'],
     features: ['Runs fully offline from a Raspberry Pi, so it keeps working when the campus network drops', '2D vector campus map with floor plans and walking directions', 'Routes continue on a visitor’s phone through a QR code'],
     challenges: [
       { challenge: 'Floor drawings were 14 MB each, too heavy for a Raspberry Pi 4.', solution: 'Optimised them to 1.5–3 MB per floor so the map pans smoothly.' },
@@ -152,13 +152,12 @@ export const projects: Project[] = [
     summary: 'An IoT parking system that checks RFID cards at the gate, counts free spaces as cars enter and leave, and shows everything on a live web dashboard.',
     problem: 'A manual gate can’t tell drivers how many spaces are free, or check who is allowed in.',
     objective: 'Automate entry for authorised cards and show live space availability on a web dashboard.',
-    contributions: ['Wrote the ESP32 firmware, from pin mapping to the FreeRTOS tasks', 'Built the web dashboard on my own', 'Wrote unit tests for the gate and RFID logic and set up the PlatformIO build'],
+    contributions: ['Wrote the ESP32 firmware, from pin mapping to the FreeRTOS tasks', 'Built the web dashboard, including Bluetooth LE manual control', 'Wrote unit tests for the gate and RFID logic and set up the PlatformIO build'],
     features: ['RFID-based vehicle authorisation with servo gates at the entry and exit', 'A live free-space count that updates as cars enter and leave; ultrasonic sensors close each gate once a car has passed', 'Web dashboard with live spaces, gate state and the last 20 events'],
     challenges: [
       { challenge: 'A slow Firebase connection could stall the gate.', solution: 'Gate control and network updates run as separate FreeRTOS tasks on separate ESP32 cores.' },
       { challenge: 'Operators need control even when the internet is down.', solution: 'Manual open and close from the browser, sent straight to the ESP32 over Bluetooth LE.' },
     ],
-    result: { value: '2 cores', label: 'gate control and networking kept apart, so the gate never waits on the network' },
     tech: ['C++', 'ESP32', 'FreeRTOS', 'Firebase', 'JavaScript', 'PlatformIO'],
     repo: 'https://github.com/jeedp/Smart-Parking-Gate-System',
     availability: 'Team project: I wrote the firmware and the dashboard, my teammates built the hardware · source on GitHub',
@@ -176,7 +175,6 @@ export const projects: Project[] = [
     objective: 'One desktop app to plan routines, log workouts and track measurements over time.',
     contributions: ['Built the whole application solo', 'Designed the relational data model in T-SQL', 'Implemented user accounts with input validation'],
     features: ['Workout templates, with custom and prebuilt routines', 'Exercise and set management, with workout tracking and history', 'Body measurement tracking'],
-    result: { value: '5', label: 'connected features on one SQL Server data model' },
     tech: ['C#', 'Windows Forms', '.NET Framework', 'SQL Server'],
     repo: 'https://github.com/jeedp/TrainSMARTApp',
     availability: 'Solo project · Windows desktop app · source on GitHub',
@@ -246,9 +244,9 @@ export type Certificate = {
 
 export const certificates: Certificate[] = [
   { title: 'Introduction to Cybersecurity', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'May 2026', category: 'Online course', file: 'certificates/introduction-to-cybersecurity.pdf', image: 'certificates/introduction-to-cybersecurity.jpg' },
+  { title: 'Hardware and Upgrade Support', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/hardware-and-upgrade-support.pdf', image: 'certificates/hardware-and-upgrade-support.jpg' },
   { title: 'Prompt Like an Engineer', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/prompt-like-an-engineer.pdf', image: 'certificates/prompt-like-an-engineer.jpg' },
   { title: 'Engaging Stakeholders for Success', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/engaging-stakeholders-for-success.pdf', image: 'certificates/engaging-stakeholders-for-success.jpg' },
-  { title: 'Hardware and Upgrade Support', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/hardware-and-upgrade-support.pdf', image: 'certificates/hardware-and-upgrade-support.jpg' },
   { title: 'Digital Awareness', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/digital-awareness.pdf', image: 'certificates/digital-awareness.jpg' },
   { title: 'Seminar or workshop', issuer: 'Add a seminar or workshop you attended', date: '', category: 'Seminar or workshop', placeholder: true },
   { title: 'Academic achievement', issuer: 'Add an award, honor or competition result', date: '', category: 'Achievement', placeholder: true },
