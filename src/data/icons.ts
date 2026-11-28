@@ -1,6 +1,6 @@
 import {
   siArduino, siC, siCplusplus, siCss, siDotnet, siEspressif, siExpress, siFirebase, siGit, siGithub, siHtml5,
-  siJavascript, siJquery, siJupyter, siLaravel, siMysql, siNodedotjs, siPandas, siPhp, siPlatformio, siPostman, siPython, siRaspberrypi,
+  siJavascript, siJquery, siJupyter, siLaravel, siMysql, siNodedotjs, siPandas, siPhp, siPlatformio, siPython, siRaspberrypi,
   siScikitlearn, siSqlite,
 } from 'simple-icons'
 
@@ -44,7 +44,6 @@ export const brands: Record<string, Brand> = {
   'Visual Studio': { title: 'Visual Studio', hex: '#865fc5', letters: 'VS' },
   'Arduino IDE': { ...si(siArduino), title: 'Arduino IDE' },
   'PlatformIO': si(siPlatformio),
-  'Postman': si(siPostman),
   '.NET Framework': si(siDotnet),
   'Windows Forms': { ...si(siDotnet), title: 'Windows Forms' },
 }

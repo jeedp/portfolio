@@ -91,7 +91,7 @@ export const skills: SkillGroup[] = [
   { name: 'Web development', icon: 'globe', items: ['HTML', 'CSS', 'Laravel', 'Node.js', 'Express'] },
   { name: 'Databases', icon: 'database', items: ['MySQL', 'SQL Server', 'SQLite', 'Firebase'] },
   { name: 'Embedded systems', icon: 'cpu', items: ['Arduino', 'ESP32', 'Raspberry Pi', 'FreeRTOS'] },
-  { name: 'Development tools', icon: 'wrench', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Arduino IDE', 'Laragon', 'Postman'] },
+  { name: 'Development tools', icon: 'wrench', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Arduino IDE', 'Laragon'] },
 ]
 
 export type Project = {
