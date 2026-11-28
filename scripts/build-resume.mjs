@@ -110,7 +110,7 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
     <dt>Web &amp; backend</dt><dd>HTML, CSS, Laravel, Node.js, Express</dd>
     <dt>Databases</dt><dd>MySQL, SQL Server, SQLite, Firebase</dd>
     <dt>Embedded</dt><dd>Arduino, ESP32, Raspberry Pi, FreeRTOS</dd>
-    <dt>Tools</dt><dd>Git, GitHub, VS Code, Visual Studio, PlatformIO, Postman, Laragon</dd>
+    <dt>Tools</dt><dd>Git, GitHub, VS Code, Visual Studio, PlatformIO, Laragon</dd>
   </dl>
 
   <h2>Certifications and awards</h2>
