@@ -41,7 +41,7 @@ const job = (title, org, dates, items) => `
 
 const certs = certificates.filter(c => !c.placeholder)
 // One line on the résumé: the courses closest to software and embedded work (the site lists them all).
-const resumeCourses = ['Data Structures and Algorithms', 'Object-Oriented Programming', 'Software Engineering']
+const resumeCourses = ['Data Structure and Algorithms', 'Object Oriented Programming', 'Software Design', 'Operating Systems']
   .filter(c => education.coursework.includes(c))
 
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(profile.name)} Résumé</title>
