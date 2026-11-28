@@ -39,7 +39,7 @@ export function About() {
       </div>
 
       {/* Education */}
-      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="edu-title">
+      <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="edu-title">
         <div className="lg:col-span-4">
           <Sub id="edu-title">Education</Sub>
           <p className="mt-4 max-w-[34ch] text-muted">From a STEM strand to Computer Engineering.</p>
@@ -69,7 +69,7 @@ export function About() {
       </div>
 
       {/* Experience */}
-      <div id="experience" className="mt-24 grid scroll-mt-8 gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
+      <div id="experience" className="mt-16 md:mt-24 grid scroll-mt-8 gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="exp-title">
         <div className="lg:col-span-4">
           <Sub id="exp-title">Experience</Sub>
           <p className="mt-4 max-w-[34ch] text-muted">My thesis and internship, newest first.</p>
@@ -91,7 +91,7 @@ export function About() {
       </div>
 
       {/* How I work */}
-      <div className="mt-24" aria-labelledby="how-title">
+      <div className="mt-16 md:mt-24" aria-labelledby="how-title">
         <Sub id="how-title">How I work</Sub>
         <ol className="mt-8 grid gap-4 md:grid-cols-3">
           {philosophy.map((p, i) => (
@@ -108,23 +108,23 @@ export function About() {
       </div>
 
       {/* Toolkit */}
-      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="tools-title">
+      <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="tools-title">
         <div className="lg:col-span-4">
           <Sub id="tools-title">Toolkit</Sub>
           <p className="mt-4 max-w-[34ch] text-muted">What I’ve used in coursework, projects and my internship.</p>
         </div>
-        <dl className="space-y-6 lg:col-span-8">
+        <dl className="space-y-4 sm:space-y-6 lg:col-span-8">
           {skills.map(g => (
-            <div key={g.name} className="grid gap-3 sm:grid-cols-[160px_1fr] sm:gap-8">
+            <div key={g.name} className="grid gap-2 sm:grid-cols-[160px_1fr] sm:gap-8">
               <dt className="text-[15px] font-medium text-ink sm:pt-1.5">{g.name}</dt>
-              <dd className="flex flex-wrap gap-2">{g.items.map(t => <TechBadge key={t} name={t} size="sm" />)}</dd>
+              <dd className="flex flex-wrap gap-1.5 sm:gap-2">{g.items.map(t => <TechBadge key={t} name={t} size="sm" />)}</dd>
             </div>
           ))}
         </dl>
       </div>
 
       {/* Certifications */}
-      <div className="mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="cert-title">
+      <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="cert-title">
         <div className="lg:col-span-4">
           <Sub id="cert-title">Certifications</Sub>
           <p className="mt-4 max-w-[34ch] text-muted">Cisco Networking Academy courses through the DICT-ITU DTC Initiative.</p>
