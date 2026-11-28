@@ -1,6 +1,7 @@
 import {
   siArduino, siC, siCplusplus, siCss, siDotnet, siEspressif, siExpress, siFirebase, siGit, siGithub, siHtml5,
-  siJavascript, siJquery, siLaravel, siMysql, siNodedotjs, siPhp, siPlatformio, siPostman, siPython, siRaspberrypi, siSqlite,
+  siJavascript, siJquery, siJupyter, siLaravel, siMysql, siNodedotjs, siPandas, siPhp, siPlatformio, siPostman, siPython, siRaspberrypi,
+  siScikitlearn, siSqlite,
 } from 'simple-icons'
 
 /**
@@ -16,6 +17,10 @@ export const brands: Record<string, Brand> = {
   'C++': si(siCplusplus),
   'C#': { title: 'C#', hex: '#9b4f96', letters: 'C#' },
   'Python': si(siPython),
+  'Jupyter': si(siJupyter),
+  'pandas': si(siPandas),
+  'scikit-learn': si(siScikitlearn),
+  'NetworkX': { title: 'NetworkX', hex: '#2C7FB8', letters: 'NX' },
   'JavaScript': si(siJavascript),
   'PHP': si(siPhp),
   'HTML': si(siHtml5),

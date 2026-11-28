@@ -126,8 +126,8 @@ export function About() {
       {/* Certifications */}
       <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="cert-title">
         <div className="lg:col-span-4">
-          <Sub id="cert-title">Certifications</Sub>
-          <p className="mt-4 max-w-[34ch] text-muted">Online courses from Pearson (via Coursera) and Cisco Networking Academy.</p>
+          <Sub id="cert-title">Certifications and awards</Sub>
+          <p className="mt-4 max-w-[34ch] text-muted">A data science award, and online courses from Pearson (via Coursera) and Cisco Networking Academy.</p>
         </div>
         <ul className="divide-y divide-line border-y border-line lg:col-span-8">
           {certs.map(c => (

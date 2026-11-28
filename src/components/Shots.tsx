@@ -49,10 +49,13 @@ export function Shots({ project, caption, eager = false, className = '' }: { pro
           })}
         </div>
       )}
-      {project.video && (
+      {(project.video || project.shotLabel) && (
         <span className="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink/85 px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-sheet backdrop-blur sm:left-6 sm:top-6">
-          <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />Recorded demo
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />{project.video ? 'Recorded demo' : project.shotLabel}
         </span>
+      )}
+      {project.shotCredit && (
+        <span className="pointer-events-none absolute bottom-5 right-5 z-10 rounded bg-sheet/85 px-1.5 py-0.5 text-[10px] text-muted sm:bottom-7 sm:right-7">{project.shotCredit}</span>
       )}
       {caption && <figcaption className="sr-only">{caption}</figcaption>}
     </figure>

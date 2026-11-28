@@ -107,7 +107,7 @@ function ProjectSlide({ project, n, total, onOpen }: { project: Project; n: numb
           </button>
           {project.repo && (
             <a href={project.repo} className="inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 text-[15px] font-medium text-ink transition-[background-color,transform] hover:bg-panel active:scale-[.97]">
-              {project.id === 'wayfinding' ? 'Team repository' : 'Source on GitHub'} <ArrowUpRight className="size-4" aria-hidden="true" />
+              {project.repo?.includes('github.com/jeedp/') ? 'Source on GitHub' : 'Team repository'} <ArrowUpRight className="size-4" aria-hidden="true" />
             </a>
           )}
         </div>
@@ -120,7 +120,7 @@ const arrow = 'grid size-11 place-items-center rounded-full border border-line-s
 
 /** The projects as a carousel: one per slide, moved by arrows, dots, swipe, trackpad or the arrow keys. */
 /** Short names for the project tabs under the carousel. */
-const tabName: Record<string, string> = { wayfinding: 'Campus Wayfinding', parking: 'Parking Gate', trainsmart: 'TrainSMART' }
+const tabName: Record<string, string> = { wayfinding: 'Campus Wayfinding', jeepney: 'Flood Rerouting', parking: 'Parking Gate', trainsmart: 'TrainSMART' }
 
 export function Work() {
   const track = useRef<HTMLDivElement>(null)
@@ -162,7 +162,7 @@ export function Work() {
   return (
     <section aria-labelledby="work" className="py-16 md:py-24">
       <div className="flex flex-wrap items-end justify-between gap-x-8">
-        <SectionTitle id="work" title="Selected Work" subtitle="Three systems I built, each shown running for real." />
+        <SectionTitle id="work" title="Selected Work" subtitle="Four projects, from firmware to machine learning." />
         <div className="mb-12 flex items-center gap-5 md:mb-16">
           <p className="tabular font-mono text-[14px] text-muted" aria-live="polite">
             <span className="text-ink">{String(active + 1).padStart(2, '0')}</span> / {String(total).padStart(2, '0')}

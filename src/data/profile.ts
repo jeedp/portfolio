@@ -98,7 +98,7 @@ export type Project = {
   id: string
   title: string
   kind: string
-  category: 'Desktop' | 'IoT' | 'Web'
+  category: 'Desktop' | 'IoT' | 'Web' | 'Data'
   status?: string
   year: string
   summary: string
@@ -118,6 +118,10 @@ export type Project = {
   shotLayout: 'wide' | 'phone'
   // Optional muted screen recording of the real system (public/projects/*.mp4), shown in place of a screenshot.
   video?: string
+  // Small label on the visual when it isn't a screenshot (e.g. a chart drawn from the project's data).
+  shotLabel?: string
+  // Credit shown on the visual when its data requires it (e.g. OpenStreetMap).
+  shotCredit?: string
 }
 
 /** Shown in this order on the page. Add screenshots by setting `image`. */
@@ -145,6 +149,36 @@ export const projects: Project[] = [
     shots: [{ src: 'projects/wayfinding-kiosk.webp', alt: 'The SLSU campus kiosk: search and quick-find on the left, the campus vector map with floor switcher in the centre, and the building directory on the right' }],
     shotLayout: 'wide',
     video: 'projects/wayfinding-demo.mp4',
+  },
+  {
+    id: 'jeepney',
+    title: 'Flood-Aware Jeepney Rerouting',
+    kind: 'Data science challenge',
+    category: 'Data',
+    year: '2024',
+    summary: 'A data science entry that predicts flood-prone areas in Metro Manila and reroutes jeepney routes around them, built from NASA, NOAH and ECMWF data.',
+    problem: 'Floods in Metro Manila cut jeepney routes, leaving commuters with no working route.',
+    objective: 'Predict which areas will flood and find alternative jeepney routes before service breaks down.',
+    // From Jed's own commits in the team repository.
+    contributions: [
+      'Built the flood prediction model: a Random Forest on UMAP-reduced spatial features, checked with 10-fold cross-validation',
+      'Wrote the kriging notebook that estimates rainfall between measurement points',
+      'Optimised and parallelised the Monte Carlo simulation and graph search used for rerouting',
+      'Wrote the scripts that download and convert NASA precipitation data',
+    ],
+    features: [
+      'Flood prediction from AEGIS, NOAH, NASA GPM and ECMWF data',
+      'Jeepney routes modelled as a graph of the Metro Manila road network',
+      'Alternative routes found by shortest path when part of the network is predicted to flood',
+    ],
+    result: { value: 'Top 10', label: 'in the 2024 Philippine Junior Data Science Challenge (UP Data Science Society)' },
+    tech: ['Python', 'Jupyter', 'scikit-learn', 'pandas', 'NetworkX'],
+    repo: 'https://github.com/Nick-Miras/JeepneyRerouting',
+    availability: 'Team Bangan · Top 10 at PJDSC 2024 · team repository on GitHub',
+    shotLabel: 'From the project’s road data',
+    shotCredit: '© OpenStreetMap contributors',
+    shots: [{ src: 'projects/jeepney-network.webp', alt: 'The project’s Metro Manila road graph (around Pasay and Makati) drawn from its GraphML file, with major roads highlighted' }],
+    shotLayout: 'wide',
   },
   {
     id: 'parking',
@@ -249,6 +283,7 @@ export type Certificate = {
 }
 
 export const certificates: Certificate[] = [
+  { title: 'Top 10, 2024 Philippine Junior Data Science Challenge', issuer: 'UP Data Science Society · Team Bangan', date: 'Nov 2024', category: 'Achievement', file: 'certificates/pjdsc-2024-top-10.jpg' },
   // A Coursera specialization by Pearson that prepares for the CompTIA CySA+ exam. NOT the CompTIA certification itself.
   { title: 'CompTIA Cybersecurity Analyst (CySA+) CS0-003 Specialization', issuer: 'Pearson, via Coursera (5 courses)', date: 'Nov 2026', category: 'Online course', file: 'certificates/comptia-cysa-specialization.pdf', url: 'https://coursera.org/verify/specialization/WFXZ3J49HRBP' },
   { title: 'Introduction to Cybersecurity', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'May 2026', category: 'Online course', file: 'certificates/introduction-to-cybersecurity.pdf', image: 'certificates/introduction-to-cybersecurity.jpg' },
