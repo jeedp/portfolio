@@ -127,13 +127,16 @@ export function About() {
       <div className="mt-16 md:mt-24 grid gap-10 lg:grid-cols-12 lg:gap-16" aria-labelledby="cert-title">
         <div className="lg:col-span-4">
           <Sub id="cert-title">Certifications</Sub>
-          <p className="mt-4 max-w-[34ch] text-muted">Cisco Networking Academy courses through the DICT-ITU DTC Initiative.</p>
+          <p className="mt-4 max-w-[34ch] text-muted">Online courses from Pearson (via Coursera) and Cisco Networking Academy.</p>
         </div>
         <ul className="divide-y divide-line border-y border-line lg:col-span-8">
           {certs.map(c => (
             <li key={c.title}>
-              <a href={c.file ? `${import.meta.env.BASE_URL}${c.file}` : undefined} target="_blank" rel="noopener" className="group flex items-center justify-between gap-6 py-4">
-                <span className="text-[16px] font-medium text-ink transition-colors group-hover:text-accent-text">{c.title}</span>
+              <a href={c.url ?? (c.file ? `${import.meta.env.BASE_URL}${c.file}` : undefined)} target="_blank" rel="noopener" className="group flex items-center justify-between gap-6 py-4">
+                <span>
+                  <span className="block text-[16px] font-medium text-ink transition-colors group-hover:text-accent-text">{c.title}</span>
+                  <span className="mt-0.5 block text-[14px] text-muted">{c.issuer.replace(' · DICT-ITU DTC Initiative', '')}</span>
+                </span>
                 <span className="flex shrink-0 items-center gap-3 text-[14px] text-muted">
                   <span className="tabular">{c.date}</span>
                   <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />

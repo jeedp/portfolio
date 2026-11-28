@@ -243,10 +243,14 @@ export type Certificate = {
   file?: string
   // A thumbnail of the certificate (public/certificates/<name>.jpg). Rebuild them from the PDFs with `npm run thumbs`.
   image?: string
+  // Public verification page (e.g. Coursera); preferred over the PDF when present.
+  url?: string
   placeholder?: boolean
 }
 
 export const certificates: Certificate[] = [
+  // A Coursera specialization by Pearson that prepares for the CompTIA CySA+ exam. NOT the CompTIA certification itself.
+  { title: 'CompTIA Cybersecurity Analyst (CySA+) CS0-003 Specialization', issuer: 'Pearson, via Coursera (5 courses)', date: 'Nov 2026', category: 'Online course', file: 'certificates/comptia-cysa-specialization.pdf', url: 'https://coursera.org/verify/specialization/WFXZ3J49HRBP' },
   { title: 'Introduction to Cybersecurity', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'May 2026', category: 'Online course', file: 'certificates/introduction-to-cybersecurity.pdf', image: 'certificates/introduction-to-cybersecurity.jpg' },
   { title: 'Hardware and Upgrade Support', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/hardware-and-upgrade-support.pdf', image: 'certificates/hardware-and-upgrade-support.jpg' },
   { title: 'Prompt Like an Engineer', issuer: 'Cisco Networking Academy · DICT-ITU DTC Initiative', date: 'Oct 2026', category: 'Online course', file: 'certificates/prompt-like-an-engineer.pdf', image: 'certificates/prompt-like-an-engineer.jpg' },
