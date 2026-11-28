@@ -64,7 +64,8 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   .plain { margin-top: 4px; }
   .skills { margin-top: 5px; display: grid; grid-template-columns: 1.2in 1fr; row-gap: 3px; }
   .skills dt { font-weight: 700; }
-  .certs-from { margin-top: 5px; }
+  .certs-from { margin-top: 3px; }
+  .certs-top { margin-top: 5px; }
   .certs { margin-top: 3px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 36px; row-gap: 1px; }
 </style></head><body>
   <h1>${esc(profile.name)}</h1>
@@ -112,8 +113,9 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>
   </dl>
 
   <h2>Certifications</h2>
+  ${certs.filter(c => !c.issuer.startsWith('Cisco')).map(c => `<div class="row certs-top"><p><b>${esc(c.title)}</b>, ${esc(c.issuer)}</p><p class="date">${esc(c.date)}</p></div>`).join('')}
   <p class="org certs-from">Cisco Networking Academy, through the DICT-ITU DTC Initiative</p>
-  <div class="certs">${certs.map(c => `<div class="row"><p>${esc(c.title)}</p><p class="date">${esc(c.date)}</p></div>`).join('')}</div>
+  <div class="certs">${certs.filter(c => c.issuer.startsWith('Cisco')).map(c => `<div class="row"><p>${esc(c.title)}</p><p class="date">${esc(c.date)}</p></div>`).join('')}</div>
 </body></html>`
 
 const tmp = join(tmpdir(), `jed-resume-${isPrivate ? 'private' : 'public'}.html`)
