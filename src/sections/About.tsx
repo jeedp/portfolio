@@ -12,13 +12,6 @@ function Sub({ children, id }: { children: string; id: string }) {
   )
 }
 
-const facts = [
-  { k: 'Studying', v: `BS Computer Engineering, ${education.school}` },
-  { k: 'Graduating', v: education.expected.replace('Expected ', '') },
-  { k: 'Based in', v: profile.location },
-  { k: 'Interested in', v: 'Software engineering, AI and ML, data engineering' },
-]
-
 export function About() {
   const experience = timeline.filter(t => !t.placeholder && t.type !== 'education')
   const degree = timeline.find(t => t.type === 'education')
@@ -31,14 +24,6 @@ export function About() {
       <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
         <Reveal className="space-y-5 text-[17px] leading-relaxed lg:col-span-7">
           {about.paragraphs.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
-          <dl className="!mt-10 grid gap-x-8 gap-y-5 border-t border-line pt-8 sm:grid-cols-2">
-            {facts.map(f => (
-              <div key={f.k}>
-                <dt className="eyebrow">{f.k}</dt>
-                <dd className="mt-1 text-[16px] font-medium text-ink">{f.v}</dd>
-              </div>
-            ))}
-          </dl>
         </Reveal>
         <Reveal delay={0.1} className="lg:col-span-5">
           <figure className="relative mx-auto max-w-[400px]">
