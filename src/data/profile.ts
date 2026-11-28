@@ -58,10 +58,10 @@ export const education = {
   location: 'Southern Leyte, Philippines',
   period: 'Aug 2023 – Present',
   expected: 'Expected May 2027',
+  // Official course titles from the BSCpE prospectus (only courses in the curriculum). Used on the résumé only.
   coursework: [
-    'Data Structures and Algorithms', 'Object-Oriented Programming', 'Database Management Systems',
-    'Software Engineering', 'Digital Logic Design', 'Microprocessor Systems', 'Computer Networks',
-    'Operating Systems', 'Embedded Systems',
+    'Data Structure and Algorithms', 'Object Oriented Programming', 'Software Design', 'Operating Systems',
+    'Software Development 1–3', 'Computer Network and Security', 'Microprocessors', 'Embedded Systems (in progress)',
   ],
 }
 
