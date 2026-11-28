@@ -102,15 +102,16 @@ export function Hero() {
           </motion.p>
         </div>
 
-        <h1 id="hero-title" className="mt-8">
+        {/* Name first in the markup (so it reads "Jed B. Padro Computer Engineering Student"), title shown on top. */}
+        <h1 id="hero-title" className="mt-8 flex flex-col-reverse">
+          <span className="mt-4 block text-[64px] font-black uppercase leading-[0.9] tracking-[-0.035em] sm:text-[96px] xl:text-[112px]">
+            {line(first, 0.45)}{' '}
+            {line(last, 0.55)}
+          </span>{' '}
           <motion.span
             className="spaced block text-[13px] font-medium uppercase tracking-[0.3em] text-ink sm:text-[14px] sm:tracking-[0.34em]"
             initial={{ opacity: 0 }} animate={ready ? { opacity: 1 } : undefined} transition={{ duration: 0.7, delay: 0.35, ease }}
           >{profile.title}</motion.span>
-          <span className="mt-4 block text-[64px] font-black uppercase leading-[0.9] tracking-[-0.035em] sm:text-[96px] xl:text-[112px]">
-            {line(first, 0.45)}
-            {line(last, 0.55)}
-          </span>
         </h1>
 
         <In at={0.8} ready={ready}>
